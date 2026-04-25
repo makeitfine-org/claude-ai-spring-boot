@@ -4,16 +4,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.piomin.services.application.dto.PersonRequest;
 import pl.piomin.services.application.dto.PersonResponse;
 import pl.piomin.services.application.service.PersonService;
 import pl.piomin.services.infrastructure.exception.PersonNotFoundException;
+import pl.piomin.services.infrastructure.security.JwtService;
 import pl.piomin.services.presentation.rest.PersonController;
 
 import java.time.LocalDate;
@@ -35,8 +37,14 @@ class PersonControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     private PersonService personService;
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private UserDetailsService userDetailsService;
 
     @Test
     @WithMockUser
