@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: claude-ai-spring-boot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: claude-ai-spring-boot
+  template:
+    metadata:
+      labels:
+        app: claude-ai-spring-boot
+    spec:
+      containers:
+        - name: app
+          image: claude-ai-spring-boot:1.0.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_DB
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              value: postgres
+            - name: KEYCLOAK_ISSUER_URI
+              value: http://keycloak:8080/realms/master
+            - name: DDL_AUTO
+              value: validate
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

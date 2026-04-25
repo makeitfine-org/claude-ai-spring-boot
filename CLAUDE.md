@@ -28,10 +28,9 @@
 - Each skill is one independent capability
 
 ### 6. Subagents usage
-- Use subagents liberally to keep the main context window clean
 - Load subagents from `.claude/agents/`
-- For complex problems, throw more compute at it via subagents
-- One task per subagent for focused execution on a given tech stack
+- Don't use subagents
+- Use only the single custom agent `spring-boot-engineer` as the main agent
 
 ## Core Principles
 - **Simplicity First**: Make every change as simple as possible. Impact minimal code
@@ -43,7 +42,7 @@
 - Always write Java code as the Spring Boot application.
 - Always use Maven for dependency management.
 - Always create test cases for the generated code both positive and negative.
-- Always generate the CircleCI pipeline in the .circleci directory to verify the code.
+- Always generate the Github Actions pipeline in the .github directory to verify the code.
 - Minimize the amount of code generated.
 - The Maven artifact name must be the same as the parent directory name.
 - Use semantic versioning for the Maven project. Each time you generate a new version, bump the PATCH section of the version number.

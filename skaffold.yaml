@@ -1,0 +1,21 @@
+apiVersion: skaffold/v4beta12
+kind: Config
+metadata:
+  name: claude-ai-spring-boot
+build:
+  artifacts:
+    - image: claude-ai-spring-boot
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+deploy:
+  kubectl:
+    manifests:
+      - k8s/postgres-configmap.yaml
+      - k8s/postgres-deployment.yaml
+      - k8s/postgres-service.yaml
+      - k8s/keycloak-deployment.yaml
+      - k8s/keycloak-service.yaml
+      - k8s/app-deployment.yaml
+      - k8s/app-service.yaml

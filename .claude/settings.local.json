@@ -9,7 +9,28 @@
       "Bash(curl -s https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-starter-parent/maven-metadata.xml)",
       "Bash(grep -E \"\\\\.java$|\\\\.yml$|\\\\.properties$|src/\")",
       "Bash(git ls-tree:*)",
-      "Bash(grep -E \"\\\\.\\(java|yml|properties|xml\\)$\")"
+      "Bash(grep -E \"\\\\.\\(java|yml|properties|xml\\)$\")",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(xargs -I{} jar -tf {})",
+      "Bash(jar -tf ~/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/4.0.5/spring-boot-test-autoconfigure-4.0.5.jar)",
+      "Bash(jar -tf /home/eug/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/4.0.5/spring-boot-test-autoconfigure-4.0.5.jar)",
+      "Bash(jar -tf /home/eug/.m2/repository/tools/jackson/core/jackson-databind/3.1.0/jackson-databind-3.1.0.jar)",
+      "Bash(grep -v \"/$\")",
+      "Bash(xargs -I{} bash -c 'jar -tf \"$1\" 2>/dev/null | grep \"WebMvcTest.class\" && echo \"Found in: $1\"' -- {})",
+      "Bash(xargs -I{} bash -c 'echo \"=== {} ===\" && jar -tf \"$1\" 2>/dev/null | grep -i \"mvc\\\\|webmvc\\\\|WebMvc\" | head -10' -- {})",
+      "Read(//home/eug/.m2/repository/org/springframework/security/**)",
+      "Bash(jar -tf /home/eug/.m2/repository/org/springframework/boot/spring-boot-test/4.0.5/spring-boot-test-4.0.5.jar)",
+      "Bash(jar -tf /home/eug/.m2/repository/org/springframework/spring-test/7.0.6/spring-test-7.0.6.jar)",
+      "Bash(python3 -m json.tool)",
+      "Bash(docker exec *)",
+      "Bash(python3 -c \"import json,sys; logs=json.load\\(sys.stdin\\); [print\\(l['Output']\\) for l in logs[-3:]]\")",
+      "Bash(curl -s -X POST http://localhost:8180/realms/master/protocol/openid-connect/token -d 'client_id=account&username=admin&password=admin&grant_type=password')",
+      "Bash(curl -s -X POST http://localhost:8180/realms/master/protocol/openid-connect/token -d 'client_id=admin-cli&username=admin&password=admin&grant_type=password')"
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "jq -r '\"\\u001b[36m\\(.model.display_name) [effort: \\(.effort.level) | think: \\(.thinking.enabled)]\\u001b[0m | context: \\u001b[33m\\(.context_window.used_percentage // 0)%\\u001b[0m | limit: \\u001b[32m\\(.rate_limits.five_hour.used_percentage)% [\\(.rate_limits.five_hour.resets_at | strflocaltime(\"%H:%M\"))]\\u001b[0m\"'"
   }
 }

@@ -20,7 +20,7 @@ When solving problems:
 - Always write Java code as the Spring Boot application.
 - Always use Maven for dependency management.
 - Always create test cases for the generated code both positive and negative.
-- Always generate the CircleCI pipeline in the .circleci directory to verify the code.
+- Always generate the Github Actions pipeline in the .github directory to verify the code.
 - Minimize the amount of code generated.
 - The Maven artifact name must be the same as the parent directory name.
 - Use semantic versioning for the Maven project. Each time you generate a new version, bump the PATCH section of the version number.
