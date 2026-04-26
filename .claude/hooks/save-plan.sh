@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PostToolUse (Write): Copy new plan files to .claude/docs/plans/ with a
+# PostToolUse (Write): Copy new plan files to .claude/docs/blackbox/plans/ with a
 # dated, human-readable name. Fires whenever Claude writes to ~/.claude/plans/.
 set -uo pipefail
 
@@ -32,7 +32,7 @@ title=$(echo "$title" | sed 's/[^a-zA-Z0-9 _-]//g' | tr -s ' ' | cut -c1-80)
 
 # --- write dated copy ---
 timestamp=$(date +'%Y-%m-%d %H:%M')
-dest_dir="$CLAUDE_PROJECT_DIR/.claude/docs/plans"
+dest_dir="$CLAUDE_PROJECT_DIR/.claude/docs/blackbox/plans"
 dest_file="$dest_dir/${timestamp} ${title}.md"
 
 mkdir -p "$dest_dir"

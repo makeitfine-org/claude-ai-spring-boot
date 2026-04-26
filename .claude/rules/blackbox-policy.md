@@ -27,11 +27,11 @@ or constraints were stated: append ONE entry to `blackbox/session-log.md`.
 
 ## Plan Mutation Events
 
-When any step in a `docs/plans/` file is split, inserted, skipped, reordered, or abandoned:
+When any step in a `docs/blackbox/plans/` file is split, inserted, skipped, reordered, or abandoned:
 
-1. Update the `## Mutations Log` table in the plan file (`docs/plans/TEMPLATE.md` format)
+1. Update the `## Mutations Log` table in the plan file (`docs/blackbox/plans/TEMPLATE.md` format)
 2. Append to `blackbox/session-log.md` under `### Decisions`:
-   `- Plan mutation: [type] on Task N of docs/plans/YYYY-MM-DD-<feature>.md — [reason]`
+   `- Plan mutation: [type] on Task N of docs/blackbox/plans/YYYY-MM-DD-<feature>.md — [reason]`
 
 This ensures plan history is auditable across sessions without loading the full plan into context.
 
