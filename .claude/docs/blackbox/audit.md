@@ -208,3 +208,33 @@ show people with the same name or surname
 ## 2026-04-26T15:32:22Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-26T16:54:45Z
+claude-ai-spring-boot/              <-- (Git Root / IntelliJ Project Root / Claude Code Root)
+├── .git/                           # Shared Git history
+├── .gitignore                      # Combined ignore rules
+├── docker-compose                  # Combined ignore rules
+├── backend/                        # Spring Boot Module
+│   ├── src/
+│   │   ├── main/java/...           # Controller, Service, Entity
+│   │   └── main/resources/         # application.yml
+│   │   ...
+│   └── pom.xml (or build.gradle)
+├── frontend/                       # React Module
+│   ├── src/
+│   │   ├── components/
+│   │   └── App.tsx
+│   │   ...
+│   ├── package.json
+│   └── vite.config.ts (or tailwind.config.ts)
+└── README.md                       # Overview of the whole system
+
+Intro frontend module (UI) for current spring boot backend.
+It should be based on:
+- Typescript, React and its related technologies (Redux, tailwind-css + shadcn/ui, etc)
+- add UI comprehensive tests
+---
+
+## 2026-04-26T17:50:56Z
+execute git add all changes and commit them with suitable message
+---
