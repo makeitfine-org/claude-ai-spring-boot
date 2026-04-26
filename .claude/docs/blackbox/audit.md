@@ -99,3 +99,14 @@ commit changes
 ## 2026-04-26T12:52:17Z
 git all all changes and commit them with suitable message
 ---
+
+## 2026-04-26T13:12:17Z
+change person entity and its dependencies to use:
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_seq")
+    @SequenceGenerator(
+        name = "person_seq", 
+        sequenceName = "persons_id_seq", 
+        allocationSize = 20
+    )
+Analyze these carefully and implement
+---

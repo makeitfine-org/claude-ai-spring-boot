@@ -20,7 +20,12 @@ import java.util.Objects;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_seq")
+    @SequenceGenerator(
+        name = "person_seq",
+        sequenceName = "persons_id_seq",
+        allocationSize = 20
+    )
     private Long id;
 
     @Column(name = "first_name", nullable = false, length = 100)

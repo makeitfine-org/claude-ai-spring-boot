@@ -13,7 +13,7 @@
 
     <groupId>pl.piomin.services</groupId>
     <artifactId>claude-ai-spring-boot</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>claude-ai-spring-boot</name>
     <description>Spring Boot REST API with JWT authentication and PostgreSQL</description>
 

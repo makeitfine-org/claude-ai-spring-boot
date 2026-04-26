@@ -149,3 +149,10 @@
 - .claude/docs/blackbox/audit.md
 - .claude/docs/blackbox/session-log.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T13:23:48Z -->
+- .claude/docs/blackbox/audit.md
+- README.md
+- pom.xml
+- src/main/java/pl/piomin/services/domain/entity/Person.java
+<!-- end-snapshot -->
