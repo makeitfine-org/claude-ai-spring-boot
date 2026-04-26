@@ -156,3 +156,9 @@
 - pom.xml
 - src/main/java/pl/piomin/services/domain/entity/Person.java
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T13:45:16Z -->
+- .claude/docs/blackbox/audit.md
+- Dockerfile
+- README.md
+<!-- end-snapshot -->

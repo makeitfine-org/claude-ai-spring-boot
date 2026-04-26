@@ -110,3 +110,20 @@ change person entity and its dependencies to use:
     )
 Analyze these carefully and implement
 ---
+
+## 2026-04-26T13:40:39Z
+Create a rule in .claude/rules directory that on any `version` change 
+of claude-ai-spring-boot application in pom.xml like so:
+<groupId>pl.piomin.services</groupId>
+    <artifactId>claude-ai-spring-boot</artifactId>
+    <version>1.0.1</version>
+you do step by step:    
+- you also do change version in Dockerfile:
+ COPY target/claude-ai-spring-boot-*.jar app.jar
+- also run `mvn clean install`
+- run `docker rmi spring-cloud2-api-gateway:latest`
+- run `docker compose down`
+- run `docker compose up`
+
+If any errors during these steps fix it.
+---
