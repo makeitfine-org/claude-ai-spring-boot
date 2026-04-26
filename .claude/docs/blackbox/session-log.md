@@ -102,3 +102,8 @@
 - blackbox/audit.md
 - blackbox/session-log.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T11:02:34Z -->
+- .claude/docs/blackbox/audit.md
+- CLAUDE.md
+<!-- end-snapshot -->

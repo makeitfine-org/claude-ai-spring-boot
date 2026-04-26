@@ -1,58 +1,72 @@
-### 1. Plan Mode Default
-- Enter plan mode for ANY not-trivial task (3+ steps or architectural decisions)
-- Use plan mode for verification steps, not just building
-- Write detailed specs upfront to reduce ambiguity
+# CLAUDE.md — claude-ai-spring-boot
 
-### 2. Self-Improvement Loop
-- After ANY correction from the user: update `tasks/lessons.md` with the pattern
-- Write rules for yourself that prevent the same mistake
-- Ruthlessly iterate on these lessons until the mistake rate drops
-- Review lessons at session start for a project
+## Stack Reference
+- Java 21, Spring Boot 3.4.1, PostgreSQL 16
+- MapStruct 1.6.3 (no Lombok), JJWT 0.12.6
+- Testcontainers 1.21.4, JaCoCo 0.8.12
+- Maven · Flyway · CircleCI · Docker · Kubernetes + Skaffold
 
-### 3. Verification Before Done
-- Never mark a task complete without proving it works
-- Diff behavior between main and your changes when relevant
-- Ask yourself: "Would a staff engineer approve this?"
-- Run tests, check logs, demonstrate correctness
+## Architecture Layers
+```
+domain/         → entities, repository interfaces only
+application/    → services, DTOs, MapStruct mappers
+presentation/   → REST controllers (@RestController)
+infrastructure/ → security, exception handlers, config
+config/         → Spring @Configuration classes
+```
+Never let a lower layer import from a higher layer.
+DTOs live in `application/dto/`. Mappers go in `application/mapper/` — always use MapStruct interfaces, never manual mapping.
 
-### 4. Demand Elegance (Balanced)
-- For non-trivial changes: pause and ask "is there a more elegant way?"
-- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
-- Skip this for simple, obvious fixes. Don't overengineer
-- Challenge your own work before presenting it
+## Coding Rules
+- Group ID / base package: `pl.piomin.services`
+- Maven `artifactId` = parent directory name, version = semantic `MAJOR.MINOR.PATCH`
+- Bump PATCH on every generated version; update `README.md` at the same time
+- No Lombok — use plain Java records or classes
+- Use Context7 MCP before writing any Spring Boot / library API code — training data drifts
 
-### 5. Skills usage
-- Use skills for any task that requires a capability
-- Load skills from `.claude/skills/`
-- Invoke skills with natural language
-- Each skill is one independent capability
+## Database Migrations (Flyway)
+- File pattern: `src/main/resources/db/migration/V{n}__{description}.sql`
+  - Example: `V4__add_refresh_tokens_table.sql`
+- Never modify an already-applied migration — always add a new one
+- Increment `n` sequentially; leave no gaps
 
-### 6. Subagents usage
-- Use subagents liberally to keep the main context window clean
-- Load subagents from `.claude/agents/`
-- For complex problems, throw more compute at it via subagents
-- One task per subagent for focused execution on a given tech stack
+## Testing Requirements
+- JaCoCo minimum: **85% line coverage per package** (enforced by `mvn verify`)
+- Excluded from coverage: `PersonApplication`
+- Integration tests: use Testcontainers (`postgres:16-alpine`) — never H2 for integration
+- Required test files per feature:
+  - `*ServiceTest.java` — unit, mocked repo
+  - `*RepositoryTest.java` — `@DataJpaTest` + Testcontainers
+  - `*IntegrationTest.java` — full slice via `@SpringBootTest`
+- Both positive and negative cases required for every test class
 
-## Core Principles
-- **Simplicity First**: Make every change as simple as possible. Impact minimal code
-- **No Laziness**: Find root causes. No temporary fixes. Senior developer standards
+## Version & Delivery Checklist
+Before marking any task done:
+1. `mvn verify` passes (tests + JaCoCo gate)
+2. Flyway migration numbered correctly
+3. `pom.xml` version bumped (PATCH), `README.md` updated
+4. `docker-compose.yml` reflects any new components
+5. CircleCI `.circleci/config.yml` updated if pipeline steps changed
+6. Kubernetes manifests in `k8s/` updated for deployment changes
 
-## Project General Instructions
+## Agent Selection Guide
+| Task | Agent |
+|---|---|
+| New feature / REST endpoint / JPA entity | `spring-boot-engineer` |
+| Architectural decision / package restructure | `java-architect` |
+| Test gaps / coverage failures | `test-automator` |
+| Security config / JWT / auth flows | `security-engineer` |
+| Dockerfile / docker-compose changes | `docker-expert` |
+| k8s manifests / Skaffold / Helm | `kubernetes-specialist` |
+| CircleCI pipeline changes | `devops-engineer` |
+| Pre-merge quality gate | `code-reviewer` |
 
-- Always use the latest versions of dependencies.
-- Always write Java code as the Spring Boot application.
-- Always use Maven for dependency management.
-- Always create test cases for the generated code both positive and negative.
-- Always generate the CircleCI pipeline in the .circleci directory to verify the code.
-- Minimize the amount of code generated.
-- The Maven artifact name must be the same as the parent directory name.
-- Use semantic versioning for the Maven project. Each time you generate a new version, bump the PATCH section of the version number.
-- Use `pl.piomin.services` as the group ID for the Maven project and base Java package.
-- Do not use the Lombok library.
-- Generate the Docker Compose file to run all components used by the application.
-- Update README.md each time you generate a new version.
+Delegate to subagents liberally — keep the main context window clean.
+Load skills from `.claude/skills/` for targeted in-context capabilities (e.g. `jpa-patterns` for N+1 issues, `api-contract-review` before releasing endpoints).
 
-## Claude Code Workflow
-
+## Workflow Defaults
+- Plan mode for any task with 3+ steps or an architectural decision
+- Session logging: see `.claude/rules/blackbox-policy.md` — do not duplicate here
 - Use **Context7 MCP** proactively for library/API docs — don't wait to be asked
-- Commits: semantic message (max 80 chars), no `Co-Authored-By` trailer
+- Commits: semantic message ≤ 80 chars, no `Co-Authored-By` trailer
+- Lessons from corrections → `tasks/lessons.md`; review at session start
