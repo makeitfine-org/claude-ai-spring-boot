@@ -163,3 +163,12 @@ show how many person in each country
 ## 2026-04-26T14:44:50Z
 git all all changes and commit them with suitable message
 ---
+
+## 2026-04-26T14:52:24Z
+Look in @.claude/rules/blackbox-policy.md, @.claude/hooks/save-plan.sh and change the hook to have only the last version of docs/blackbox/plans/YYYY-MM-DD-<feature>.md if plan were edited during session.
+Do not save multiple versions of the same plans.
+---
+
+## 2026-04-26T14:58:10Z
+git all all changes and commit them with suitable message
+---

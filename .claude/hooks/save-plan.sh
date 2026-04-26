@@ -31,11 +31,13 @@ fi
 title=$(echo "$title" | sed 's/[^a-zA-Z0-9 _-]//g' | tr -s ' ' | cut -c1-80)
 
 # --- write dated copy ---
-timestamp=$(date +'%Y-%m-%d %H:%M')
+timestamp=$(date +'%Y-%m-%d')
 dest_dir="$CLAUDE_PROJECT_DIR/.claude/docs/blackbox/plans"
 dest_file="$dest_dir/${timestamp} ${title}.md"
 
 mkdir -p "$dest_dir"
+# Remove any prior version of this plan (any date prefix, same title suffix)
+find "$dest_dir" -maxdepth 1 -name "* ${title}.md" -delete 2>/dev/null || true
 printf '%s' "$content" > "$dest_file" 2>/dev/null || true
 
 exit 0

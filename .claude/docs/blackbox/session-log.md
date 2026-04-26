@@ -201,3 +201,8 @@
 - .claude/docs/blackbox/session-log.md
 - src/main/resources/db/migration/V3__seed_persons.sql
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T14:56:34Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/hooks/save-plan.sh
+<!-- end-snapshot -->
