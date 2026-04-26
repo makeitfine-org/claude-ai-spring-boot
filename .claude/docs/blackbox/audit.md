@@ -54,3 +54,20 @@ thank you
 ## 2026-04-26T10:57:35Z
 Analyze the project and imporve @CLAUDE.md
 ---
+
+## 2026-04-26T11:18:06Z
+Improve @README.md
+---
+
+## 2026-04-26T11:34:35Z
+Code hook which will save in .claude/docs/plans folder the file on every time `plan` mode is using.
+Name this file with title what it does and the prefix of this file with date (YYYY-MM HH:mm).
+---
+
+## 2026-04-26T11:50:27Z
+Implement plun ~/.claude/plans/code-hook-which-will-serialized-plum.md
+---
+
+## 2026-04-26T11:56:27Z
+See @README.md and propose how to improve it
+---

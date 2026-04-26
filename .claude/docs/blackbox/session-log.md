@@ -107,3 +107,17 @@
 - .claude/docs/blackbox/audit.md
 - CLAUDE.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T11:53:18Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T11:58:43Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/hooks/save-plan.sh
+- .claude/settings.json
+- README.md
+- pom.xml
+<!-- end-snapshot -->
