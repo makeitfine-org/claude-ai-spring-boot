@@ -302,3 +302,15 @@ Do not save multiple files of the same plans.
 ## 2026-04-26T19:37:58Z
 Add correction to plan
 ---
+
+## 2026-04-26T20:07:36Z
+Improve variable names in @backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+---
+
+## 2026-04-26T20:16:08Z
+change the hook to save only plan file with the last time creation of docs/blackbox/plans/YYYY-MM-DD HH:mm <feature>.md instead of docs/blackbox/plans/YYYY-MM-DD HH:mm <feature>.md
+---
+
+## 2026-04-26T20:17:08Z
+change the hook to save only plan file with the last time creation of docs/blackbox/plans/YYYY-MM-DD HH:mm <feature>.md instead of docs/blackbox/plans/YYYY-MM-DD <feature>.md
+---

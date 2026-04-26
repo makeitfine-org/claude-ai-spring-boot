@@ -279,3 +279,8 @@
 - frontend/package-lock.json
 - frontend/tsconfig.app.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T20:17:51Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/hooks/save-plan.sh
+<!-- end-snapshot -->
