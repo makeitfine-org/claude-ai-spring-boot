@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "sonnet",
   "env": {
     "PERSON_DB_URL": "postgres:postgres@localhost:5432/persondb"
   },
@@ -53,6 +55,7 @@
       "Bash(docker exec:*)",
       "Bash(docker-compose down:*)",
       "Bash(find . -type f \\\\\\(-name *.java -o -name *.xml -o -name *.yaml -o -name *.yml \\\\\\))",
+      "Bash(git add *)",
       "mcp__postgres-persons__query"
     ]
   },

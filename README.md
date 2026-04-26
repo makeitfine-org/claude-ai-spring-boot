@@ -419,3 +419,4 @@ Current version: **1.0.1**
 ## Plans to implement:
 - Without stop and deletion docker containers change app image and container to new version,
   update database docker image by rolling up new migration version
+- See settings.json (allow, deny, etc) in onboard project and move here
