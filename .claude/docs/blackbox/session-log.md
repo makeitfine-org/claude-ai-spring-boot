@@ -162,3 +162,42 @@
 - Dockerfile
 - README.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T14:04:33Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T14:12:35Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T14:13:21Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T14:14:34Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T14:34:20Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- src/main/resources/db/migration/V3__seed_persons.sql
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T14:40:58Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-26 16:31 Fix V3 seed migration reassign countries to allowed list wipe volume.md
+- .claude/docs/blackbox/session-log.md
+- src/main/resources/db/migration/V3__seed_persons.sql
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T14:41:50Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-26 16:31 Fix V3 seed migration reassign countries to allowed list wipe volume.md
+- .claude/docs/blackbox/session-log.md
+- src/main/resources/db/migration/V3__seed_persons.sql
+<!-- end-snapshot -->

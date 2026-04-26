@@ -127,3 +127,39 @@ you do step by step:
 
 If any errors during these steps fix it.
 ---
+
+## 2026-04-26T14:02:52Z
+run `docker compose up` and if issues fix.
+---
+
+## 2026-04-26T14:12:11Z
+Show all persons from The USA. Use MCP server.
+---
+
+## 2026-04-26T14:13:12Z
+Show me all persons.
+---
+
+## 2026-04-26T14:14:29Z
+But it's not it's not all. Show me all
+---
+
+## 2026-04-26T14:19:33Z
+:/model sonnet
+---
+
+## 2026-04-26T14:21:03Z
+when I run `docker compose down` and then `docker compose up` V3 flyway migration doesn't change database, there is still 7 records, not more. fix it
+---
+
+## 2026-04-26T14:40:36Z
+Show all persons from The United States. Use MCP.
+---
+
+## 2026-04-26T14:41:40Z
+show how many person in each country
+---
+
+## 2026-04-26T14:44:50Z
+git all all changes and commit them with suitable message
+---
