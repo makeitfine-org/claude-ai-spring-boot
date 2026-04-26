@@ -10,8 +10,9 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+# todo: temp
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -46,8 +47,9 @@ services:
       retries: 3
       start_period: 40s
 
-volumes:
-  postgres_data:
+# todo: temp
+#volumes:
+#  postgres_data:
 
 networks:
   app-network:

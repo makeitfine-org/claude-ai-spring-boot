@@ -225,3 +225,26 @@
 - .claude/settings.json
 - README.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T15:30:34Z -->
+- .claude/docs/blackbox/audit.md
+- README.md
+- docker-compose.yml
+- src/main/resources/db/migration/V3__seed_persons.sql
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T15:31:13Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- README.md
+- docker-compose.yml
+- src/main/resources/db/migration/V3__seed_persons.sql
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T15:31:39Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- README.md
+- docker-compose.yml
+- src/main/resources/db/migration/V3__seed_persons.sql
+<!-- end-snapshot -->

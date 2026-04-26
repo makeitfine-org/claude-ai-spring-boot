@@ -188,3 +188,23 @@ git all all changes and commit them with suitable message
 ## 2026-04-26T15:10:02Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-26T15:29:34Z
+show how many person in each country
+---
+
+## 2026-04-26T15:30:16Z
+Show all persons from The United States. Use MCP.
+---
+
+## 2026-04-26T15:31:08Z
+show how many person in each country
+---
+
+## 2026-04-26T15:31:27Z
+show people with the same name or surname
+---
+
+## 2026-04-26T15:32:22Z
+execute git add all changes and commit them with suitable message
+---
