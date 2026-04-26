@@ -47,6 +47,20 @@ services:
       retries: 3
       start_period: 40s
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: claude-ai-frontend
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+    restart: unless-stopped
+
 # todo: temp
 #volumes:
 #  postgres_data:

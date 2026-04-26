@@ -31,7 +31,7 @@ When any step in a `docs/blackbox/plans/` file is split, inserted, skipped, reor
 
 1. Update the `## Mutations Log` table in the plan file (`docs/blackbox/plans/TEMPLATE.md` format)
 2. Append to `blackbox/session-log.md` under `### Decisions`:
-   `- Plan mutation: [type] on Task N of docs/blackbox/plans/YYYY-MM-DD-<feature>.md — [reason]`
+   `- Plan mutation: [type] on Task N of docs/blackbox/plans/YYYY-MM-DD HH:mm <feature>.md — [reason]`
 
 This ensures plan history is auditable across sessions without loading the full plan into context.
 

@@ -276,3 +276,8 @@ show all persons with id<2 or id>27 from table, use mcp postgres
 ## 2026-04-26T18:50:56Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-26T18:53:38Z
+Create Dockerfile for frontend, and config docker-compose.yaml for it.
+Run `docker compose` and check that frontend and backend works fine togather and all api commands executed as exptected
+---

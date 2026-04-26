@@ -271,3 +271,11 @@
 - .claude/settings.json
 - .mcp.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T19:07:31Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/rules/blackbox-policy.md
+- docker-compose.yml
+- frontend/package-lock.json
+- frontend/tsconfig.app.json
+<!-- end-snapshot -->
