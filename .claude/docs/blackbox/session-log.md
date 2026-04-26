@@ -248,3 +248,10 @@
 - docker-compose.yml
 - src/main/resources/db/migration/V3__seed_persons.sql
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T18:30:35Z -->
+- .claude/docs/blackbox/audit.md
+- README.md
+- backend/README.md
+- frontend/README.md
+<!-- end-snapshot -->

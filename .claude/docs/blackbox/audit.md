@@ -238,3 +238,13 @@ It should be based on:
 ## 2026-04-26T17:50:56Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-26T18:25:12Z
+- Analyze project and improve @backend/README.md and @frontend/README.md 
+- Write detailed guide and curl commands for backend all api commands
+- Write detialed giude for frontent
+---
+
+## 2026-04-26T18:42:46Z
+execute git add all changes and commit them with suitable message
+---
