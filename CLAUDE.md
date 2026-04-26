@@ -51,3 +51,8 @@
 - Do not use the Lombok library.
 - Generate the Docker Compose file to run all components used by the application.
 - Update README.md each time you generate a new version.
+
+## Claude Code Workflow
+
+- Use **Context7 MCP** proactively for library/API docs — don't wait to be asked
+- Commits: semantic message (max 80 chars), no `Co-Authored-By` trailer
