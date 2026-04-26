@@ -281,3 +281,24 @@ execute git add all changes and commit them with suitable message
 Create Dockerfile for frontend, and config docker-compose.yaml for it.
 Run `docker compose` and check that frontend and backend works fine togather and all api commands executed as exptected
 ---
+
+## 2026-04-26T19:19:29Z
+show all persons from Ukraine (mcp postgres use)
+---
+
+## 2026-04-26T19:20:15Z
+among them show only man
+---
+
+## 2026-04-26T19:20:38Z
+with age less then 40
+---
+
+## 2026-04-26T19:23:47Z
+Look in @.claude/rules/blackbox-policy.md, @.claude/hooks/save-plan.sh and change the hook to save only plan file with the last time creation of docs/blackbox/plans/YYYY-MM-DD HH:mm <feature>.md.
+Do not save multiple files of the same plans.
+---
+
+## 2026-04-26T19:37:58Z
+Add correction to plan
+---
