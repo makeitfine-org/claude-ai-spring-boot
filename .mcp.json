@@ -7,7 +7,7 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-postgres",
-        "postgresql://${PERSON_DB_URL}"
+        "postgresql://postgres:postgres@localhost:5432/persondb"
       ]
     }
   }

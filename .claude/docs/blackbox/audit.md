@@ -248,3 +248,31 @@ execute git add all changes and commit them with suitable message
 ## 2026-04-26T18:42:46Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-26T18:44:26Z
+show all persons with id<2 or id>27, use mcp
+---
+
+## 2026-04-26T18:46:12Z
+yes
+---
+
+## 2026-04-26T18:46:49Z
+PERSON_DB_URL in settings.json read there
+---
+
+## 2026-04-26T18:48:03Z
+show all persons with id<2 or id>27, use mcp postgres
+---
+
+## 2026-04-26T18:48:51Z
+show all persons with id<2 or id>27 from table, use mcp postgres
+---
+
+## 2026-04-26T18:50:20Z
+show all persons with id<2 or id>27 from table, use mcp postgres
+---
+
+## 2026-04-26T18:50:56Z
+execute git add all changes and commit them with suitable message
+---

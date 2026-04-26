@@ -2,7 +2,8 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "model": "sonnet",
   "env": {
-    "PERSON_DB_URL": "postgres:postgres@localhost:5432/persondb"
+    "PERSON_DB_URL": "postgres:postgres@localhost:5432/persondb",
+    "comment": "reading from here doesn't work"
   },
   "hooks": {
     "Stop": [

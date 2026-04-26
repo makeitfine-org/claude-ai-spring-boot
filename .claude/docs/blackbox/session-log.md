@@ -255,3 +255,19 @@
 - backend/README.md
 - frontend/README.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T18:44:48Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T18:48:20Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T18:50:25Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.json
+- .mcp.json
+<!-- end-snapshot -->
