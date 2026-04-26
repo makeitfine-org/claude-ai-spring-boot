@@ -13,7 +13,7 @@ A production-ready Spring Boot 3.4.1 application featuring a RESTful API for per
 - **Comprehensive Testing** with JUnit 5, Mockito, and Testcontainers
 - **Docker** and **Docker Compose** support
 - **Kubernetes** deployment with Skaffold
-- **CircleCI** pipeline for CI/CD
+- **Github Actions** pipeline for CI/CD
 - **Health Checks** and monitoring with Spring Actuator
 - **85%+ Test Coverage** with JaCoCo
 
@@ -292,21 +292,20 @@ mvn jacoco:check
 
 ## CI/CD Pipeline
 
-The project uses CircleCI for continuous integration and deployment.
+The project uses GitHub Actions for continuous integration and deployment (`.github/workflows/ci.yml`).
 
 ### Pipeline Stages
 
-1. **Build and Test**: Compile, run tests, generate coverage report
-2. **Security Scan**: OWASP dependency check
-3. **Docker Build**: Build and push Docker image (main branch only)
+1. **Build and Test**: Compile, run tests, enforce 85% JaCoCo coverage, upload reports
+2. **Security Scan**: OWASP dependency check (runs after build)
+3. **Docker Build**: Build and push Docker image to Docker Hub (`main` branch only)
 
-### Setup CircleCI
+### Setup GitHub Actions
 
-1. Connect your repository to CircleCI
-2. Add environment variables:
+1. In your repository go to **Settings → Secrets → Actions** and add:
    - `DOCKER_USERNAME`: Docker Hub username
-   - `DOCKER_PASSWORD`: Docker Hub password
-3. Pipeline will run automatically on each commit
+   - `DOCKER_PASSWORD`: Docker Hub password or access token
+2. The pipeline runs automatically on every push and on pull requests targeting `main`
 
 ## Security
 
@@ -398,7 +397,7 @@ src/
 - **Build**: Maven
 - **Containerization**: Docker, Docker Compose
 - **Orchestration**: Kubernetes, Skaffold
-- **CI/CD**: CircleCI
+- **CI/CD**: Github Actions
 - **Monitoring**: Spring Actuator
 
 ## Contributing

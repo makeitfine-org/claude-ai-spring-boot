@@ -121,3 +121,15 @@
 - README.md
 - pom.xml
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T12:15:26Z -->
+- .circleci/config.yml
+- .claude/docs/blackbox/audit.md
+- CLAUDE.md
+- README.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T12:20:51Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->

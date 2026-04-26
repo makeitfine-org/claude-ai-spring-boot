@@ -4,7 +4,7 @@
 - Java 21, Spring Boot 3.4.1, PostgreSQL 16
 - MapStruct 1.6.3 (no Lombok), JJWT 0.12.6
 - Testcontainers 1.21.4, JaCoCo 0.8.12
-- Maven · Flyway · CircleCI · Docker · Kubernetes + Skaffold
+- Maven · Flyway · GitHub Actions · Docker · Kubernetes + Skaffold
 
 ## Architecture Layers
 ```
@@ -46,7 +46,7 @@ Before marking any task done:
 2. Flyway migration numbered correctly
 3. `pom.xml` version bumped (PATCH), `README.md` updated
 4. `docker-compose.yml` reflects any new components
-5. CircleCI `.circleci/config.yml` updated if pipeline steps changed
+5. GitHub Actions `.github/workflows/ci.yml` updated if pipeline steps changed
 6. Kubernetes manifests in `k8s/` updated for deployment changes
 
 ## Agent Selection Guide
@@ -58,7 +58,7 @@ Before marking any task done:
 | Security config / JWT / auth flows | `security-engineer` |
 | Dockerfile / docker-compose changes | `docker-expert` |
 | k8s manifests / Skaffold / Helm | `kubernetes-specialist` |
-| CircleCI pipeline changes | `devops-engineer` |
+| GitHub Actions pipeline changes | `devops-engineer` |
 | Pre-merge quality gate | `code-reviewer` |
 
 Delegate to subagents liberally — keep the main context window clean.
