@@ -83,3 +83,15 @@ continue
 ## 2026-04-26T12:20:39Z
 commit changes
 ---
+
+## 2026-04-26T12:37:58Z
+In CI/CD @.github/workflows/ci.yml file set to execute only build-and-test
+---
+
+## 2026-04-26T12:40:00Z
+dont' remove it just disable for now
+---
+
+## 2026-04-26T12:43:13Z
+commit changes
+---

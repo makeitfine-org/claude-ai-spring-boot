@@ -133,3 +133,19 @@
 - .claude/docs/blackbox/audit.md
 - .claude/docs/blackbox/session-log.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T12:38:10Z -->
+- .claude/docs/blackbox/audit.md
+- .github/workflows/ci.yml
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T12:40:27Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .github/workflows/ci.yml
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-26T12:43:45Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->

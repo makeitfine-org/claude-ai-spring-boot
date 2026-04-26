@@ -47,6 +47,7 @@ jobs:
           path: target/claude-ai-spring-boot-*.jar
 
   security-scan:
+    if: false
     runs-on: ubuntu-latest
     needs: build-and-test
     steps:
@@ -72,9 +73,10 @@ jobs:
           path: target/dependency-check-report.html
 
   docker-build:
+    if: false
+    # if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: build-and-test
-    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
 
