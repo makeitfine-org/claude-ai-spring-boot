@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "postgres-persons": {
+      "type": "stdio",
+      "disabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://${PERSON_DB_URL}"
+      ]
+    }
+  }
+}
