@@ -2,6 +2,30 @@
   "env": {
     "PERSON_DB_URL": "postgres:postgres@localhost:5432/persondb"
   },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/stop-blackbox-log.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/prompt-audit-log.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "allow": [
       "Bash(mvn:*)",

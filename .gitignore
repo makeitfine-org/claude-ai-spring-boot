@@ -231,4 +231,4 @@ dry.txt
 Makefile
 
 # Claude Code local overrides (per-developer)
-.claude/settings.local.json
+
