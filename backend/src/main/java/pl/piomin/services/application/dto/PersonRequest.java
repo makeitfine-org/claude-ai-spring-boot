@@ -117,7 +117,7 @@ public class PersonRequest {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Boolean getActive() {
+    public Boolean isActive() {
         return active;
     }
 

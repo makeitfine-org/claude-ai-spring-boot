@@ -18,8 +18,8 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(PersonNotFoundException.class)
-    public ProblemDetail handlePersonNotFoundException(PersonNotFoundException ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ProblemDetail handlePersonNotFoundException(PersonNotFoundException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
         problemDetail.setTitle("Person Not Found");
         problemDetail.setType(URI.create("https://api.example.com/errors/person-not-found"));
         problemDetail.setProperty("timestamp", Instant.now());
@@ -27,9 +27,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ProblemDetail handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ProblemDetail handleValidationExceptions(MethodArgumentNotValidException exception) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        exception.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ProblemDetail handleBadCredentialsException(BadCredentialsException ex) {
+    public ProblemDetail handleBadCredentialsException(BadCredentialsException exception) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.UNAUTHORIZED,
                 "Invalid email or password"
@@ -59,10 +59,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ProblemDetail handleUsernameNotFoundException(UsernameNotFoundException ex) {
+    public ProblemDetail handleUsernameNotFoundException(UsernameNotFoundException exception) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.UNAUTHORIZED,
-                ex.getMessage()
+                exception.getMessage()
         );
         problemDetail.setTitle("User Not Found");
         problemDetail.setType(URI.create("https://api.example.com/errors/user-not-found"));
@@ -71,10 +71,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ProblemDetail handleIllegalArgumentException(IllegalArgumentException ex) {
+    public ProblemDetail handleIllegalArgumentException(IllegalArgumentException exception) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.BAD_REQUEST,
-                ex.getMessage()
+                exception.getMessage()
         );
         problemDetail.setTitle("Invalid Request");
         problemDetail.setType(URI.create("https://api.example.com/errors/invalid-request"));
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ProblemDetail handleGlobalException(Exception ex) {
+    public ProblemDetail handleGlobalException(Exception exception) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 "An unexpected error occurred"
@@ -91,7 +91,7 @@ public class GlobalExceptionHandler {
         problemDetail.setTitle("Internal Server Error");
         problemDetail.setType(URI.create("https://api.example.com/errors/internal-error"));
         problemDetail.setProperty("timestamp", Instant.now());
-        problemDetail.setProperty("message", ex.getMessage());
+        problemDetail.setProperty("message", exception.getMessage());
         return problemDetail;
     }
 }

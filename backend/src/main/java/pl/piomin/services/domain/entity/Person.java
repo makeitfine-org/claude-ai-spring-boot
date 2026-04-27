@@ -158,7 +158,7 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Boolean getActive() {
+    public Boolean isActive() {
         return active;
     }
 

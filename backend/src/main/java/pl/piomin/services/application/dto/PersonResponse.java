@@ -103,7 +103,7 @@ public class PersonResponse {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Boolean getActive() {
+    public Boolean isActive() {
         return active;
     }
 

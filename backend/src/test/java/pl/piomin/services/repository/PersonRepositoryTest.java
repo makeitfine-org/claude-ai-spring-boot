@@ -121,6 +121,6 @@ class PersonRepositoryTest {
         assertThat(saved.getPostalCode()).isEqualTo("60601");
         assertThat(saved.getCountry()).isEqualTo("USA");
         assertThat(saved.getDateOfBirth()).isEqualTo(LocalDate.of(1990, 5, 15));
-        assertThat(saved.getActive()).isTrue();
+        assertThat(saved.isActive()).isTrue();
     }
 }

@@ -12,7 +12,7 @@ class PersonEntityTest {
     @Test
     void noArgConstructor_SetsDefaultActive() {
         Person person = new Person();
-        assertThat(person.getActive()).isTrue();
+        assertThat(person.isActive()).isTrue();
     }
 
     @Test
@@ -54,7 +54,7 @@ class PersonEntityTest {
         assertThat(person.getPostalCode()).isEqualTo("00-001");
         assertThat(person.getCountry()).isEqualTo("Poland");
         assertThat(person.getDateOfBirth()).isEqualTo(dob);
-        assertThat(person.getActive()).isFalse();
+        assertThat(person.isActive()).isFalse();
         assertThat(person.getCreatedAt()).isEqualTo(now);
         assertThat(person.getUpdatedAt()).isEqualTo(now);
         assertThat(person.getVersion()).isEqualTo(2L);

@@ -350,3 +350,388 @@
 - .claude/scripts/naming-team.sh
 - .claude/settings.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T13:56:05Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T13:58:18Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:00:20Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:02:44Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:04:11Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:05:17Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:08:03Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:08:45Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:08:54Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:11:16Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:11:38Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:11:46Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:11:58Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:11:59Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:12:06Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:12:34Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:12:42Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:12:42Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:12:45Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:12:54Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:12:58Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:13:00Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:13:07Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:13:08Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:13:13Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:13:18Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:14:09Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:14:16Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:15:45Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T14:16:55Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtService.java
+- backend/src/test/java/pl/piomin/services/domain/entity/PersonEntityTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- frontend/src/App.tsx
+- notes.md
+<!-- end-snapshot -->

@@ -2,7 +2,7 @@
 name: backend-naming-reviewer
 description: Reviews and improves Java variable, field, and method naming in the Spring Boot backend following Java conventions and project rules (no Lombok, MapStruct, records).
 tools: Read, Write, Edit, Bash, Glob, Grep
-model: sonnet
+model: opus
 ---
 
 You are a Java naming specialist. Your only job is to audit and fix naming in `backend/src/main/java/`.
