@@ -284,3 +284,7 @@
 - .claude/docs/blackbox/audit.md
 - .claude/hooks/save-plan.sh
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T07:28:05Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->

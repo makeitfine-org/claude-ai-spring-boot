@@ -70,3 +70,4 @@ Load skills from `.claude/skills/` for targeted in-context capabilities (e.g. `j
 - Use **Context7 MCP** proactively for library/API docs — don't wait to be asked
 - Commits: semantic message ≤ 80 chars, no `Co-Authored-By` trailer
 - Lessons from corrections → `tasks/lessons.md`; review at session start
+- When compacting, always preserve the full list of modified files and any test commands
