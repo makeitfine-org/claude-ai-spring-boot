@@ -288,3 +288,65 @@
 <!-- git-snapshot 2026-04-27T07:28:05Z -->
 - .claude/docs/blackbox/audit.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T12:14:09Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-27 14:05 Plan Agent Team for Variable Naming Improvement Backend Frontend.md
+- .claude/settings.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T12:23:00Z -->
+- .claude/agents/backend-naming-reviewer.md
+- .claude/agents/frontend-naming-reviewer.md
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-27 14:05 Plan Agent Team for Variable Naming Improvement Backend Frontend.md
+- .claude/docs/blackbox/session-log.md
+- .claude/scripts/naming-team.sh
+- .claude/settings.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T12:24:27Z -->
+- .claude/agents/backend-naming-reviewer.md
+- .claude/agents/frontend-naming-reviewer.md
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-27 14:05 Plan Agent Team for Variable Naming Improvement Backend Frontend.md
+- .claude/docs/blackbox/session-log.md
+- .claude/scripts/naming-team.sh
+- .claude/settings.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T12:25:18Z -->
+- .claude/agents/backend-naming-reviewer.md
+- .claude/agents/frontend-naming-reviewer.md
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-27 14:05 Plan Agent Team for Variable Naming Improvement Backend Frontend.md
+- .claude/docs/blackbox/session-log.md
+- .claude/scripts/naming-team.sh
+- .claude/settings.json
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- frontend/src/App.tsx
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T12:26:09Z -->
+- .claude/agents/backend-naming-reviewer.md
+- .claude/agents/frontend-naming-reviewer.md
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-27 14:05 Plan Agent Team for Variable Naming Improvement Backend Frontend.md
+- .claude/docs/blackbox/session-log.md
+- .claude/scripts/naming-team.sh
+- .claude/settings.json
+- backend/src/main/java/pl/piomin/services/application/dto/PersonRequest.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/entity/Person.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/JwtAuthenticationFilter.java
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T12:26:51Z -->
+- .claude/agents/backend-naming-reviewer.md
+- .claude/agents/frontend-naming-reviewer.md
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-27 14:05 Plan Agent Team for Variable Naming Improvement Backend Frontend.md
+- .claude/docs/blackbox/session-log.md
+- .claude/scripts/naming-team.sh
+- .claude/settings.json
+<!-- end-snapshot -->
