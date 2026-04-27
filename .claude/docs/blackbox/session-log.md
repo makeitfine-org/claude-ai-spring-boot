@@ -984,3 +984,8 @@
 - frontend/src/main.tsx
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-27T15:43:54Z -->
+- .claude/docs/blackbox/audit.md
+- .mcp.json
+<!-- end-snapshot -->

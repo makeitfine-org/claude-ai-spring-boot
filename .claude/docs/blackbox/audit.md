@@ -563,3 +563,15 @@ Propose these:
 
  ctrl-g to edit in Zettlr · ~/.claude/plans/create-login-page-on-glistening-badger.md
 ---
+
+## 2026-04-27T15:39:39Z
+I use docker to run backend anf frontend. Open borwser localhost:3000, login and show all persons (max 20 on page), show last page.
+---
+
+## 2026-04-27T15:42:09Z
+I use docker to run backend anf frontend. Open borwser localhost:3000, login got to the persons page, choose max 20 persons on page, click to the last page.
+---
+
+## 2026-04-27T15:45:04Z
+execute git add all changes and commit them with suitable message
+---

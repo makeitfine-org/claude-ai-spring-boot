@@ -9,6 +9,15 @@
         "@modelcontextprotocol/server-postgres",
         "postgresql://postgres:postgres@localhost:5432/persondb"
       ]
+    },
+    "playwright": {
+      "type": "stdio",
+      "disabled": false,
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "env": {}
     }
   }
 }
