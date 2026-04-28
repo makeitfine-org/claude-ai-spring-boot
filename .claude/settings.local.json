@@ -52,9 +52,12 @@
       "Bash(kubectl get *)",
       "Bash(kubectl *)",
       "Bash(helm *)",
-      "Bash(kubectl port-forward *)"
+      "Bash(kubectl port-forward *)",
+      "Bash(xargs basename *)",
+      "Bash(npx tsc *)",
+      "Bash(npx cucumber-js *)",
+      "Bash(echo \"Exit: $?\")"
     ],
     "deny": []
-  },
-  "model": "Haiku"
+  }
 }

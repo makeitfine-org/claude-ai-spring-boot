@@ -675,3 +675,19 @@ Implement the plan you proposed
 ## 2026-04-28T12:49:34Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-28T13:05:30Z
+I like to write end-to-end acceptance criteria tests with covers all functionality of application (backend+frontend).
+How is it better to make? Create a new submodule for that or add that into submodules (bakend, frontend)?
+What framework to use for these?
+Interview me and propose the best plan for implementation
+---
+
+## 2026-04-28T13:51:12Z
+Implement the plan you proposed
+---
+
+## 2026-04-28T14:16:00Z
+Add README.md to e2e and relevant description in details how to use, run, extand e2e test, etc.
+Update @../README.md based on adding e2e module.
+---

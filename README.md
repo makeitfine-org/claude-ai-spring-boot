@@ -69,6 +69,10 @@ frontend/             → React 19 + Vite SPA
   nginx.conf
   skaffold.yaml
 
+e2e/                  → Cucumber + Playwright acceptance tests
+  features/           → Gherkin scenarios (auth, UI, API, DB)
+  src/                → step definitions and support utilities
+
 docker-compose.yml    → local full-stack orchestration
 .github/workflows/    → GitHub Actions CI/CD
 ```
@@ -79,6 +83,30 @@ docker-compose.yml    → local full-stack orchestration
 
 - **Backend** — API reference, environment variables, curl examples, testing, Kubernetes deployment: [`backend/README.md`](backend/README.md)
 - **Frontend** — dev setup, project structure, auth flow, Docker, testing: [`frontend/README.md`](frontend/README.md)
+- **E2E** — acceptance test setup, running, writing new scenarios, CI integration: [`e2e/README.md`](e2e/README.md)
+
+---
+
+## Running Acceptance Tests (E2E)
+
+```bash
+# 1. Start the full stack
+docker compose up -d --wait
+
+# 2. Install e2e dependencies (first time only)
+cd e2e && cp .env.example .env && npm install && npx playwright install --with-deps chromium
+
+# 3. Run all scenarios
+npm test
+
+# Run by scope
+npm run test:ui     # browser-driven SPA scenarios
+npm run test:api    # REST contract scenarios
+npm run test:auth   # login / JWT lifecycle
+npm run test:db     # database integrity
+```
+
+Reports land in `e2e/reports/cucumber.html`. See [`e2e/README.md`](e2e/README.md) for the full guide.
 
 ---
 

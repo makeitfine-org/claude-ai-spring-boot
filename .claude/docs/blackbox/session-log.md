@@ -1054,3 +1054,17 @@
 - frontend/src/features/persons/personsApi.ts
 - frontend/src/features/persons/usePersons.ts
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T14:10:35Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-28 15:49 E2E Acceptance Tests Module.md
+- .claude/settings.local.json
+- .github/workflows/ci.yml
+- .gitignore
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T14:18:57Z -->
+- .claude/docs/blackbox/audit.md
+- README.md
+<!-- end-snapshot -->

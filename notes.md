@@ -10,12 +10,15 @@
    (but all time it was idled, not responded)
 ---
 
-todo:
-- Open playwright in active chrome browser:
+### Todo
+I. - Open playwright in active chrome browser:
 https://playwright.dev/mcp/configuration/browser-extension
-* Add e2e tests for up backend and frontend and check:  
+* Add e2e tests for up backend and frontend and check:
+* Create acceptance criteria tests
 * * login
 * * person (get,post,edit,delete)
 * * navigate through pages (1-2-3-...)
-* * search person by email
+* * search person by email, city, first name, ... etc.
 * * logout
+---
+I. Create dark/light/auto themas for front-end

@@ -232,3 +232,10 @@ Makefile
 
 # Claude Code local overrides (per-developer)
 
+# E2E module
+e2e/node_modules/
+e2e/reports/
+e2e/test-results/
+e2e/playwright-report/
+e2e/.env
+
