@@ -226,6 +226,7 @@ Thumbs.db
 #helm
 Chart.lock
 dry.txt
+tmp.drafts.md
 
 .cursor/
 Makefile

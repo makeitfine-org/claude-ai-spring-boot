@@ -1,4 +1,6 @@
- #### Prompt which created 2 pane
+ ### Notes 
+ 
+Prompt which created 2 pane 
  1) Create new `tmux new-session -s claude-team` session
  2) Create and run a team with 2 agent to refactor the frontend and backend.                                                                                                                                                                                   
  Use agents: @"backend-naming-reviewer (agent)" @"frontend-naming-reviewer (agent)"
@@ -10,8 +12,8 @@
    (but all time it was idled, not responded)
 ---
 
-### Todo
-Open playwright in active chrome browser:
+### Todo (tasks)
+✅ Open playwright in active chrome browser:
 https://playwright.dev/mcp/configuration/browser-extension
 * Add e2e tests for up backend and frontend and check:
 * Create acceptance criteria tests

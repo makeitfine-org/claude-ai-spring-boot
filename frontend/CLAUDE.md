@@ -62,3 +62,6 @@ src/
 - API mocking in tests: MSW (`msw/node` setup with `http` and `HttpResponse`).
 - E2E: Playwright (`npx playwright test`).
 - Test files co-locate with the code they test or live in a `__tests__/` sibling.
+
+## Testing Requirements
+- For new or updated functionality add or update tests 
