@@ -56,8 +56,10 @@
       "Bash(xargs basename *)",
       "Bash(npx tsc *)",
       "Bash(npx cucumber-js *)",
-      "Bash(echo \"Exit: $?\")"
+      "Bash(echo \"Exit: $?\")",
+      "Bash(make help *)"
     ],
     "deny": []
-  }
+  },
+  "model": "Haiku"
 }

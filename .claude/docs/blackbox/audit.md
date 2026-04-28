@@ -738,3 +738,150 @@ While updating consider @../e2e/README.md  @../e2e/CLAUDE.md.
 ## 2026-04-28T15:44:00Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-28T16:52:25Z
+## Create Makefile
+
+### This file should have such commands:
+
+- clean:  
+  `docker down`
+  `docker rmi claude-ai-spring-boot-app:latest claude-ai-spring-boot-frontend:latest`
+  inside backend folder: `mvn clean`
+  inside frontend folder: `rm -rf dist node_modules package-lock.json && npm install`
+- buildBackend:
+  inside backend folder: `mvn install`
+- buildFrontend:
+  inside frontend folder: `npm install && npm build`
+- build:
+  buildBackend
+  buildFrontend
+  Running Acceptance Tests (E2E)  
+- ghList: gh run list --limit 5
+- ghView: gh run view --web
+- docker_all (similar to the template I provide)
+
+Consider also telegram notification
+
+
+### Take as a template `Makefile` of the project with has name `RENOVATION`:
+````
+- # Makefile for RENOVATION
+# ln -s <absolute path>/renovation/.cursor/storage/renovation/Makefile Makefile
+# ln -sfn <absolute path>/renovation/.cursor/storage/renovation/Makefile Makefile
+
+.PHONY: clean style compile integrationTest check_all build docker_all docker_down default_message message help
+
+# Function to execute commands sequentially with success and failure messages
+# Usage: $(call execute_commands,command1 && command2 && command3 && .. && commandN, success_msg, fail_msg)
+define execute_commands
+@( $(1) ) && $(MAKE) message $(2) || { $(MAKE) message $(3); exit 1; }
+endef
+GR=./gradlew
+
+clean:
+$(GR) clean
+
+style: clean
+$(GR) ktlintCheck
+
+compile: clean
+$(GR) compileKotlin compileTestKotlin compileJava compileTestJava
+
+integrationTest: clean
+$(GR) integrationTest
+
+check_all: clean # should be improved
+$(GR) checkall
+
+build:
+@echo "### Full build (renovation) ..."
+$(call execute_commands,\
+$(MAKE) clean && \
+$(MAKE) style && \
+$(MAKE) compile && \
+$(GR) buildAll,\
+"✅ BUILD SUCCESSFUL (renovation) ✅",\
+"❌ BUILD FAILED (renovation) ❌")
+
+docker_all:
+@echo "### Building and docker up locally (renovation) ..."
+$(call execute_commands,\
+$(MAKE) build && \
+docker compose down && \
+$(MAKE) message "✅ DOCKER COMPOSE RUNNING (renovation) ... ⏩⏩⏩" && \
+docker compose up,\
+"✅ DOCKER COMPOSE ALL SUCCESSFUL (renovation) ✅",\
+"❌ DOCKER COMPOSE ALL FAILED (renovation) ❌")
+
+docker_down:
+docker compose down
+
+###
+# Common commands
+default_message:
+make message "🔔 Execution finished (renovation) 🔔"
+
+message:
+@echo "=============================================="
+@echo "============= MESSAGE (TELEGRAM) ============="
+@echo "=============================================="
+@if [ -z "$(filter-out $@,$(MAKECMDGOALS))" ]; then \
+echo "Usage: make message \"Your message here\""; \
+exit 1; \
+fi
+@echo "Sending message:"
+@echo "$(filter-out $@,$(MAKECMDGOALS))"
+@echo
+bash -c ' \
+tn() { \
+local msg="$${*:-🔔 Job finished (renovation) 🔔}"; \
+local api="https://api.telegram.org/bot$${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"; \
+curl -sS -X POST "$$api" \
+--data "chat_id=$${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+--data-urlencode "text=$$msg"; \
+}; \
+tn "$(filter-out $@,$(MAKECMDGOALS))" \
+'
+@echo
+%:
+@:
+
+help:
+@echo ""
+@echo "╔═══════════════════════════════════════════════════════════════════╗"
+@echo "║               RENOVATION - Makefile Commands                      ║"
+@echo "╚═══════════════════════════════════════════════════════════════════╝"
+@echo ""
+@echo "Usage: make <target>"
+@echo ""
+@echo "🔨 Build Targets:"
+@echo "  clean             - Clean the project"
+@echo "  style             - Check code style with ktlint (includes clean)"
+@echo "  compile           - Compile Kotlin and Java sources (includes clean)"
+@echo "  integrationTest   - Run integration tests (includes clean)"
+@echo "  check_all         - Run all checks (includes clean)"
+@echo "  build             - Full build: clean + style + compile + buildAll"
+@echo ""
+@echo "🐳 Docker Targets:"
+@echo "  docker_all        - Build and start all services with Docker Compose"
+@echo "  docker_down       - Stop and remove all Docker services"
+@echo ""
+@echo "📬 Notification Targets:"
+@echo "  default_message   - Send default notification to Telegram"
+@echo "  message <text>    - Send custom notification to Telegram"
+@echo "                      Example: make message \"Build completed\""
+@echo ""
+@echo "❓ Other:"
+@echo "  help              - Show this help message"
+@echo ""
+```
+---
+
+## 2026-04-28T16:58:25Z
+Implement the plan you proposed
+---
+
+## 2026-04-28T17:22:36Z
+execute git add all changes and commit them with suitable message
+---

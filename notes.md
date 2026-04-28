@@ -24,10 +24,23 @@ https://playwright.dev/mcp/configuration/browser-extension
 * * logout
 ---
 Create dark/light/auto themas for front-end
---
+
+---
 After claude code completed task it writes resume what it did and show it on the terminal.
 Create hook that saves it to the file `audit.md` file also.
 ---
-Create Makefile take as a template renovation Makefile
+✅ Create Makefile take as a template renovation Makefile
 gh run list --limit 5
 gh run view --log
+---
+Play around switching from plan -> edition in Claude Code after plan created.
+
+---
+Add Makefile to README.md, CLAUDE.md?
+
+---
+Increase speed of creation of frontend/Dockerfile (cause backend/Docker is fast)
+
+---
+Think of not to exclude:
+`rm -rf dist node_modules package-lock.json` from `Make clean`

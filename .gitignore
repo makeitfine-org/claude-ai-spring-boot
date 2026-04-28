@@ -229,7 +229,7 @@ dry.txt
 tmp.drafts.md
 
 .cursor/
-Makefile
+#Makefile
 
 # Claude Code local overrides (per-developer)
 
