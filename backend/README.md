@@ -2,6 +2,8 @@
 
 A production-ready Spring Boot 3.4.1 application featuring a RESTful API for person management with JWT authentication, PostgreSQL database, and Kubernetes deployment support.
 
+Part of the full-stack **claude-ai-spring-boot** project. Running `docker-compose up` from the repository root also starts the React frontend on **port 3000**. See [`../frontend/README.md`](../frontend/README.md) for frontend documentation.
+
 ## Features
 
 - **Spring Boot 3.4.1** with Java 21

@@ -8,3 +8,8 @@
 2) Create and run a team with 1 agent to refactor frontend.                                                                                                                               
    Use agents: @"frontend-naming-reviewer (agent)"
    (but all time it was idled, not responded)
+---
+
+todo:
+Open playwright in active chrome browser:
+https://playwright.dev/mcp/configuration/browser-extension

@@ -575,3 +575,35 @@ I use docker to run backend anf frontend. Open borwser localhost:3000, login got
 ## 2026-04-27T15:45:04Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-28T09:15:59Z
+show persons with postcode ending with 701 (use postgres mcp)
+---
+
+## 2026-04-28T09:20:09Z
+Analyse all the the project and refactor @CLAUDE.md also create separate CLAUDE.md files for @backend/ and @frontend/ module
+---
+
+## 2026-04-28T09:30:09Z
+Analyse all the the project and refactor @CLAUDE.md also create separate CLAUDE.md files for @backend/ and @frontend/ module.
+Also Update @backend/README.md and @frontend/README.md and create README.md for the root project.
+---
+
+## 2026-04-28T09:36:10Z
+show plan for approval:
+Claude has written up a plan and is ready to execute. Would you like to proceed?
+
+ ❯ 1. Yes, auto-accept edits
+   2. Yes, manually approve edits
+   3. No, refine with Ultraplan on Claude Code on the web
+   4. Tell Claude what to change
+      shift+tab to approve with this feedback
+---
+
+## 2026-04-28T09:38:03Z
+show me the plan
+---
+
+## 2026-04-28T09:40:38Z
+give me a plan for edition and approval
+---

@@ -989,3 +989,24 @@
 - .claude/docs/blackbox/audit.md
 - .mcp.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T09:16:23Z -->
+- .claude/docs/blackbox/audit.md
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T09:38:14Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- CLAUDE.md
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T09:47:25Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- CLAUDE.md
+- backend/README.md
+- frontend/README.md
+- notes.md
+<!-- end-snapshot -->
