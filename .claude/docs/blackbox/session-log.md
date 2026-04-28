@@ -1010,3 +1010,13 @@
 - frontend/README.md
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T11:02:13Z -->
+- .claude/docs/blackbox/audit.md
+- README.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T11:21:47Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->

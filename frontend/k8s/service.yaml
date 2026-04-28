@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: claude-ai-frontend
+  labels:
+    app: claude-ai-frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: claude-ai-frontend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 80
+      name: http

@@ -607,3 +607,23 @@ show me the plan
 ## 2026-04-28T09:40:38Z
 give me a plan for edition and approval
 ---
+
+## 2026-04-28T10:48:11Z
+Add Kubernetes Deployment for @frontend/ 
+Extend @README.md insturctions for skaffold for frontend
+Add detailed instruction to README.md:
+- how to create and configure minikube locally
+- how to deploy with skaffold backend and frontend on this minikube
+---
+
+## 2026-04-28T10:59:18Z
+Implement plan with auto-accept edits
+---
+
+## 2026-04-28T11:20:37Z
+execute git add all changes and commit them with suitable message
+---
+
+## 2026-04-28T11:21:21Z
+execute git add all changes and commit them with suitable message
+---

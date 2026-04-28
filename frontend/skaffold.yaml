@@ -1,0 +1,25 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: claude-ai-frontend
+
+build:
+  artifacts:
+    - image: claude-ai-frontend
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+
+deploy:
+  kubectl:
+    manifests:
+      - k8s/configmap.yaml
+      - k8s/deployment.yaml
+      - k8s/service.yaml
+
+portForward:
+  - resourceType: service
+    resourceName: claude-ai-frontend
+    port: 3000
+    localPort: 3000
