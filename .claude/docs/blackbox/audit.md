@@ -627,3 +627,28 @@ execute git add all changes and commit them with suitable message
 ## 2026-04-28T11:21:21Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-28T11:45:03Z
+cd backend
+skaffold dev    # live rebuild on file changes
+# or:
+skaffold run    # one-shot deploy
+explain with simple example
+---
+
+## 2026-04-28T11:48:11Z
+on:
+cd backend
+skaffold dev
+I get:
+parsing skaffold config: error parsing skaffold configuration file: unable to parse config: yaml: unmarshal errors:
+  line 11: field manifests not found in type v4beta11.KubectlDeploy
+---
+
+## 2026-04-28T11:53:14Z
+Go through and execute all `Kubernetes Deployment (Minikube)` steps from @README.md and fix all issues with deployment and its configs
+---
+
+## 2026-04-28T11:57:56Z
+Implement the plan you proposed
+---

@@ -11,15 +11,17 @@ build:
   local:
     push: false
 
+manifests:
+  rawYaml:
+    - k8s/configmap.yaml
+    - k8s/secret.yaml
+    - k8s/postgres-deployment.yaml
+    - k8s/postgres-service.yaml
+    - k8s/deployment.yaml
+    - k8s/service.yaml
+
 deploy:
-  kubectl:
-    manifests:
-      - k8s/configmap.yaml
-      - k8s/secret.yaml
-      - k8s/postgres-deployment.yaml
-      - k8s/postgres-service.yaml
-      - k8s/deployment.yaml
-      - k8s/service.yaml
+  kubectl: {}
 
 portForward:
   - resourceType: service

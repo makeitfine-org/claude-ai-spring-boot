@@ -14,6 +14,10 @@ spec:
       labels:
         app: claude-ai-spring-boot
     spec:
+      initContainers:
+      - name: wait-for-postgres
+        image: postgres:16-alpine
+        command: ['sh', '-c', 'until pg_isready -h postgres-service -p 5432; do echo "waiting for postgres"; sleep 2; done']
       containers:
       - name: app
         image: claude-ai-spring-boot

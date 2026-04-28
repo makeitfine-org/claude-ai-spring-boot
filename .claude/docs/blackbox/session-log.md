@@ -1020,3 +1020,23 @@
 - .claude/docs/blackbox/audit.md
 - .claude/docs/blackbox/session-log.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T11:45:08Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T11:48:54Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/skaffold.yaml
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T12:05:44Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-28 13:55 Plan Execute README Kubernetes Minikube Deployment Steps and Fix Issues.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/k8s/deployment.yaml
+- backend/skaffold.yaml
+- frontend/skaffold.yaml
+<!-- end-snapshot -->
