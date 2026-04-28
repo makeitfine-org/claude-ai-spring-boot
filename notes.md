@@ -44,3 +44,10 @@ Increase speed of creation of frontend/Dockerfile (cause backend/Docker is fast)
 ---
 Think of not to exclude:
 `rm -rf dist node_modules package-lock.json` from `Make clean`
+
+---
+Make update in settins.json instead of settins.local.json
+
+---
+Rename in Makefile (for simple typing):
+cleanShallow -> clean.shallow

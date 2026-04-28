@@ -1093,3 +1093,12 @@
 - .claude/docs/blackbox/audit.md
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T18:17:42Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- README.md
+- backend/README.md
+- e2e/README.md
+- frontend/README.md
+<!-- end-snapshot -->

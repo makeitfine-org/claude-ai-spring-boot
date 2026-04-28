@@ -759,7 +759,7 @@ execute git add all changes and commit them with suitable message
   Running Acceptance Tests (E2E)  
 - ghList: gh run list --limit 5
 - ghView: gh run view --web
-- docker_all (similar to the template I provide)
+- dockerAll (similar to the template I provide)
 
 Consider also telegram notification
 
@@ -901,4 +901,16 @@ cleanShallow:
         
 updateFrontend:
     cd ../frontend && rm -rf dist node_modules package-lock.json && npx npm-check-updates -u && npm install     
+---
+
+## 2026-04-28T18:16:10Z
+Improve and update all README.md files based on @Makefile
+---
+
+## 2026-04-28T18:38:15Z
+Run one by one all goals in @Makefile and check the each of them executes correctly
+---
+
+## 2026-04-28T18:42:28Z
+Run one by one each goal in @Makefile and check the each of them executes correctly
 ---

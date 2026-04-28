@@ -1,6 +1,6 @@
 # Makefile for claude-ai-spring-boot
 
-.PHONY: clean cleanShallow updateFrontend buildBackend buildFrontend acceptanceTest build docker_all docker_down \
+.PHONY: clean cleanShallow updateFrontend buildBackend buildFrontend acceptanceTest build dockerAll docker_down \
         ghList ghView default_message message help
 
 # Function to execute commands sequentially with success and failure messages
@@ -42,10 +42,7 @@ buildFrontend:
 
 acceptanceTest:
 	@echo "### Running acceptance tests (claude-ai-spring-boot) ..."
-	$(call execute_commands,\
-		cd e2e && npm install && npm test,\
-		"✅ ACCEPTANCE TESTS PASSED (claude-ai-spring-boot) ✅",\
-		"❌ ACCEPTANCE TESTS FAILED (claude-ai-spring-boot) ❌")
+	cd e2e && npm install && npm test
 
 build:
 	@echo "### Full build (claude-ai-spring-boot) ..."
@@ -53,17 +50,15 @@ build:
 		$(MAKE) buildBackend && \
 		$(MAKE) buildFrontend && \
 		docker compose up -d && \
-		cd e2e && npm install && npm test && \
-		cd .. && docker compose down,\
+		$(MAKE) acceptanceTest && \
+		docker compose down,\
 		"✅ BUILD SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ BUILD FAILED (claude-ai-spring-boot) ❌")
 
-docker_all:
+dockerAll:
 	@echo "### Building and docker up locally (claude-ai-spring-boot) ..."
 	$(call execute_commands,\
-		$(MAKE) buildBackend && \
-		$(MAKE) buildFrontend && \
-		docker compose down && \
+		$(MAKE) build && \
 		$(MAKE) message "✅ DOCKER COMPOSE RUNNING (claude-ai-spring-boot) ... ⏩⏩⏩" && \
 		docker compose up,\
 		"✅ DOCKER COMPOSE ALL SUCCESSFUL (claude-ai-spring-boot) ✅",\
@@ -128,7 +123,7 @@ help:
 	@echo "  acceptanceTest    - Run Cucumber+Playwright e2e tests (stack must be running)"
 	@echo ""
 	@echo "🐳 Docker Targets:"
-	@echo "  docker_all        - Build backend + frontend, then docker compose up (foreground)"
+	@echo "  dockerAll        - Build backend + frontend, then docker compose up (foreground)"
 	@echo "  docker_down       - Stop and remove all Docker services"
 	@echo ""
 	@echo "🐙 GitHub Actions:"
