@@ -11,7 +11,7 @@
 ---
 
 ### Todo
-I. - Open playwright in active chrome browser:
+Open playwright in active chrome browser:
 https://playwright.dev/mcp/configuration/browser-extension
 * Add e2e tests for up backend and frontend and check:
 * Create acceptance criteria tests
@@ -21,4 +21,9 @@ https://playwright.dev/mcp/configuration/browser-extension
 * * search person by email, city, first name, ... etc.
 * * logout
 ---
-I. Create dark/light/auto themas for front-end
+Create dark/light/auto themas for front-end
+--
+After claude code completed task it writes resume what it did and show it on the terminal.
+Create hook that saves it to the file `audit.md` file also.
+---
+Create Makefile take as a template renovation Makefile

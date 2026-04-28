@@ -1068,3 +1068,12 @@
 - .claude/docs/blackbox/audit.md
 - README.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T15:01:46Z -->
+- .claude/docs/blackbox/audit.md
+- .github/workflows/ci.yml
+- README.md
+- e2e/README.md
+- e2e/src/hooks.ts
+- frontend/src/lib/api.ts
+<!-- end-snapshot -->

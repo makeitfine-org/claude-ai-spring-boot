@@ -1,4 +1,6 @@
-import { Before, After, BeforeAll, AfterAll, ITestCaseHookParameter } from '@cucumber/cucumber'
+import { Before, After, BeforeAll, AfterAll, ITestCaseHookParameter, setDefaultTimeout } from '@cucumber/cucumber'
+
+setDefaultTimeout(30000)
 import { chromium } from 'playwright'
 import { CustomWorld } from './world'
 import { bringStackUp, tearDownStack, waitForStack } from './support/stack'

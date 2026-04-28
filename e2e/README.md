@@ -31,6 +31,12 @@ Built with **Cucumber-JS** (BDD / Gherkin) + **Playwright** (browser automation)
 ## Setup
 
 ```bash
+# From the repo root — build the backend JAR (required before docker compose up)
+mvn -f backend/pom.xml package -DskipTests -q
+
+# Start the full stack
+docker compose up -d --wait
+
 # From the e2e/ directory:
 cp .env.example .env          # defaults work for docker-compose
 npm install

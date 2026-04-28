@@ -691,3 +691,41 @@ Implement the plan you proposed
 Add README.md to e2e and relevant description in details how to use, run, extand e2e test, etc.
 Update @../README.md based on adding e2e module.
 ---
+
+## 2026-04-28T14:47:33Z
+1) Go through and execute all `## Running Acceptance Tests (E2E)` steps from @README.md and fix all issues and errors
+2) Fix issue git github actions ci.yml "e2e" job:
+
+#17 [frontend stage-1 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#17 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#17 DONE 0.0s
+
+#18 [frontend internal] load build context
+#18 transferring context: 293.52kB done
+#18 CANCELED
+------
+ > [app 3/3] COPY target/claude-ai-spring-boot-1.0.1.jar app.jar:
+------
+
+--------------------
+
+   1 |     FROM eclipse-temurin:21-jre-alpine
+
+   2 |     WORKDIR /app
+
+   3 | >>> COPY target/claude-ai-spring-boot-1.0.1.jar app.jar
+
+   4 |     EXPOSE 8080
+
+   5 |     ENTRYPOINT ["java", "-jar", "app.jar"]
+
+--------------------
+
+target app: failed to solve: failed to compute cache key: failed to calculate checksum of ref e27c7740-8587-4822-9bec-fa47c65630a3::ntdau3a3jc7tdq4d809p3i3hy: "/target/claude-ai-spring-boot-1.0.1.jar": not found
+
+Error: Process completed with exit code 1.
+---
+
+## 2026-04-28T14:54:34Z
+Implement the plan you proposed
+---
