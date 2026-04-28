@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import pl.piomin.services.application.dto.PersonRequest;
 import pl.piomin.services.application.dto.PersonResponse;
 import pl.piomin.services.application.mapper.PersonMapper;
@@ -18,13 +19,14 @@ import pl.piomin.services.domain.entity.Person;
 import pl.piomin.services.domain.repository.PersonRepository;
 import pl.piomin.services.infrastructure.exception.PersonNotFoundException;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -112,19 +114,48 @@ class PersonServiceTest {
     }
 
     @Test
-    void getAllPersons_Success() {
-        Pageable pageable = PageRequest.of(0, 20);
+    void getAllPersons_NullQuery_ReturnsAll() {
         Page<Person> personPage = new PageImpl<>(List.of(person));
 
-        when(personRepository.findAll(pageable)).thenReturn(personPage);
+        when(personRepository.search(eq(null), any(Pageable.class))).thenReturn(personPage);
         when(personMapper.toResponse(person)).thenReturn(personResponse);
 
-        Page<PersonResponse> result = personService.getAllPersons(pageable);
+        Page<PersonResponse> result = personService.getAllPersons(null, PageRequest.of(0, 20));
 
         assertThat(result).isNotNull();
         assertThat(result.getContent()).hasSize(1);
         assertThat(result.getContent().get(0).getEmail()).isEqualTo("john.doe@example.com");
-        verify(personRepository).findAll(pageable);
+        verify(personRepository).search(eq(null), any(Pageable.class));
+    }
+
+    @Test
+    void getAllPersons_WithQuery_ReturnsFiltered() {
+        Page<Person> personPage = new PageImpl<>(List.of(person));
+
+        when(personRepository.search(eq("john"), any(Pageable.class))).thenReturn(personPage);
+        when(personMapper.toResponse(person)).thenReturn(personResponse);
+
+        Page<PersonResponse> result = personService.getAllPersons("john", PageRequest.of(0, 20));
+
+        assertThat(result).isNotNull();
+        assertThat(result.getContent()).hasSize(1);
+        verify(personRepository).search(eq("john"), any(Pageable.class));
+    }
+
+    @Test
+    void getAllPersons_UnknownSortField_FallsBackToLastName() {
+        Page<Person> personPage = new PageImpl<>(List.of(person));
+
+        when(personRepository.search(eq(null), any(Pageable.class))).thenReturn(personPage);
+        when(personMapper.toResponse(person)).thenReturn(personResponse);
+
+        Pageable unknownSort = PageRequest.of(0, 20, Sort.by("unknownField"));
+        personService.getAllPersons(null, unknownSort);
+
+        verify(personRepository).search(eq(null), argThat(p ->
+                p.getSort().getOrderFor("lastName") != null &&
+                p.getSort().getOrderFor("unknownField") == null
+        ));
     }
 
     @Test
@@ -181,24 +212,4 @@ class PersonServiceTest {
         verify(personRepository, never()).deleteById(any());
     }
 
-    @Test
-    void findByEmail_Success() {
-        when(personRepository.findByEmail("john.doe@example.com")).thenReturn(Optional.of(person));
-        when(personMapper.toResponse(person)).thenReturn(personResponse);
-
-        PersonResponse result = personService.findByEmail("john.doe@example.com");
-
-        assertThat(result).isNotNull();
-        assertThat(result.getEmail()).isEqualTo("john.doe@example.com");
-        verify(personRepository).findByEmail("john.doe@example.com");
-    }
-
-    @Test
-    void findByEmail_NotFound_ThrowsException() {
-        when(personRepository.findByEmail("notfound@example.com")).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> personService.findByEmail("notfound@example.com"))
-                .isInstanceOf(PersonNotFoundException.class)
-                .hasMessageContaining("Person not found with email");
-    }
 }

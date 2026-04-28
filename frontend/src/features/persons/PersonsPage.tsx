@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { PlusIcon, SearchIcon, LogOutIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import {
+  PlusIcon,
+  SearchIcon,
+  LogOutIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  ChevronDownIcon,
+} from 'lucide-react'
 import { useAuth } from '@/auth/AuthContext'
 import {
   usePersonsList,
-  usePersonSearch,
   useCreatePerson,
   useUpdatePerson,
   useDeletePerson,
@@ -27,14 +34,52 @@ import type { PersonRequest, PersonResponse } from '@/types/person'
 
 const PAGE_SIZES = [10, 20, 50]
 
+type SortField = 'firstName' | 'lastName' | 'email' | 'phoneNumber' | 'city' | 'active'
+type SortDir = 'asc' | 'desc'
+
+interface SortableHeadProps {
+  field: SortField
+  currentField: SortField
+  currentDir: SortDir
+  onSort: (field: SortField) => void
+  children: React.ReactNode
+  className?: string
+}
+
+function SortableHead({ field, currentField, currentDir, onSort, children, className }: SortableHeadProps) {
+  const active = field === currentField
+  return (
+    <TableHead className={className}>
+      <button
+        className="flex items-center gap-1 hover:text-foreground transition-colors"
+        onClick={() => onSort(field)}
+      >
+        {children}
+        {active ? (
+          currentDir === 'asc' ? (
+            <ChevronUpIcon className="size-3.5" />
+          ) : (
+            <ChevronDownIcon className="size-3.5" />
+          )
+        ) : (
+          <ChevronUpIcon className="size-3.5 opacity-0 group-hover:opacity-40" />
+        )}
+      </button>
+    </TableHead>
+  )
+}
+
 export function PersonsPage() {
   const { logout } = useAuth()
   const navigate = useNavigate()
 
   const [page, setPage] = useState(0)
   const [size, setSize] = useState(20)
-  const [searchEmail, setSearchEmail] = useState('')
-  const [debouncedEmail, setDebouncedEmail] = useState('')
+  const [sortField, setSortField] = useState<SortField>('lastName')
+  const [sortDir, setSortDir] = useState<SortDir>('asc')
+  const [searchValue, setSearchValue] = useState('')
+  const [debouncedQ, setDebouncedQ] = useState('')
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const [formOpen, setFormOpen] = useState(false)
   const [editTarget, setEditTarget] = useState<PersonResponse | undefined>()
@@ -42,38 +87,34 @@ export function PersonsPage() {
 
   const [deleteTarget, setDeleteTarget] = useState<PersonResponse | undefined>()
 
-  const listQuery = usePersonsList(page, size)
-  const searchQuery = usePersonSearch(debouncedEmail)
+  const sort = `${sortField},${sortDir}`
+  const listQuery = usePersonsList(page, size, sort, debouncedQ || undefined)
 
   const createMutation = useCreatePerson()
   const updateMutation = useUpdatePerson(editTarget?.id ?? 0)
   const deleteMutation = useDeletePerson()
 
-  const isSearching = debouncedEmail.length > 0
-  const persons = isSearching
-    ? searchQuery.data
-      ? [searchQuery.data]
-      : []
-    : listQuery.data?.content ?? []
+  const persons = listQuery.data?.content ?? []
+  const totalPages = listQuery.data?.totalPages ?? 1
+  const totalElements = listQuery.data?.totalElements ?? 0
 
-  const totalPages = isSearching ? 1 : listQuery.data?.totalPages ?? 1
-  const totalElements = isSearching
-    ? searchQuery.data
-      ? 1
-      : 0
-    : listQuery.data?.totalElements ?? 0
-
-  const isLoading = isSearching ? searchQuery.isLoading : listQuery.isLoading
-  const queryError = isSearching ? searchQuery.error : listQuery.error
-
-  let emailTimer: ReturnType<typeof setTimeout>
   const handleSearchChange = (value: string) => {
-    setSearchEmail(value)
-    clearTimeout(emailTimer)
-    emailTimer = setTimeout(() => {
-      setDebouncedEmail(value.trim())
+    setSearchValue(value)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      setDebouncedQ(value.trim())
       setPage(0)
     }, 400)
+  }
+
+  const handleSort = (field: SortField) => {
+    if (field === sortField) {
+      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
+    } else {
+      setSortField(field)
+      setSortDir('asc')
+    }
+    setPage(0)
   }
 
   const openCreate = () => {
@@ -117,6 +158,8 @@ export function PersonsPage() {
     navigate('/login', { replace: true })
   }
 
+  const sortProps = { currentField: sortField, currentDir: sortDir, onSort: handleSort }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b px-6 py-3 flex items-center justify-between">
@@ -138,8 +181,8 @@ export function PersonsPage() {
             <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
             <Input
               className="pl-8"
-              placeholder="Search by email…"
-              value={searchEmail}
+              placeholder="Search name, email, phone, city…"
+              value={searchValue}
               onChange={(e) => handleSearchChange(e.target.value)}
             />
           </div>
@@ -158,11 +201,9 @@ export function PersonsPage() {
           </div>
         </div>
 
-        {queryError && (
+        {listQuery.error && (
           <Alert variant="destructive">
-            <AlertDescription>
-              {isSearching ? 'No person found with that email.' : 'Failed to load persons.'}
-            </AlertDescription>
+            <AlertDescription>Failed to load persons.</AlertDescription>
           </Alert>
         )}
 
@@ -170,24 +211,24 @@ export function PersonsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>First name</TableHead>
-                <TableHead>Last name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>City</TableHead>
-                <TableHead>Active</TableHead>
+                <SortableHead field="firstName" {...sortProps}>First name</SortableHead>
+                <SortableHead field="lastName" {...sortProps}>Last name</SortableHead>
+                <SortableHead field="email" {...sortProps}>Email</SortableHead>
+                <SortableHead field="phoneNumber" {...sortProps}>Phone</SortableHead>
+                <SortableHead field="city" {...sortProps}>City</SortableHead>
+                <SortableHead field="active" {...sortProps}>Active</SortableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {isLoading && (
+              {listQuery.isLoading && (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
                     Loading…
                   </TableCell>
                 </TableRow>
               )}
-              {!isLoading && persons.length === 0 && (
+              {!listQuery.isLoading && persons.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
                     No persons found.
@@ -226,34 +267,32 @@ export function PersonsPage() {
           </Table>
         </div>
 
-        {!isSearching && (
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <span>
+            {totalElements} person{totalElements !== 1 ? 's' : ''}
+          </span>
+          <div className="flex items-center gap-2">
+            <Button
+              size="icon-sm"
+              variant="outline"
+              disabled={page === 0}
+              onClick={() => setPage((p) => p - 1)}
+            >
+              <ChevronLeftIcon />
+            </Button>
             <span>
-              {totalElements} person{totalElements !== 1 ? 's' : ''}
+              {page + 1} / {Math.max(totalPages, 1)}
             </span>
-            <div className="flex items-center gap-2">
-              <Button
-                size="icon-sm"
-                variant="outline"
-                disabled={page === 0}
-                onClick={() => setPage((p) => p - 1)}
-              >
-                <ChevronLeftIcon />
-              </Button>
-              <span>
-                {page + 1} / {Math.max(totalPages, 1)}
-              </span>
-              <Button
-                size="icon-sm"
-                variant="outline"
-                disabled={page + 1 >= totalPages}
-                onClick={() => setPage((p) => p + 1)}
-              >
-                <ChevronRightIcon />
-              </Button>
-            </div>
+            <Button
+              size="icon-sm"
+              variant="outline"
+              disabled={page + 1 >= totalPages}
+              onClick={() => setPage((p) => p + 1)}
+            >
+              <ChevronRightIcon />
+            </Button>
           </div>
-        )}
+        </div>
       </main>
 
       <PersonFormDialog

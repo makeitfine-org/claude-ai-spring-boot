@@ -55,5 +55,6 @@
       "Bash(kubectl port-forward *)"
     ],
     "deny": []
-  }
+  },
+  "model": "Haiku"
 }

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 import pl.piomin.services.config.JpaAuditingConfig;
 import pl.piomin.services.domain.entity.Person;
@@ -100,6 +102,69 @@ class PersonRepositoryTest {
 
         Optional<Person> deleted = personRepository.findById(personId);
         assertThat(deleted).isEmpty();
+    }
+
+    @Test
+    void shouldSearchByFirstNameCaseInsensitive() {
+        Person person = new Person("Alice", "Anderson", "alice@example.com");
+        entityManager.persistAndFlush(person);
+
+        Page<Person> result = personRepository.search("alic", PageRequest.of(0, 10));
+
+        assertThat(result.getContent()).hasSize(1);
+        assertThat(result.getContent().get(0).getFirstName()).isEqualTo("Alice");
+    }
+
+    @Test
+    void shouldSearchByCity() {
+        Person person = new Person("Bob", "Builder", "bob@example.com");
+        person.setCity("Springfield");
+        entityManager.persistAndFlush(person);
+
+        Page<Person> result = personRepository.search("spring", PageRequest.of(0, 10));
+
+        assertThat(result.getContent()).hasSize(1);
+        assertThat(result.getContent().get(0).getCity()).isEqualTo("Springfield");
+    }
+
+    @Test
+    void shouldSearchByEmail() {
+        Person person = new Person("Carol", "Clark", "carol.clark@mycompany.com");
+        entityManager.persistAndFlush(person);
+
+        Page<Person> result = personRepository.search("mycompany", PageRequest.of(0, 10));
+
+        assertThat(result.getContent()).hasSize(1);
+        assertThat(result.getContent().get(0).getEmail()).isEqualTo("carol.clark@mycompany.com");
+    }
+
+    @Test
+    void shouldReturnEmptyPageWhenNoMatch() {
+        Person person = new Person("Dave", "Doe", "dave@example.com");
+        entityManager.persistAndFlush(person);
+
+        Page<Person> result = personRepository.search("xyznotfound", PageRequest.of(0, 10));
+
+        assertThat(result.getContent()).isEmpty();
+    }
+
+    @Test
+    void shouldReturnAllPersonsWhenQueryIsBlank() {
+        entityManager.persistAndFlush(new Person("Eve", "Evans", "eve@example.com"));
+        entityManager.persistAndFlush(new Person("Frank", "Fox", "frank@example.com"));
+
+        Page<Person> result = personRepository.search("", PageRequest.of(0, 10));
+
+        assertThat(result.getTotalElements()).isGreaterThanOrEqualTo(2);
+    }
+
+    @Test
+    void shouldReturnAllPersonsWhenQueryIsNull() {
+        entityManager.persistAndFlush(new Person("Grace", "Green", "grace@example.com"));
+
+        Page<Person> result = personRepository.search(null, PageRequest.of(0, 10));
+
+        assertThat(result.getTotalElements()).isGreaterThanOrEqualTo(1);
     }
 
     @Test

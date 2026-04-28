@@ -652,3 +652,26 @@ Go through and execute all `Kubernetes Deployment (Minikube)` steps from @README
 ## 2026-04-28T11:57:56Z
 Implement the plan you proposed
 ---
+
+## 2026-04-28T12:29:51Z
+Improve prompt for claude code in plan mode:
+Add such functionality:
+
+1) Sort by "First name",  "Last name",  "Email", "Phone",  "City",  "Active",  "Actions"
+
+2) Change search by email to immediate search for everithing,  so
+ So if I begin to write: "a" you search emails, first name, last name, email, etc. the contains this symbol
+    if I proceed to write: "abc" you search emails, first name, last name, email, etc. the contains this symbol
+---
+
+## 2026-04-28T12:37:45Z
+Implement the plan you proposed
+---
+
+## 2026-04-28T12:39:38Z
+Implement the plan you proposed
+---
+
+## 2026-04-28T12:49:34Z
+execute git add all changes and commit them with suitable message
+---

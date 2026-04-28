@@ -18,7 +18,6 @@ import pl.piomin.services.infrastructure.exception.PersonNotFoundException;
 import pl.piomin.services.infrastructure.security.JwtService;
 import pl.piomin.services.presentation.rest.PersonController;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -135,7 +134,7 @@ class PersonControllerTest {
 
         PageImpl<PersonResponse> page = new PageImpl<>(List.of(response1, response2), PageRequest.of(0, 20), 2);
 
-        when(personService.getAllPersons(any())).thenReturn(page);
+        when(personService.getAllPersons(any(), any())).thenReturn(page);
 
         mockMvc.perform(get("/api/persons"))
                 .andExpect(status().isOk())
@@ -143,7 +142,7 @@ class PersonControllerTest {
                 .andExpect(jsonPath("$.content.length()").value(2))
                 .andExpect(jsonPath("$.totalElements").value(2));
 
-        verify(personService).getAllPersons(any());
+        verify(personService).getAllPersons(any(), any());
     }
 
     @Test
@@ -186,19 +185,23 @@ class PersonControllerTest {
 
     @Test
     @WithMockUser
-    void findByEmail_Success() throws Exception {
+    void getAllPersons_WithQuery_ReturnsFilteredResults() throws Exception {
         PersonResponse response = new PersonResponse();
         response.setId(1L);
-        response.setEmail("john.doe@example.com");
+        response.setFirstName("Alice");
+        response.setLastName("Anderson");
+        response.setEmail("alice@example.com");
 
-        when(personService.findByEmail("john.doe@example.com")).thenReturn(response);
+        PageImpl<PersonResponse> page = new PageImpl<>(List.of(response), PageRequest.of(0, 20), 1);
 
-        mockMvc.perform(get("/api/persons/search")
-                        .param("email", "john.doe@example.com"))
+        when(personService.getAllPersons(eq("ali"), any())).thenReturn(page);
+
+        mockMvc.perform(get("/api/persons").param("q", "ali"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("john.doe@example.com"));
+                .andExpect(jsonPath("$.content.length()").value(1))
+                .andExpect(jsonPath("$.content[0].firstName").value("Alice"));
 
-        verify(personService).findByEmail("john.doe@example.com");
+        verify(personService).getAllPersons(eq("ali"), any());
     }
 
     @Test

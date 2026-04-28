@@ -36,9 +36,10 @@ public class PersonController {
 
     @GetMapping
     public ResponseEntity<Page<PersonResponse>> getAllPersons(
+            @RequestParam(required = false) String q,
             @PageableDefault(size = 20, sort = "lastName", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        Page<PersonResponse> response = personService.getAllPersons(pageable);
+        Page<PersonResponse> response = personService.getAllPersons(q, pageable);
         return ResponseEntity.ok(response);
     }
 
@@ -57,9 +58,4 @@ public class PersonController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<PersonResponse> findByEmail(@RequestParam String email) {
-        PersonResponse response = personService.findByEmail(email);
-        return ResponseEntity.ok(response);
-    }
 }

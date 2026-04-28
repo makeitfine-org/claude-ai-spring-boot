@@ -1040,3 +1040,17 @@
 - backend/skaffold.yaml
 - frontend/skaffold.yaml
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T12:46:26Z -->
+- .claude/docs/blackbox/audit.md
+- backend/src/main/java/pl/piomin/services/application/service/PersonService.java
+- backend/src/main/java/pl/piomin/services/domain/repository/PersonRepository.java
+- backend/src/main/java/pl/piomin/services/presentation/rest/PersonController.java
+- backend/src/test/java/pl/piomin/services/controller/PersonControllerTest.java
+- backend/src/test/java/pl/piomin/services/integration/PersonIntegrationTest.java
+- backend/src/test/java/pl/piomin/services/repository/PersonRepositoryTest.java
+- backend/src/test/java/pl/piomin/services/service/PersonServiceTest.java
+- frontend/src/features/persons/PersonsPage.tsx
+- frontend/src/features/persons/personsApi.ts
+- frontend/src/features/persons/usePersons.ts
+<!-- end-snapshot -->

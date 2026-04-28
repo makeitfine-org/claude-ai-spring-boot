@@ -177,33 +177,70 @@ class PersonIntegrationTest {
 
     @Test
     @WithMockUser
-    void searchByEmail_Found_Success() throws Exception {
-        // Create person
+    void search_MatchesByFirstName() throws Exception {
         PersonRequest request = new PersonRequest();
-        request.setFirstName("Search");
-        request.setLastName("Test");
-        request.setEmail("search@example.com");
+        request.setFirstName("Zachary");
+        request.setLastName("Unique");
+        request.setEmail("zachary@example.com");
 
-        mockMvc.perform(post("/api/persons")
-                        .with(csrf())
+        mockMvc.perform(post("/api/persons").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
 
-        // Search by email
-        mockMvc.perform(get("/api/persons/search")
-                        .param("email", "search@example.com"))
+        mockMvc.perform(get("/api/persons").param("q", "Zacha"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("search@example.com"))
-                .andExpect(jsonPath("$.firstName").value("Search"));
+                .andExpect(jsonPath("$.content[0].firstName").value("Zachary"))
+                .andExpect(jsonPath("$.totalElements").value(1));
     }
 
     @Test
     @WithMockUser
-    void searchByEmail_NotFound_ReturnsError() throws Exception {
-        mockMvc.perform(get("/api/persons/search")
-                        .param("email", "nonexistent@example.com"))
-                .andExpect(status().isNotFound());
+    void search_NoMatch_ReturnsEmptyPage() throws Exception {
+        mockMvc.perform(get("/api/persons").param("q", "xyznotfound123"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isEmpty())
+                .andExpect(jsonPath("$.totalElements").value(0));
+    }
+
+    @Test
+    @WithMockUser
+    void search_MatchesByCity() throws Exception {
+        PersonRequest request = new PersonRequest();
+        request.setFirstName("City");
+        request.setLastName("Tester");
+        request.setEmail("city@example.com");
+        request.setCity("Springfield");
+
+        mockMvc.perform(post("/api/persons").with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/api/persons").param("q", "spring"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect(jsonPath("$.content[0].city").value("Springfield"));
+    }
+
+    @Test
+    @WithMockUser
+    void getAllPersons_SortByFirstNameDesc() throws Exception {
+        for (String[] pair : new String[][]{{"Alice", "al@example.com"}, {"Bob", "bob@example.com"}, {"Charlie", "ch@example.com"}}) {
+            PersonRequest req = new PersonRequest();
+            req.setFirstName(pair[0]);
+            req.setLastName("Test");
+            req.setEmail(pair[1]);
+            mockMvc.perform(post("/api/persons").with(csrf())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(req)))
+                    .andExpect(status().isCreated());
+        }
+
+        mockMvc.perform(get("/api/persons").param("sort", "firstName,desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].firstName").value("Charlie"))
+                .andExpect(jsonPath("$.content[2].firstName").value("Alice"));
     }
 
     @Test
