@@ -18,6 +18,7 @@ import {
 } from './usePersons'
 import { PersonFormDialog } from './PersonFormDialog'
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -164,10 +165,13 @@ export function PersonsPage() {
     <div className="min-h-screen bg-background">
       <header className="border-b px-6 py-3 flex items-center justify-between">
         <h1 className="text-base font-semibold">Persons</h1>
-        <Button variant="ghost" size="sm" onClick={handleLogout}>
-          <LogOutIcon className="size-4 mr-1.5" />
-          Logout
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button variant="ghost" size="sm" onClick={handleLogout}>
+            <LogOutIcon className="size-4 mr-1.5" />
+            Logout
+          </Button>
+        </div>
       </header>
 
       <main className="p-6 flex flex-col gap-4">

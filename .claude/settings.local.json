@@ -57,7 +57,9 @@
       "Bash(npx tsc *)",
       "Bash(npx cucumber-js *)",
       "Bash(echo \"Exit: $?\")",
-      "Bash(make help *)"
+      "Bash(make help *)",
+      "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot diff)",
+      "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot log --oneline -5)"
     ],
     "deny": []
   }

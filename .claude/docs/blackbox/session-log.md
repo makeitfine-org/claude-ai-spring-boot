@@ -1112,3 +1112,20 @@
 - .claude/docs/blackbox/audit.md
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T19:51:37Z -->
+- .claude/docs/blackbox/audit.md
+- frontend/index.html
+- frontend/package.json
+- frontend/src/features/auth/LoginPage.tsx
+- frontend/src/features/persons/PersonsPage.tsx
+- frontend/src/main.tsx
+- frontend/vite.config.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T19:54:48Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- notes.md
+<!-- end-snapshot -->

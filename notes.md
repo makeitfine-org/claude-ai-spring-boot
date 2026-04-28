@@ -66,3 +66,6 @@ Deploy to AWS (as lambda or talk with AI how's better)
 
 ---
 backlog.md work with
+
+---
+Make changes for `make build` to execute without stop Skaffold of (back and front)
