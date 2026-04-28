@@ -11,5 +11,11 @@
 ---
 
 todo:
-Open playwright in active chrome browser:
+- Open playwright in active chrome browser:
 https://playwright.dev/mcp/configuration/browser-extension
+* Add e2e tests for up backend and frontend and check:  
+* * login
+* * person (get,post,edit,delete)
+* * navigate through pages (1-2-3-...)
+* * search person by email
+* * logout
