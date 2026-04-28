@@ -932,3 +932,9 @@ clean:
 ## 2026-04-28T19:09:29Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-28T19:12:22Z
+In @Makefile change goals is "_" to camelCase:
+example:
+docker_down to dockerDown
+---

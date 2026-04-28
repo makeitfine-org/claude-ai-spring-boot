@@ -1,7 +1,7 @@
 # Makefile for claude-ai-spring-boot
 
-.PHONY: clean cleanShallow updateFrontend buildBackend buildFrontend acceptanceTest build dockerAll docker_down \
-        ghList ghView default_message message help
+.PHONY: clean cleanShallow updateFrontend buildBackend buildFrontend acceptanceTest build dockerAll dockerDown \
+        ghList ghView defaultMessage message help
 
 # Function to execute commands sequentially with success and failure messages
 # Usage: $(call execute_commands,command1 && command2 && .. && commandN, success_msg, fail_msg)
@@ -77,7 +77,7 @@ dockerAll:
 		"✅ DOCKER COMPOSE ALL SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ DOCKER COMPOSE ALL FAILED (claude-ai-spring-boot) ❌")
 
-docker_down:
+dockerDown:
 	docker compose down
 
 ghList:
@@ -88,7 +88,7 @@ ghView:
 
 ###
 # Common commands
-default_message:
+defaultMessage:
 	make message "🔔 Execution finished (claude-ai-spring-boot) 🔔"
 
 message:
@@ -137,14 +137,14 @@ help:
 	@echo ""
 	@echo "🐳 Docker Targets:"
 	@echo "  dockerAll        - Build backend + frontend, then docker compose up (foreground)"
-	@echo "  docker_down       - Stop and remove all Docker services"
+	@echo "  dockerDown       - Stop and remove all Docker services"
 	@echo ""
 	@echo "🐙 GitHub Actions:"
 	@echo "  ghList            - List last 5 GitHub Actions runs"
 	@echo "  ghView            - Open latest GitHub Actions run in browser"
 	@echo ""
 	@echo "📬 Notification Targets:"
-	@echo "  default_message   - Send default notification to Telegram"
+	@echo "  defaultMessage    - Send default notification to Telegram"
 	@echo "  message <text>    - Send custom notification to Telegram"
 	@echo "                      Example: make message \"Build completed\""
 	@echo ""
