@@ -1107,3 +1107,8 @@
 - .claude/docs/blackbox/audit.md
 - Makefile
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T19:28:34Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+<!-- end-snapshot -->

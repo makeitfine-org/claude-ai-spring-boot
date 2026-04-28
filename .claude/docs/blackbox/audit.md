@@ -938,3 +938,7 @@ In @Makefile change goals is "_" to camelCase:
 example:
 docker_down to dockerDown
 ---
+
+## 2026-04-28T19:28:30Z
+how to exclude blackbox folder form search in Intellij idea?
+---

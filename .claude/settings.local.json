@@ -60,6 +60,5 @@
       "Bash(make help *)"
     ],
     "deny": []
-  },
-  "model": "Haiku"
+  }
 }

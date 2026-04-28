@@ -42,12 +42,27 @@ Add Makefile to README.md, CLAUDE.md?
 Increase speed of creation of frontend/Dockerfile (cause backend/Docker is fast)
 
 ---
-Think of not to exclude:
+✅ Think of not to exclude:
 `rm -rf dist node_modules package-lock.json` from `Make clean`
 
 ---
 Make update in settins.json instead of settins.local.json
 
 ---
-Rename in Makefile (for simple typing):
+✅ x Rename in Makefile (for simple typing):
 cleanShallow -> clean.shallow
+
+---
+Rename
+<artifactId>claude-ai-spring-boot</artifactId>
+to
+<artifactId>backend</artifactId>
+
+---
+Add alias to ~/.bashrc of 'make' as 'ma'
+
+---
+Deploy to AWS (as lambda or talk with AI how's better)
+
+---
+backlog.md work with
