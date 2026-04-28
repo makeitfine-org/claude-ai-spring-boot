@@ -59,5 +59,6 @@
       "Bash(echo \"Exit: $?\")"
     ],
     "deny": []
-  }
+  },
+  "model": "sonnet"
 }

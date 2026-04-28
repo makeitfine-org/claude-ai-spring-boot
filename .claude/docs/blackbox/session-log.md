@@ -1077,3 +1077,9 @@
 - e2e/src/hooks.ts
 - frontend/src/lib/api.ts
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T15:38:16Z -->
+- .claude/docs/blackbox/audit.md
+- CLAUDE.md
+- notes.md
+<!-- end-snapshot -->

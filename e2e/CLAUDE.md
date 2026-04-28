@@ -15,3 +15,13 @@ Cucumber (BDD) + Playwright + TypeScript black-box acceptance tests.
 - Reports land in `reports/` (gitignored)
 - Playwright traces on failure go to `test-results/` (gitignored)
 - Never put real credentials in code; use `.env` (copy `.env.example`)
+
+## E2E Gotchas
+
+**Cucumber step timeout** — `timeout:` in `cucumber.js` profile config is silently ignored by
+`@cucumber/cucumber` v11. Use `setDefaultTimeout(ms)` in `e2e/src/hooks.ts` at module level.
+
+**Axios 401 interceptor scope** — The refresh-and-redirect logic in `frontend/src/lib/api.ts`
+guards auth endpoints with `!original.url?.startsWith('/api/auth/')`. Without this guard, a
+failed login triggers a refresh attempt → "no refresh token" → `window.location.href = '/login'`
+(full page reload), which destroys React state before any error Alert can render.

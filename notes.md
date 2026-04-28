@@ -27,3 +27,5 @@ After claude code completed task it writes resume what it did and show it on the
 Create hook that saves it to the file `audit.md` file also.
 ---
 Create Makefile take as a template renovation Makefile
+gh run list --limit 5
+gh run view --log

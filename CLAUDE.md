@@ -5,6 +5,7 @@
 ```
 backend/    → Spring Boot 3.4.1 REST API (see backend/CLAUDE.md)
 frontend/   → React 19 + Vite SPA       (see frontend/CLAUDE.md)
+e2e/        → Cucumber + Playwright acceptance tests (see e2e/CLAUDE.md)
 k8s/        → Kubernetes manifests (inside backend/)
 docker-compose.yml → postgres:5432, app:8080, frontend:3000
 ```
@@ -32,6 +33,7 @@ Module-specific coding rules live in each module's own `CLAUDE.md`.
 | Dockerfile / docker-compose changes | `docker-expert` |
 | k8s manifests / Skaffold / Helm | `kubernetes-specialist` |
 | GitHub Actions pipeline changes | `devops-engineer` |
+| New/fix Cucumber+Playwright e2e scenario | `test-automator` |
 | Pre-merge quality gate | `code-reviewer` |
 | Backend naming review | `backend-naming-reviewer` |
 | Frontend naming review | `frontend-naming-reviewer` |
@@ -46,3 +48,4 @@ Before marking any task done:
 1. `docker-compose.yml` reflects any new services or env vars
 2. Root `README.md` updated if ports, services, or quick-start steps changed
 3. GitHub Actions `.github/workflows/ci.yml` updated if pipeline steps changed
+4. If Dockerfile, docker-compose, or env vars changed: `cd e2e && npm test` to confirm all scenarios still pass
