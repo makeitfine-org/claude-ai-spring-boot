@@ -914,3 +914,21 @@ Run one by one all goals in @Makefile and check the each of them executes correc
 ## 2026-04-28T18:42:28Z
 Run one by one each goal in @Makefile and check the each of them executes correctly
 ---
+
+## 2026-04-28T19:08:10Z
+In @Makefile make for each goal telegram notification:
+example:
+clean:
+    @echo "### Cleaning (claude-ai-spring-boot) ..."
+    $(call execute_commands,\
+        docker compose down ; \
+        docker rmi -f claude-ai-spring-boot-app:latest claude-ai-spring-boot-frontend:latest 2>/dev/null || true && \
+        cd backend && mvn clean && \
+        cd ../frontend && rm -rf dist node_modules package-lock.json,\
+        "✅ CLEAN SUCCESSFUL (claude-ai-spring-boot) ✅",\
+        "❌ CLEAN FAILED (claude-ai-spring-boot) ❌")
+---
+
+## 2026-04-28T19:09:29Z
+execute git add all changes and commit them with suitable message
+---

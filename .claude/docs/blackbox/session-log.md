@@ -1102,3 +1102,8 @@
 - e2e/README.md
 - frontend/README.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-28T19:08:26Z -->
+- .claude/docs/blackbox/audit.md
+- Makefile
+<!-- end-snapshot -->

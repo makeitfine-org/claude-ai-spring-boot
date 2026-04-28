@@ -30,19 +30,32 @@ cleanShallow:
 		"❌ CLEAN FAILED (claude-ai-spring-boot) ❌")
 
 updateFrontend:
-	cd frontend && rm -rf dist node_modules package-lock.json && npx npm-check-updates -u && npm install
+	@echo "### Updating frontend (claude-ai-spring-boot) ..."
+	$(call execute_commands,\
+		cd frontend && rm -rf dist node_modules package-lock.json && npx npm-check-updates -u && npm install,\
+		"✅ UPDATE FRONTEND SUCCESSFUL (claude-ai-spring-boot) ✅",\
+		"❌ UPDATE FRONTEND FAILED (claude-ai-spring-boot) ❌")
 
 buildBackend:
 	@echo "### Building backend (claude-ai-spring-boot) ..."
-	cd backend && mvn install
+	$(call execute_commands,\
+		cd backend && mvn install,\
+		"✅ BUILD BACKEND SUCCESSFUL (claude-ai-spring-boot) ✅",\
+		"❌ BUILD BACKEND FAILED (claude-ai-spring-boot) ❌")
 
 buildFrontend:
 	@echo "### Building frontend (claude-ai-spring-boot) ..."
-	cd frontend && npm install && npm run build
+	$(call execute_commands,\
+		cd frontend && npm install && npm run build,\
+		"✅ BUILD FRONTEND SUCCESSFUL (claude-ai-spring-boot) ✅",\
+		"❌ BUILD FRONTEND FAILED (claude-ai-spring-boot) ❌")
 
 acceptanceTest:
 	@echo "### Running acceptance tests (claude-ai-spring-boot) ..."
-	cd e2e && npm install && npm test
+	$(call execute_commands,\
+		cd e2e && npm install && npm test,\
+		"✅ ACCEPTANCE TESTS SUCCESSFUL (claude-ai-spring-boot) ✅",\
+		"❌ ACCEPTANCE TESTS FAILED (claude-ai-spring-boot) ❌")
 
 build:
 	@echo "### Full build (claude-ai-spring-boot) ..."
