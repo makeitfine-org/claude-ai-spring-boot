@@ -885,3 +885,20 @@ Implement the plan you proposed
 ## 2026-04-28T17:22:36Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-28T17:25:51Z
+Add to goals to Makefile:
+
+cleanShallow:
+    @echo "### Cleaning (claude-ai-spring-boot) ..."
+    $(call execute_commands,\
+        docker compose down ; \
+        docker rmi -f claude-ai-spring-boot-app:latest claude-ai-spring-boot-frontend:latest 2>/dev/null || true && \
+        cd backend && mvn clean && \
+        cd ../frontend && rm -rf dist,\
+        "✅ CLEAN SUCCESSFUL (claude-ai-spring-boot) ✅",\
+        "❌ CLEAN FAILED (claude-ai-spring-boot) ❌")
+        
+updateFrontend:
+    cd ../frontend && rm -rf dist node_modules package-lock.json && npx npm-check-updates -u && npm install     
+---

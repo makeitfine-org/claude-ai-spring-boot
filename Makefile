@@ -1,6 +1,6 @@
 # Makefile for claude-ai-spring-boot
 
-.PHONY: clean buildBackend buildFrontend acceptanceTest build docker_all docker_down \
+.PHONY: clean cleanShallow updateFrontend buildBackend buildFrontend acceptanceTest build docker_all docker_down \
         ghList ghView default_message message help
 
 # Function to execute commands sequentially with success and failure messages
@@ -18,6 +18,19 @@ clean:
 		cd ../frontend && rm -rf dist node_modules package-lock.json,\
 		"✅ CLEAN SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ CLEAN FAILED (claude-ai-spring-boot) ❌")
+
+cleanShallow:
+	@echo "### Cleaning (claude-ai-spring-boot) ..."
+	$(call execute_commands,\
+		docker compose down ; \
+		docker rmi -f claude-ai-spring-boot-app:latest claude-ai-spring-boot-frontend:latest 2>/dev/null || true && \
+		cd backend && mvn clean && \
+		cd ../frontend && rm -rf dist,\
+		"✅ CLEAN SUCCESSFUL (claude-ai-spring-boot) ✅",\
+		"❌ CLEAN FAILED (claude-ai-spring-boot) ❌")
+
+updateFrontend:
+	cd frontend && rm -rf dist node_modules package-lock.json && npx npm-check-updates -u && npm install
 
 buildBackend:
 	@echo "### Building backend (claude-ai-spring-boot) ..."
@@ -105,6 +118,8 @@ help:
 	@echo ""
 	@echo "🔨 Build Targets:"
 	@echo "  clean             - Docker down, remove images, mvn clean, reinstall frontend deps"
+	@echo "  cleanShallow      - Same as clean but skip reinstalling frontend node_modules"
+	@echo "  updateFrontend    - Update frontend deps (npm-check-updates -u && npm install)"
 	@echo "  buildBackend      - Build backend with Maven (cd backend && mvn install)"
 	@echo "  buildFrontend     - Build frontend (npm install && npm run build)"
 	@echo "  build             - Full build: backend + frontend + e2e tests (spins docker up/down)"
