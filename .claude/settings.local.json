@@ -67,7 +67,8 @@
       "mcp__backlog__get_backlog_instructions",
       "mcp__backlog__task_view",
       "mcp__backlog__*_*",
-      "mcp__backlog__*"
+      "mcp__backlog__*",
+      "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot add CLAUDE.md)"
     ],
     "deny": []
   },

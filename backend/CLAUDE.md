@@ -64,3 +64,4 @@ Before marking any backend task done:
 5. GitHub Actions `.github/workflows/ci.yml` updated if pipeline steps changed
 6. Kubernetes manifests in `backend/k8s/` updated for deployment changes
 7. Follow `.claude/rules/version-bump-procedure.md` for the full Dockerfile + rebuild sequence
+8. For new or updated functionality add or update tests 

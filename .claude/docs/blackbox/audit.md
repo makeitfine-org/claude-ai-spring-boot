@@ -3057,3 +3057,7 @@ Complete the backlog task-3
 ## 2026-04-29T18:17:12Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-29T18:24:27Z
+Add a rule that if you completed the task which did some changes in application source or test files or in any files that could influence the build or deploy you must do `makefile build` to check that it passes successfully
+---

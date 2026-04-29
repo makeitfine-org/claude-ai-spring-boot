@@ -1278,3 +1278,8 @@
 - e2e/CLAUDE.md
 - frontend/CLAUDE.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T18:25:09Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
