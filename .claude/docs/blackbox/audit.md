@@ -3015,3 +3015,15 @@ Please create a task for this in the backlog.
 ## 2026-04-29T13:58:49Z
 Work on backlog task-1
 ---
+
+## 2026-04-29T15:40:08Z
+When `skafflod dev` in running for `frontend` and `backend`.
+And when I do any code changes in `frontend` source code files I see that `frontend` skafflod reload and changes appears.
+But when I do changes to on backend source files and compile them or even do `mvn clean package` I see the skaffold reload something, even pods rebuild but I see not changes when check in buinding with frontend on the browser.
+Seems `skaffold dev` on `backend` doesn't work properly
+Please create a task or tasks for this in the backlog.
+---
+
+## 2026-04-29T15:52:23Z
+Recommend me what prompt to run to claude code form it to execute Task-2 and its subtasks.
+---

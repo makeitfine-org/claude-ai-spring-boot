@@ -63,9 +63,10 @@
       "mcp__backlog__task_search",
       "mcp__backlog__task_create",
       "mcp__backlog__task_complete",
-      "mcp__backlog__task_edit"
+      "mcp__backlog__task_edit",
+      "mcp__backlog__get_backlog_instructions"
     ],
     "deny": []
   },
-  "model": "Sonnet"
+  "model": "opusplan"
 }

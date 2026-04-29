@@ -1222,3 +1222,20 @@
 - frontend/k8s/configmap.yaml
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T15:43:01Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T15:52:34Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-04-29 17:41 Plan Backlog tasks for skaffold dev backend hot-reload issue.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backlog/tasks/task-2 - Fix-skaffold-dev-hot-reload-for-backend-module.md
+- backlog/tasks/task-2.1 - Make-backend-Docker-build-self-contained-no-host-side-mvn-prerequisite.md
+- backlog/tasks/task-2.2 - Configure-skaffold-dev-file-watch-for-backend-Java-sources.md
+- notes.md
+<!-- end-snapshot -->

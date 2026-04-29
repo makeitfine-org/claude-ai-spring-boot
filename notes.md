@@ -79,3 +79,25 @@ change `1.0.1` to `*`
 While `make build` docker are being created with some port exposing in docker compose.
 And this port can overlap with skaffold(s) backend and frontend instances in minikube ports.
 Fix these for `make build` works normally while minikube running 
+
+---
+
+While `skaffold dev` in frontend and backend there are multiple errors, fix it.
+
+to select an already authenticated account to use.                                                                                                                                                                                                            
+ERROR: (gcloud.auth.docker-helper) There was a problem refreshing your current auth tokens: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})                                                                    
+Please run:
+
+$ gcloud auth login
+
+to obtain new credentials.
+
+If you have already logged in with a different account, run:
+
+$ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.                                                                                                                                                                                                          
+                                                  
+---
+Seems skaffold on `backend` doesn't reload docker on changes in code
+fix it
