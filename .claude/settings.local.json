@@ -72,5 +72,6 @@
       "Bash(backlog task *)"
     ],
     "deny": []
-  }
+  },
+  "model": "Haiku"
 }
