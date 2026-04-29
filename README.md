@@ -90,16 +90,13 @@ docker-compose.yml    → local full-stack orchestration
 ## Running Acceptance Tests (E2E)
 
 ```bash
-# 1. Build the backend JAR (required before first docker compose up)
-mvn -f backend/pom.xml package -DskipTests -q
-
-# 2. Start the full stack
+# 1. Start the full stack (Docker builds the backend JAR automatically)
 docker compose up -d --wait
 
-# 3. Install e2e dependencies (first time only)
+# 2. Install e2e dependencies (first time only)
 cd e2e && cp .env.example .env && npm install && npx playwright install --with-deps chromium
 
-# 4. Run all scenarios
+# 3. Run all scenarios
 npm test
 
 # Run by scope

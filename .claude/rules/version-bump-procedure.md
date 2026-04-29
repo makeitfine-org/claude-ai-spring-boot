@@ -8,20 +8,18 @@ Triggered whenever `<version>` changes under the `backend` artifact in `pom.xml`
 <version>X.Y.Z</version>
 ```
 
+The Dockerfile uses a wildcard `COPY --from=build /app/target/backend-*.jar app.jar` so
+no Dockerfile edit is needed when bumping the version.
+
 ## Steps (execute in order; fix any errors before continuing)
 
-1. **Update Dockerfile** — change the `COPY` line to reference the new version:
-   ```
-   COPY target/backend-{NEW_VERSION}.jar app.jar
-   ```
+1. **Build** — `mvn clean install`
 
-2. **Build** — `mvn clean install`
-
-3. **Remove old Docker image** — `docker rmi spring-cloud2-api-gateway:latest`
+2. **Remove old Docker image** — `docker rmi spring-cloud2-api-gateway:latest`
    (ignore "image not found" errors)
 
-4. **Stop running containers** — `docker compose down`
+3. **Stop running containers** — `docker compose down`
 
-5. **Start fresh** — `docker compose up`
+4. **Start fresh** — `docker compose up`
 
 If any step fails, diagnose and fix the root cause before retrying — do not skip steps.

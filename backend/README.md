@@ -412,6 +412,10 @@ docker-compose down
 
 ## Kubernetes Deployment
 
+`skaffold dev` watches `src/` and `pom.xml` for changes and triggers a full image
+rebuild automatically (no manual `mvn` step required). Expected round-trip time after a
+source change: **2–5 minutes** (Maven runs inside Docker on each rebuild).
+
 ```bash
 # Deploy (live rebuild on file changes)
 skaffold dev

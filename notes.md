@@ -63,6 +63,11 @@ to
 
 ---
 Deploy to AWS (as lambda or talk with AI how's better)
+- Write me a detailed plan (step by step) how to deploy it to aws
+- Propose the cheapest aws technologies (lambda, rds)
+- I'd like to deploy it with code no manula clicking on  UI.
+  So write terraform or propose something else.
+
 
 ---
 backlog.md work with
@@ -101,3 +106,11 @@ to select an already authenticated account to use.
 ---
 Seems skaffold on `backend` doesn't reload docker on changes in code
 fix it
+
+---
+Improve CLAUDE.md files by running `makefile build` after adding new features 
+
+---
+Write multi-user support for they can registracte with login, password 
+and get confirmation on email.
+Save it in cognito or propose something else

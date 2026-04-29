@@ -1239,3 +1239,27 @@
 - backlog/tasks/task-2.2 - Configure-skaffold-dev-file-watch-for-backend-Java-sources.md
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T16:19:34Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T16:25:15Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/rules/version-bump-procedure.md
+- .claude/settings.local.json
+- README.md
+- backend/Dockerfile
+- backend/README.md
+- backlog/tasks/task-2 - Fix-skaffold-dev-hot-reload-for-backend-module.md
+- backlog/tasks/task-2.1 - Make-backend-Docker-build-self-contained-no-host-side-mvn-prerequisite.md
+- backlog/tasks/task-2.2 - Configure-skaffold-dev-file-watch-for-backend-Java-sources.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T16:43:42Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- notes.md
+<!-- end-snapshot -->

@@ -1,9 +1,10 @@
 ---
 id: TASK-2.1
 title: Make backend Docker build self-contained (no host-side mvn prerequisite)
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-04-29 15:42'
+updated_date: '2026-04-29 16:24'
 labels:
   - backend
   - docker
@@ -28,8 +29,14 @@ Critical files: `backend/Dockerfile`, `backend/skaffold.yaml`, `backend/pom.xml`
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A clean checkout with no target/ directory can run skaffold build for the backend artifact and produces a runnable image
-- [ ] #2 The image no longer references a hard-coded version string (e.g. backend-1.0.1.jar)
-- [ ] #3 docker compose up from the repo root continues to work
-- [ ] #4 backend/k8s/deployment.yaml image name matches the Skaffold artifact name
+- [x] #1 A clean checkout with no target/ directory can run skaffold build for the backend artifact and produces a runnable image
+- [x] #2 The image no longer references a hard-coded version string (e.g. backend-1.0.1.jar)
+- [x] #3 docker compose up from the repo root continues to work
+- [x] #4 backend/k8s/deployment.yaml image name matches the Skaffold artifact name
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Replaced single-stage Dockerfile with a multi-stage build. Stage 1 uses `maven:3.9-eclipse-temurin-21`, caches dependencies separately, then builds the jar with `mvn -B -ntp package -DskipTests`. Stage 2 copies via wildcard `backend-*.jar` — no hard-coded version. Created `backend/.dockerignore` excluding `target/`, `.git/`, `.idea/`, `*.md` so the build context is clean and Skaffold's watcher ignores `target/`. `docker compose up` continues to use the same Dockerfile with no changes to `docker-compose.yml`.
+<!-- SECTION:FINAL_SUMMARY:END -->
