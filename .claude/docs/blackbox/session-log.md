@@ -1318,3 +1318,60 @@
 - .claude/docs/blackbox/audit.md
 - CLAUDE.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T19:47:51Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T20:23:19Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/CLAUDE.md
+- backend/Dockerfile
+- backend/skaffold.yaml
+- backlog/tasks/task-5 - Speed-up-skaffold-dev-builds-and-fix-gcloud-docker-helper-auth-errors.md
+- frontend/CLAUDE.md
+- frontend/Dockerfile
+- frontend/skaffold.yaml
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T20:28:57Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/CLAUDE.md
+- backend/Dockerfile
+- backend/skaffold.yaml
+- backlog/tasks/task-5 - Speed-up-skaffold-dev-builds-and-fix-gcloud-docker-helper-auth-errors.md
+- frontend/.dockerignore
+- frontend/CLAUDE.md
+- frontend/Dockerfile
+- frontend/skaffold.yaml
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T20:30:38Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/CLAUDE.md
+- backend/Dockerfile
+- backend/skaffold.yaml
+- backlog/tasks/task-5 - Speed-up-skaffold-dev-builds-and-fix-gcloud-docker-helper-auth-errors.md
+- frontend/.dockerignore
+- frontend/CLAUDE.md
+- frontend/Dockerfile
+- frontend/skaffold.yaml
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T20:43:52Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- notes.md
+<!-- end-snapshot -->

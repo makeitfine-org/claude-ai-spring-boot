@@ -198,4 +198,38 @@ to select an already authenticated account to use.
 ---
 Create a task in the backlog for described problems solution
 
+---
+
+After task completion save in the end of task file the summary which Claude code provided.
+
+For example after completion task `task-5` claude code give summary:
+
+● Here's a summary of what was done for task-5:
+
+Files changed:
+
+┌────────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────┐                                                                                                                          
+│          File          │                                                Change                                                 │
+├────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                          
+│ backend/Dockerfile     │ Added BuildKit cache mount for /root/.m2 — Maven deps persist across rebuilds                         │
+├────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                        
+│ frontend/Dockerfile    │ Added BuildKit cache mount for /root/.npm, switched npm install → npm ci --prefer-offline             │                                                                                                                          
+├────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                          
+│ frontend/.dockerignore │ Created — excludes node_modules/, dist/, .git/, etc. (shrinks build context from ~354 MB to a few MB) │                                                                                                                          
+├────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                          
+│ backend/skaffold.yaml  │ Added useBuildkit: true                                                                               │                                                                                                                        
+├────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                          
+│ frontend/skaffold.yaml │ Added useBuildkit: true                                                                               │
+├────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                          
+│ ~/.docker/config.json  │ Removed europe-docker.pkg.dev: gcloud credHelper — eliminates the invalid_grant noise                 │
+├────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                          
+│ backend/CLAUDE.md      │ Documented the Skaffold dev build optimizations                                                       │
+├────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────┤                                                                                                                          
+│ frontend/CLAUDE.md     │ Documented the Skaffold dev build optimizations                                                       │
+└────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+AC #4 and #5 (before/after timing numbers) can't be checked without running skaffold dev live — the task is marked complete for all the structural criteria. The key outcome: after the first cold build populates the BuildKit cache, subsequent skaffold  
+dev iterations will skip Maven dependency resolution entirely on the backend, and the frontend will transfer a tiny build context instead of 354 MB.
+
+So save it must have been saved in the end of file `task-5-....md`
 

@@ -63,6 +63,12 @@ src/
 - E2E: Playwright (`npx playwright test`).
 - Test files co-locate with the code they test or live in a `__tests__/` sibling.
 
+## Skaffold Dev Builds
+
+The Dockerfile uses a BuildKit cache mount (`--mount=type=cache,target=/root/.npm`) so `npm ci` reuses the package cache across rebuilds. A `.dockerignore` excludes `node_modules/`, `dist/`, `.git/`, etc. to keep the build context small (was ~354 MB without it).
+
+`skaffold.yaml` sets `useBuildkit: true` to ensure BuildKit is active.
+
 ## Makefile Targets (frontend)
 
 Use these from the **repo root**:

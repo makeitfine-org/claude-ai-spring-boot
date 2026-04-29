@@ -44,6 +44,12 @@ config/         → Spring @Configuration classes
   - `*IntegrationTest.java` — full slice via `@SpringBootTest`
 - Both positive and negative cases required for every test class
 
+## Skaffold Dev Builds
+
+The Dockerfile uses BuildKit cache mounts (`--mount=type=cache,target=/root/.m2`) so Maven dependencies are cached across rebuilds without invalidating Docker layer cache. `skaffold dev` incremental rebuilds only re-run the Maven package step, not the dependency download.
+
+`skaffold.yaml` sets `useBuildkit: true` to ensure BuildKit is active.
+
 ## Makefile Targets (backend)
 
 Use these from the **repo root** instead of running Maven directly:

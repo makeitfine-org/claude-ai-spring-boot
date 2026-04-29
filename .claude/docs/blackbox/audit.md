@@ -3098,3 +3098,103 @@ execute git add all changes and commit them with suitable message
 ## 2026-04-29T19:44:22Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-29T19:47:19Z
+1) When run `skaffold dev` on backend I get long execution of such command:
+
+1396908a28e9: Pull complete
+Digest: sha256:8e7dc4215c70f922e798c9f8aafa0a3734ca386342427b3dbb17cecc4a429c8e
+Status: Downloaded newer image for maven:3.9-eclipse-temurin-21
+---> 8a14c71c9922
+Step 2/11 : WORKDIR /app
+---> Running in 489cb2460db0
+---> b194a847f0ba
+Step 3/11 : COPY pom.xml .
+---> 4550958f128e
+Step 4/11 : RUN mvn -B -ntp dependency:go-offline -q
+---> Running in 9f2d74d6bd02
+
+2) When run `skaffold dev` on backend I get long execution of such command:
+   to select an already authenticated account to use.                                                                             
+   Sending build context to Docker daemon  354.5MB                                                                                
+   Step 1/11 : FROM node:22-alpine AS builder                                                                                     
+   ---> 04a4709b55a8                                             
+   Step 2/11 : WORKDIR /app                                       
+   ---> Using cache                                              
+   ---> d1158aeef2b2                                             
+   Step 3/11 : COPY package.json package-lock.json ./                                                                             
+   ---> Using cache                                              
+   ---> e36b20d2db12                                             
+   Step 4/11 : RUN npm install                                    
+   ---> Using cache                                              
+   ---> 8a21003f7cb5                                             
+   Step 5/11 : COPY . .                                           
+   ---> 71c8b96f076b
+   Step 6/11 : RUN npm run build
+   ---> Running in 661991431d10
+
+3) When run `skaffold dev` on backend and frontend I get in log:
+
+   to select an already authenticated account to use.                                                                                                                                                                                                            
+   ERROR: (gcloud.auth.docker-helper) There was a problem refreshing your current auth tokens: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})                                                                    
+   Please run:
+
+$ gcloud auth login
+
+to obtain new credentials.
+
+If you have already logged in with a different account, run:
+
+$ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.                                                                                                                                                                                                            
+ERROR: (gcloud.auth.docker-helper) There was a problem refreshing your current auth tokens: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})                                                                    
+Please run:
+
+$ gcloud auth login
+
+to obtain new credentials.
+
+If you have already logged in with a different account, run:
+
+$ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.                                                                                                                                                                                                            
+ERROR: (gcloud.auth.docker-helper) There was a problem refreshing your current auth tokens: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})                                                                    
+Please run:
+
+$ gcloud auth login
+
+to obtain new credentials.
+
+If you have already logged in with a different account, run:
+
+$ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.
+
+---
+Create a task in the backlog for described problems solution
+---
+
+## 2026-04-29T20:19:59Z
+Complete the backlog task-5
+---
+
+## 2026-04-29T20:28:47Z
+Complete the task. AC #4 and #5 (before/after timing numbers) can't be checked without running skaffold dev live — the task is marked complete for all the structural criteria and check
+---
+
+## 2026-04-29T20:30:30Z
+Did you check this acceptance criterial?
+#4 skaffold dev for backend completes an incremental rebuild in noticeably less time than before (record before/after timings in finalSummary)
+#5 skaffold dev for frontend completes an incremental rebuild in noticeably less time than before (record before/after timings in finalSummary)
+---
+
+## 2026-04-29T20:30:48Z
+yes
+---
+
+## 2026-04-29T20:42:18Z
+execute git add all changes and commit them with suitable message
+---
