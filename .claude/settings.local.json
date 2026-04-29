@@ -70,7 +70,10 @@
       "mcp__backlog__*",
       "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot add CLAUDE.md)",
       "Bash(backlog task *)",
-      "Bash(docker builder *)"
+      "Bash(docker builder *)",
+      "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot add frontend/package-lock.json)",
+      "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot commit -m \"fix: sync frontend package-lock.json with package.json\")",
+      "Bash(docker run *)"
     ],
     "deny": []
   }

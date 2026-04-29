@@ -2,7 +2,7 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,target=/root/.npm npm ci --cache /root/.npm --prefer-offline
+RUN --mount=type=cache,target=/root/.npm npm install --cache /root/.npm --prefer-offline
 COPY . .
 RUN npm run build
 

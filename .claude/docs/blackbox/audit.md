@@ -3198,3 +3198,79 @@ yes
 ## 2026-04-29T20:42:18Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-29T20:51:14Z
+while running in `frontend` folder the command `skaffold dev` I got the issue:
+#9 [internal] load build context                                                                                                        
+#9 transferring context: 2.58kB done                                                                                                    
+#9 DONE 0.0s                                                                                                                            
+                                                                                                                                        
+#10 [builder 2/6] WORKDIR /app                                                                                                          
+#10 CACHED                                                                                                                              
+                                                                                                                                        
+#11 [builder 3/6] COPY package.json package-lock.json ./                                                                                
+#11 CACHED                                                                                                                              
+                                                                    
+#12 [builder 4/6] RUN --mount=type=cache,target=/root/.npm npm ci --cache /root/.npm --prefer-offline                                                                                                                                                         
+#12 0.749 npm error code EUSAGE                                     
+#12 0.749 npm error                                                 
+#12 0.749 npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+#12 0.749 npm error                                                 
+#12 0.749 npm error Missing: @emnapi/core@1.10.0 from lock file                                                                
+#12 0.749 npm error Missing: @emnapi/runtime@1.10.0 from lock file                                                             
+#12 0.749 npm error       
+#12 0.749 npm error Clean install a project                                                                                    
+#12 0.749 npm error         
+#12 0.749 npm error Usage:                                                                                                              
+#12 0.749 npm error npm ci                                                                                                              
+#12 0.749 npm error                                                                                                                     
+#12 0.749 npm error Options:                                                                                                            
+#12 0.749 npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]                                                                                                                                                                  
+#12 0.749 npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+#12 0.749 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+#12 0.749 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]                                                                                                                                                               
+#12 0.749 npm error [--no-bin-links] [--no-fund] [--dry-run]                                                                            
+#12 0.749 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]                                                                                                                                                                   
+#12 0.749 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]                                                                                                                                                                           
+#12 0.749 npm error                                                                                                                     
+#12 0.749 npm error aliases: clean-install, ic, install-clean, isntall-clean                                          
+#12 0.749 npm error
+#12 0.749 npm error Run "npm help ci" for more info                                                                                     
+#12 0.751 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-04-29T20_49_42_476Z-debug-0.log
+#12 ERROR: process "/bin/sh -c npm ci --cache /root/.npm --prefer-offline" did not complete successfully: exit code: 1                                                                                                                                        
+------                                                         
+ > [builder 4/6] RUN --mount=type=cache,target=/root/.npm npm ci --cache /root/.npm --prefer-offline:                                                                                                                                                         
+0.749 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]                                                                                                                                                                 
+0.749 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]                                                                                                                                                                   
+0.749 npm error [--no-bin-links] [--no-fund] [--dry-run]                                                                       
+0.749 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]                                                                                                                                                                       
+0.749 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]                                                                                                                                                                               
+0.749 npm error                                                
+0.749 npm error aliases: clean-install, ic, install-clean, isntall-clean                                                                                                                                                                                      
+0.749 npm error                                                
+0.749 npm error Run "npm help ci" for more info                                                                                
+0.751 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-04-29T20_49_42_476Z-debug-0.log                                                                                                                                             
+------                                                         
+Dockerfile:5                                                   
+--------------------                                           
+   3 |     WORKDIR /app                                        
+   4 |     COPY package.json package-lock.json ./                                                                              
+   5 | >>> RUN --mount=type=cache,target=/root/.npm npm ci --cache /root/.npm --prefer-offline                                                                                                                                                                
+   6 |     COPY . .                                            
+   7 |     RUN npm run build                                   
+--------------------                                           
+ERROR: failed to build: failed to solve: process "/bin/sh -c npm ci --cache /root/.npm --prefer-offline" did not complete successfully: exit code: 1
+Cleaning up...                                                 
+ - No resources found                                          
+build [claude-ai-frontend] failed: exit status 1. Docker build ran into internal error. Please retry.                                                                                                                                                         
+If this keeps happening, please open an issue.. 
+Fix it.
+---
+
+## 2026-04-29T20:55:27Z
+But by switching npm ci back to npm install willn't it again slowering the docker creation?
+---
+
+## 2026-04-29T20:58:32Z
+execute git add all changes and commit them with suitable message
+---

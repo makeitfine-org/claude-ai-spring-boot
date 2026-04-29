@@ -1375,3 +1375,16 @@
 - .claude/settings.local.json
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T20:55:40Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- backend/src/main/java/pl/piomin/services/application/dto/PersonResponse.java
+- frontend/Dockerfile
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T20:59:11Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
