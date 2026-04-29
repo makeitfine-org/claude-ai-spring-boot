@@ -1283,3 +1283,33 @@
 - .claude/docs/blackbox/audit.md
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T18:50:27Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T18:52:00Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T19:01:02Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- Makefile
+- "backlog/tasks/task-4 - Rename-claude-ai-spring-boot-frontend-\342\206\222-frontend-and-claude-ai-spring-boot-app-\342\206\222-backend-throughout-the-project.md"
+- docker-compose.yml
+- frontend/README.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T19:03:59Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- Makefile
+- "backlog/tasks/task-4 - Rename-claude-ai-spring-boot-frontend-\342\206\222-frontend-and-claude-ai-spring-boot-app-\342\206\222-backend-throughout-the-project.md"
+- docker-compose.yml
+<!-- end-snapshot -->

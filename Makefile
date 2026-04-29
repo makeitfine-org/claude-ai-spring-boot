@@ -13,7 +13,7 @@ clean:
 	@echo "### Cleaning (claude-ai-spring-boot) ..."
 	$(call execute_commands,\
 		docker compose down ; \
-		docker rmi -f claude-ai-spring-boot-app:latest claude-ai-spring-boot-frontend:latest 2>/dev/null || true && \
+		docker rmi -f claude-ai-spring-boot-backend:latest claude-ai-spring-boot-frontend:latest 2>/dev/null || true && \
 		cd backend && mvn clean && \
 		cd ../frontend && rm -rf dist node_modules package-lock.json,\
 		"✅ CLEAN SUCCESSFUL (claude-ai-spring-boot) ✅",\
@@ -23,7 +23,7 @@ cleanShallow:
 	@echo "### Cleaning (claude-ai-spring-boot) ..."
 	$(call execute_commands,\
 		docker compose down ; \
-		docker rmi -f claude-ai-spring-boot-app:latest claude-ai-spring-boot-frontend:latest 2>/dev/null || true && \
+		docker rmi -f claude-ai-spring-boot-backend:latest claude-ai-spring-boot-frontend:latest 2>/dev/null || true && \
 		cd backend && mvn clean && \
 		cd ../frontend && rm -rf dist,\
 		"✅ CLEAN SUCCESSFUL (claude-ai-spring-boot) ✅",\

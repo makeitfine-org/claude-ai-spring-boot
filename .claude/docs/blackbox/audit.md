@@ -3061,3 +3061,27 @@ execute git add all changes and commit them with suitable message
 ## 2026-04-29T18:24:27Z
 Add a rule that if you completed the task which did some changes in application source or test files or in any files that could influence the build or deploy you must do `makefile build` to check that it passes successfully
 ---
+
+## 2026-04-29T18:48:34Z
+When I run `backlog task list` I see only `to do` task, but my completed task are not shown as `Done` why, how to change it?
+---
+
+## 2026-04-29T18:50:18Z
+use backlog mcp
+---
+
+## 2026-04-29T18:51:01Z
+use backlog cli
+---
+
+## 2026-04-29T18:56:42Z
+Complete the backlog task-4
+---
+
+## 2026-04-29T19:03:19Z
+rename  docker images: frontend -> claude-ai-spring-boot-frontend and backend -> claude-ai-spring-boot-backend
+---
+
+## 2026-04-29T19:05:46Z
+execute git add all changes and commit them with suitable message
+---
