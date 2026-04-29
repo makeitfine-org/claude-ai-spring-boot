@@ -950,3 +950,2055 @@ Add dark/light/auto themas functionality to front-end
 ## 2026-04-28T19:53:53Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-29T10:26:00Z
+I have ~/.bashrc file with such content:
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+###
+# Automatically add completion for all aliases to commands having completion functions
+function alias_completion {
+    local namespace="alias_completion"
+
+    # parse function based completion definitions, where capture group 2 => function and 3 => trigger
+    local compl_regex='complete( +[^ ]+)* -F ([^ ]+) ("[^"]+"|[^ ]+)'
+    # parse alias definitions, where capture group 1 => trigger, 2 => command, 3 => command arguments
+    local alias_regex="alias ([^=]+)='(\"[^\"]+\"|[^ ]+)(( +[^ ]+)*)'"
+
+    # create array of function completion triggers, keeping multi-word triggers together
+    eval "local completions=($(complete -p | sed -Ene "/$compl_regex/s//'\3'/p"))"
+    (( ${#completions[@]} == 0 )) && return 0
+
+    # create temporary file for wrapper functions and completions
+    rm -f "/tmp/${namespace}-*.tmp" # preliminary cleanup
+    local tmp_file; tmp_file="$(mktemp "/tmp/${namespace}-${RANDOM}XXX.tmp")" || return 1
+
+    local completion_loader; completion_loader="$(complete -p -D 2>/dev/null | sed -Ene 's/.* -F ([^ ]*).*/\1/p')"
+
+    # read in "<alias> '<aliased command>' '<command args>'" lines from defined aliases
+    local line; while read line; do
+        eval "local alias_tokens; alias_tokens=($line)" 2>/dev/null || continue # some alias arg patterns cause an eval parse error
+        local alias_name="${alias_tokens[0]}" alias_cmd="${alias_tokens[1]}" alias_args="${alias_tokens[2]# }"
+
+        # skip aliases to pipes, boolean control structures and other command lists
+        # (leveraging that eval errs out if $alias_args contains unquoted shell metacharacters)
+        eval "local alias_arg_words; alias_arg_words=($alias_args)" 2>/dev/null || continue
+        # avoid expanding wildcards
+        read -a alias_arg_words <<< "$alias_args"
+
+        # skip alias if there is no completion function triggered by the aliased command
+        if [[ ! " ${completions[*]} " =~ " $alias_cmd " ]]; then
+            if [[ -n "$completion_loader" ]]; then
+                # force loading of completions for the aliased command
+                eval "$completion_loader $alias_cmd"
+                # 124 means completion loader was successful
+                [[ $? -eq 124 ]] || continue
+                completions+=($alias_cmd)
+            else
+                continue
+            fi
+        fi
+        local new_completion="$(complete -p "$alias_cmd")"
+
+        # create a wrapper inserting the alias arguments if any
+        if [[ -n $alias_args ]]; then
+            local compl_func="${new_completion/#* -F /}"; compl_func="${compl_func%% *}"
+            # avoid recursive call loops by ignoring our own functions
+            if [[ "${compl_func#_$namespace::}" == $compl_func ]]; then
+                local compl_wrapper="_${namespace}::${alias_name}"
+                    echo "function $compl_wrapper {
+                        (( COMP_CWORD += ${#alias_arg_words[@]} ))
+                        COMP_WORDS=($alias_cmd $alias_args \${COMP_WORDS[@]:1})
+                        (( COMP_POINT -= \${#COMP_LINE} ))
+                        COMP_LINE=\${COMP_LINE/$alias_name/$alias_cmd $alias_args}
+                        (( COMP_POINT += \${#COMP_LINE} ))
+                        $compl_func
+                    }" >> "$tmp_file"
+                    new_completion="${new_completion/ -F $compl_func / -F $compl_wrapper }"
+            fi
+        fi
+
+        # replace completion trigger by alias
+        new_completion="${new_completion% *} $alias_name"
+        echo "$new_completion" >> "$tmp_file"
+    done < <(alias -p | sed -Ene "s/$alias_regex/\1 '\2' '\3'/p")
+    source "$tmp_file" && rm -f "$tmp_file"
+};
+
+export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
+export M2_HOME=/usr/share/maven
+export MAVEN_OPTS="-Xss16M"
+export GRADLE_HOME=/opt/gradle/gradle-8.10.2
+
+PATH="$JAVA_HOME/bin:$M2_HOME/bin:$GRADLE_HOME/bin:$PATH:$HOME/jdtls/bin"
+export PATH="$HOME/.nvm/versions/node/v25.1.0/bin:$PATH"
+
+export EDITOR="zettlr"
+
+#export GRADLE_OPTS="-Xmx16g"
+#export MAVEN_OPTS="-Xmx16g"
+
+#export ISTIO_HOME="/home/ilaptop/dev/software/istio-1.27.1" #todo: fix
+#export PATH=$ISTIO_HOME/bin:$PATH #todo: fix
+
+# Placed in ~/.secrets.d/secrets.sh
+# export RENOVATION_VAULT_TOKEN=
+# export RENOVATION_VAULT_UNSEAL_KEY=
+# export NOTIFICATION_TELEGRAM_BOT_TOKEN=
+# export NOTIFICATION_TELEGRAM_BOT_CHAT_ID=
+# export NOTIFICATION_TELEGRAM_CHAT_ID=
+
+# ~/.bashrc
+load_renovation_env() {
+  # shellcheck disable=SC1090
+  source ~/.secrets.d/secrets.sh
+  echo "Sensitive env loaded for this shell."
+}
+
+load_renovation_env
+
+##Aliases
+#Common
+#alias j17="export JAVA_HOME=/usr/lib/jvm/jdk-17" #todo: fix
+alias j21='export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 21"'
+alias j25='export JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 25"'
+
+alias .="cd .."
+alias l="ls"
+alias c="cd "
+alias wd="cd /home/eug/dev/projects/my/renovation"
+alias r="reset"
+alias cl="clear"
+alias e="exit"
+alias n="npm"
+alias nr="npm run"
+alias ni="npm install"
+alias no="node"
+alias ns="netstat -lpn | grep "
+alias ki="sudo kill -9 "
+alias sau="sudo apt update -y && sudo apt autoremove -y && sudo apt update -y"
+alias w="watch -n 1 "
+
+alias cla="claude"
+
+#Git (it considers git aliases described in the snippet: https://bitbucket.org/snippets/iCreators/dRdyj)
+alias g='git'
+alias gf='git fetch'
+alias gpu='git push'
+alias gp='git pull'
+alias gl='git log -5 --oneline'
+alias gpl='git pull origin develop'
+alias gps='git push origin develop'
+alias gb='git branch'
+alias gch='git checkout'
+alias gs='git status'
+alias gc='git commit -m'
+alias ga='git add'
+alias gaa='git add .'
+alias gac='git add . && git commit -m'
+alias gd='git diff'
+#alias gr='git reset'
+alias grs='git reset --soft'
+alias gcl='git clean -f'
+alias grc='g rc' #!git reset --hard && git clean -f
+alias gm='git merge'
+alias gco='git commit'
+alias gca='git commit --amend'
+alias gt='git tag'
+
+#Maven
+alias m="mvn"
+alias mc="mvn clean"
+alias mco="mvn compile"
+alias mp="mvn package"
+alias mt="mvn test"
+#alias mi="mvn install"
+alias mcc="mvn clean compile"
+alias mctc="mvn clean test-compile"
+alias mcp="mvn clean package"
+alias mct="mvn clean test"
+alias mcv="mvn clean verify"
+alias mcin="mvn clean integration-test"
+alias mci="mvn clean install"
+alias mcis="mvn clean install -DskipTests=true"
+alias mid="mvn idea:clean idea:idea"
+alias mdr="mvn dependency:resolve dependency:sources"
+alias mcva="mvn clean validate"
+alias mdt="mvn dependency:tree"
+alias mdg="mvn dependency:tree | grep "
+alias mdi='function mdi(){ mvn dependency:tree -Dincludes=$1; };mdi'
+
+#Gradle
+alias gr="./gradlew"
+alias grc="./gradlew clean"
+alias grb="./gradlew build"
+alias grt="./gradlew test"
+alias grj="./gradlew jar"
+alias grcb="./gradlew clean build --no-build-cache"
+alias idea="/bin/bash -l -c ~/dev/software/idea-IU-253.30387.90/bin/idea"
+
+#Docker
+alias d='docker'
+alias dl='docker logs'
+alias dp='docker ps -a'
+alias di='docker images'
+alias dc='docker compose' 
+alias dcu='docker compose up'
+alias dcd='docker compose up -d'
+alias dcp='docker compose ps'
+alias dcdw='docker compose down'
+alias dkc='docker kill $(docker ps -q) && docker rm $(docker ps -a -q)'
+alias des='function des(){ docker exec -it $1 sh; };des'
+alias deb='function deb(){ docker exec -it $1 bash; };deb'
+
+#Kubenetes
+alias k="kubectl"
+#alias ka="kubectl get pod && kubectl get service && kubectl get deployments && kubectl get replicasets.apps && kubectl get statefulsets.apps"
+alias kg="kubectl get"
+alias kd="kubectl delete"
+alias kde="kubectl describe"
+alias kga="kubectl get all"
+alias kgp="kubectl get pv"
+alias kgpc="kubectl get pvc"
+alias kn="kubectl config view --minify -o jsonpath='{..namespace}' && echo"
+alias kns="kubectl config set-context --current --namespace"
+
+#Minikube
+alias mi="minikube"
+alias min="minikube -p mn"
+alias mis="minikube ssh"
+
+#Helm
+alias h="helm"
+alias fcon="sudo openfortivpn vpn.regnology.net:443   --saml-login   --pppd-use-peerdns=1 --set-dns=1   --trusted-cert f116223a10c0bd719fa31bb470866ee9cbe681df6c01558ea5949694b8699d3b"
+
+# after any command just put tnot(), e.g. gradle build; tnot
+alias tnsimple="curl -X POST \"https://api.telegram.org/bot$NOTIFICATION_TELEGRAM_BOT_TOKEN/sendMessage\" -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\": \\\"$NOTIFICATION_TELEGRAM_CHAT_ID\\\", \\\"text\\\": \\\"🔔 Job finished 🔔\\\"}\""
+
+# using: tnot "<message>"
+tn() {
+  local msg="${*:-🔔 Job finished 🔔}"
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data-urlencode "text=$msg"
+}
+
+tncut() {
+  local raw="${*:-🔔 Job finished 🔔}"
+  # Fast substring (may cut a multi-byte char in UTF-8 edge cases)
+  local msg="${raw:0:1000}"
+
+  # HTML-escape for parse_mode=HTML
+  local esc
+  esc=$(printf '%s' "$msg" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g')
+
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data "parse_mode=HTML" \
+    --data-urlencode "text=<pre><code>${esc}</code></pre>"
+}
+
+
+
+#ALIAS COMPLETION !!! should be in the end !!!
+alias_completion
+
+# !!! Should be in the end
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Created by `pipx` on 2026-02-26 13:13:20
+export PATH="$PATH:/home/eug/.local/bin"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/home/eug/.bun/bin/bun "/home/eug/.claude/plugins/cache/thedotmack/claude-mem/10.5.5/scripts/worker-service.cjs"'
+---
+
+## 2026-04-29T10:28:09Z
+I have ~/.bashrc file with such content:
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+###
+# Automatically add completion for all aliases to commands having completion functions
+function alias_completion {
+    local namespace="alias_completion"
+
+    # parse function based completion definitions, where capture group 2 => function and 3 => trigger
+    local compl_regex='complete( +[^ ]+)* -F ([^ ]+) ("[^"]+"|[^ ]+)'
+    # parse alias definitions, where capture group 1 => trigger, 2 => command, 3 => command arguments
+    local alias_regex="alias ([^=]+)='(\"[^\"]+\"|[^ ]+)(( +[^ ]+)*)'"
+
+    # create array of function completion triggers, keeping multi-word triggers together
+    eval "local completions=($(complete -p | sed -Ene "/$compl_regex/s//'\3'/p"))"
+    (( ${#completions[@]} == 0 )) && return 0
+
+    # create temporary file for wrapper functions and completions
+    rm -f "/tmp/${namespace}-*.tmp" # preliminary cleanup
+    local tmp_file; tmp_file="$(mktemp "/tmp/${namespace}-${RANDOM}XXX.tmp")" || return 1
+
+    local completion_loader; completion_loader="$(complete -p -D 2>/dev/null | sed -Ene 's/.* -F ([^ ]*).*/\1/p')"
+
+    # read in "<alias> '<aliased command>' '<command args>'" lines from defined aliases
+    local line; while read line; do
+        eval "local alias_tokens; alias_tokens=($line)" 2>/dev/null || continue # some alias arg patterns cause an eval parse error
+        local alias_name="${alias_tokens[0]}" alias_cmd="${alias_tokens[1]}" alias_args="${alias_tokens[2]# }"
+
+        # skip aliases to pipes, boolean control structures and other command lists
+        # (leveraging that eval errs out if $alias_args contains unquoted shell metacharacters)
+        eval "local alias_arg_words; alias_arg_words=($alias_args)" 2>/dev/null || continue
+        # avoid expanding wildcards
+        read -a alias_arg_words <<< "$alias_args"
+
+        # skip alias if there is no completion function triggered by the aliased command
+        if [[ ! " ${completions[*]} " =~ " $alias_cmd " ]]; then
+            if [[ -n "$completion_loader" ]]; then
+                # force loading of completions for the aliased command
+                eval "$completion_loader $alias_cmd"
+                # 124 means completion loader was successful
+                [[ $? -eq 124 ]] || continue
+                completions+=($alias_cmd)
+            else
+                continue
+            fi
+        fi
+        local new_completion="$(complete -p "$alias_cmd")"
+
+        # create a wrapper inserting the alias arguments if any
+        if [[ -n $alias_args ]]; then
+            local compl_func="${new_completion/#* -F /}"; compl_func="${compl_func%% *}"
+            # avoid recursive call loops by ignoring our own functions
+            if [[ "${compl_func#_$namespace::}" == $compl_func ]]; then
+                local compl_wrapper="_${namespace}::${alias_name}"
+                    echo "function $compl_wrapper {
+                        (( COMP_CWORD += ${#alias_arg_words[@]} ))
+                        COMP_WORDS=($alias_cmd $alias_args \${COMP_WORDS[@]:1})
+                        (( COMP_POINT -= \${#COMP_LINE} ))
+                        COMP_LINE=\${COMP_LINE/$alias_name/$alias_cmd $alias_args}
+                        (( COMP_POINT += \${#COMP_LINE} ))
+                        $compl_func
+                    }" >> "$tmp_file"
+                    new_completion="${new_completion/ -F $compl_func / -F $compl_wrapper }"
+            fi
+        fi
+
+        # replace completion trigger by alias
+        new_completion="${new_completion% *} $alias_name"
+        echo "$new_completion" >> "$tmp_file"
+    done < <(alias -p | sed -Ene "s/$alias_regex/\1 '\2' '\3'/p")
+    source "$tmp_file" && rm -f "$tmp_file"
+};
+
+export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
+export M2_HOME=/usr/share/maven
+export MAVEN_OPTS="-Xss16M"
+export GRADLE_HOME=/opt/gradle/gradle-8.10.2
+
+PATH="$JAVA_HOME/bin:$M2_HOME/bin:$GRADLE_HOME/bin:$PATH:$HOME/jdtls/bin"
+export PATH="$HOME/.nvm/versions/node/v25.1.0/bin:$PATH"
+
+export EDITOR="zettlr"
+
+#export GRADLE_OPTS="-Xmx16g"
+#export MAVEN_OPTS="-Xmx16g"
+
+#export ISTIO_HOME="/home/ilaptop/dev/software/istio-1.27.1" #todo: fix
+#export PATH=$ISTIO_HOME/bin:$PATH #todo: fix
+
+# Placed in ~/.secrets.d/secrets.sh
+# export RENOVATION_VAULT_TOKEN=
+# export RENOVATION_VAULT_UNSEAL_KEY=
+# export NOTIFICATION_TELEGRAM_BOT_TOKEN=
+# export NOTIFICATION_TELEGRAM_BOT_CHAT_ID=
+# export NOTIFICATION_TELEGRAM_CHAT_ID=
+
+# ~/.bashrc
+load_renovation_env() {
+  # shellcheck disable=SC1090
+  source ~/.secrets.d/secrets.sh
+  echo "Sensitive env loaded for this shell."
+}
+
+load_renovation_env
+
+##Aliases
+#Common
+#alias j17="export JAVA_HOME=/usr/lib/jvm/jdk-17" #todo: fix
+alias j21='export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 21"'
+alias j25='export JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 25"'
+
+alias .="cd .."
+alias l="ls"
+alias c="cd "
+alias wd="cd /home/eug/dev/projects/my/renovation"
+alias r="reset"
+alias cl="clear"
+alias e="exit"
+alias n="npm"
+alias nr="npm run"
+alias ni="npm install"
+alias no="node"
+alias ns="netstat -lpn | grep "
+alias ki="sudo kill -9 "
+alias sau="sudo apt update -y && sudo apt autoremove -y && sudo apt update -y"
+alias w="watch -n 1 "
+
+alias cla="claude"
+
+#Git (it considers git aliases described in the snippet: https://bitbucket.org/snippets/iCreators/dRdyj)
+alias g='git'
+alias gf='git fetch'
+alias gpu='git push'
+alias gp='git pull'
+alias gl='git log -5 --oneline'
+alias gpl='git pull origin develop'
+alias gps='git push origin develop'
+alias gb='git branch'
+alias gch='git checkout'
+alias gs='git status'
+alias gc='git commit -m'
+alias ga='git add'
+alias gaa='git add .'
+alias gac='git add . && git commit -m'
+alias gd='git diff'
+#alias gr='git reset'
+alias grs='git reset --soft'
+alias gcl='git clean -f'
+alias grc='g rc' #!git reset --hard && git clean -f
+alias gm='git merge'
+alias gco='git commit'
+alias gca='git commit --amend'
+alias gt='git tag'
+
+#Maven
+alias m="mvn"
+alias mc="mvn clean"
+alias mco="mvn compile"
+alias mp="mvn package"
+alias mt="mvn test"
+#alias mi="mvn install"
+alias mcc="mvn clean compile"
+alias mctc="mvn clean test-compile"
+alias mcp="mvn clean package"
+alias mct="mvn clean test"
+alias mcv="mvn clean verify"
+alias mcin="mvn clean integration-test"
+alias mci="mvn clean install"
+alias mcis="mvn clean install -DskipTests=true"
+alias mid="mvn idea:clean idea:idea"
+alias mdr="mvn dependency:resolve dependency:sources"
+alias mcva="mvn clean validate"
+alias mdt="mvn dependency:tree"
+alias mdg="mvn dependency:tree | grep "
+alias mdi='function mdi(){ mvn dependency:tree -Dincludes=$1; };mdi'
+
+#Gradle
+alias gr="./gradlew"
+alias grc="./gradlew clean"
+alias grb="./gradlew build"
+alias grt="./gradlew test"
+alias grj="./gradlew jar"
+alias grcb="./gradlew clean build --no-build-cache"
+alias idea="/bin/bash -l -c ~/dev/software/idea-IU-253.30387.90/bin/idea"
+
+#Docker
+alias d='docker'
+alias dl='docker logs'
+alias dp='docker ps -a'
+alias di='docker images'
+alias dc='docker compose' 
+alias dcu='docker compose up'
+alias dcd='docker compose up -d'
+alias dcp='docker compose ps'
+alias dcdw='docker compose down'
+alias dkc='docker kill $(docker ps -q) && docker rm $(docker ps -a -q)'
+alias des='function des(){ docker exec -it $1 sh; };des'
+alias deb='function deb(){ docker exec -it $1 bash; };deb'
+
+#Kubenetes
+alias k="kubectl"
+#alias ka="kubectl get pod && kubectl get service && kubectl get deployments && kubectl get replicasets.apps && kubectl get statefulsets.apps"
+alias kg="kubectl get"
+alias kd="kubectl delete"
+alias kde="kubectl describe"
+alias kga="kubectl get all"
+alias kgp="kubectl get pv"
+alias kgpc="kubectl get pvc"
+alias kn="kubectl config view --minify -o jsonpath='{..namespace}' && echo"
+alias kns="kubectl config set-context --current --namespace"
+
+#Minikube
+alias mi="minikube"
+alias min="minikube -p mn"
+alias mis="minikube ssh"
+
+#Helm
+alias h="helm"
+alias fcon="sudo openfortivpn vpn.regnology.net:443   --saml-login   --pppd-use-peerdns=1 --set-dns=1   --trusted-cert f116223a10c0bd719fa31bb470866ee9cbe681df6c01558ea5949694b8699d3b"
+
+# after any command just put tnot(), e.g. gradle build; tnot
+alias tnsimple="curl -X POST \"https://api.telegram.org/bot$NOTIFICATION_TELEGRAM_BOT_TOKEN/sendMessage\" -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\": \\\"$NOTIFICATION_TELEGRAM_CHAT_ID\\\", \\\"text\\\": \\\"🔔 Job finished 🔔\\\"}\""
+
+# using: tnot "<message>"
+tn() {
+  local msg="${*:-🔔 Job finished 🔔}"
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data-urlencode "text=$msg"
+}
+
+tncut() {
+  local raw="${*:-🔔 Job finished 🔔}"
+  # Fast substring (may cut a multi-byte char in UTF-8 edge cases)
+  local msg="${raw:0:1000}"
+
+  # HTML-escape for parse_mode=HTML
+  local esc
+  esc=$(printf '%s' "$msg" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g')
+
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data "parse_mode=HTML" \
+    --data-urlencode "text=<pre><code>${esc}</code></pre>"
+}
+
+
+
+#ALIAS COMPLETION !!! should be in the end !!!
+alias_completion
+
+# !!! Should be in the end
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Created by `pipx` on 2026-02-26 13:13:20
+export PATH="$PATH:/home/eug/.local/bin"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/home/eug/.bun/bin/bun "/home/eug/.claude/plugins/cache/thedotmack/claude-mem/10.5.5/scripts/worker-service.cjs"'
+
+I'd like to add:
+alias ma="make"
+But when I do thes autocompletion for `make` command stop working.
+So once again I a type `make <tab>` autocompletion works, but when I type `ma <tab>`, with that alias added, autocompletion doesn't work.
+Recommend what to change to fix it.
+---
+
+## 2026-04-29T10:37:20Z
+I add:
+alias ma="make"
+
+  # Mirror make's completion onto `ma` (force-loading it if lazy)
+  _make_alias_completion() {
+      complete -p make &>/dev/null || _completion_loader make 2>/dev/null
+      # Re-emit make's completion definition, retargeted at `ma`
+      local def
+      def=$(complete -p make 2>/dev/null) && eval "${def% make} ma"
+  }
+  _make_alias_completion
+  unset -f _make_alias_completion
+After alias_completion and it doesn't work.
+---
+
+## 2026-04-29T10:41:56Z
+give all the .bashrc with your changes
+---
+
+## 2026-04-29T10:49:53Z
+I changes to:
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+###
+# Automatically add completion for all aliases to commands having completion functions
+function alias_completion {
+    local namespace="alias_completion"
+
+    # parse function based completion definitions, where capture group 2 => function and 3 => trigger
+    local compl_regex='complete( +[^ ]+)* -F ([^ ]+) ("[^"]+"|[^ ]+)'
+    # parse alias definitions, where capture group 1 => trigger, 2 => command, 3 => command arguments
+    local alias_regex="alias ([^=]+)='(\"[^\"]+\"|[^ ]+)(( +[^ ]+)*)'"
+
+    # create array of function completion triggers, keeping multi-word triggers together
+    eval "local completions=($(complete -p | sed -Ene "/$compl_regex/s//'\3'/p"))"
+    (( ${#completions[@]} == 0 )) && return 0
+
+    # create temporary file for wrapper functions and completions
+    rm -f "/tmp/${namespace}-*.tmp" # preliminary cleanup
+    local tmp_file; tmp_file="$(mktemp "/tmp/${namespace}-${RANDOM}XXX.tmp")" || return 1
+
+    local completion_loader; completion_loader="$(complete -p -D 2>/dev/null | sed -Ene 's/.* -F ([^ ]*).*/\1/p')"
+
+    # read in "<alias> '<aliased command>' '<command args>'" lines from defined aliases
+    local line; while read line; do
+        eval "local alias_tokens; alias_tokens=($line)" 2>/dev/null || continue # some alias arg patterns cause an eval parse error
+        local alias_name="${alias_tokens[0]}" alias_cmd="${alias_tokens[1]}" alias_args="${alias_tokens[2]# }"
+
+        # skip aliases to pipes, boolean control structures and other command lists
+        # (leveraging that eval errs out if $alias_args contains unquoted shell metacharacters)
+        eval "local alias_arg_words; alias_arg_words=($alias_args)" 2>/dev/null || continue
+        # avoid expanding wildcards
+        read -a alias_arg_words <<< "$alias_args"
+
+        # skip alias if there is no completion function triggered by the aliased command
+        if [[ ! " ${completions[*]} " =~ " $alias_cmd " ]]; then
+            if [[ -n "$completion_loader" ]]; then
+                # force loading of completions for the aliased command
+                eval "$completion_loader $alias_cmd"
+                # 124 means completion loader was successful
+                [[ $? -eq 124 ]] || continue
+                completions+=($alias_cmd)
+            else
+                continue
+            fi
+        fi
+        local new_completion="$(complete -p "$alias_cmd")"
+
+        # create a wrapper inserting the alias arguments if any
+        if [[ -n $alias_args ]]; then
+            local compl_func="${new_completion/#* -F /}"; compl_func="${compl_func%% *}"
+            # avoid recursive call loops by ignoring our own functions
+            if [[ "${compl_func#_$namespace::}" == $compl_func ]]; then
+                local compl_wrapper="_${namespace}::${alias_name}"
+                    echo "function $compl_wrapper {
+                        (( COMP_CWORD += ${#alias_arg_words[@]} ))
+                        COMP_WORDS=($alias_cmd $alias_args \${COMP_WORDS[@]:1})
+                        (( COMP_POINT -= \${#COMP_LINE} ))
+                        COMP_LINE=\${COMP_LINE/$alias_name/$alias_cmd $alias_args}
+                        (( COMP_POINT += \${#COMP_LINE} ))
+                        $compl_func
+                    }" >> "$tmp_file"
+                    new_completion="${new_completion/ -F $compl_func / -F $compl_wrapper }"
+            fi
+        fi
+
+        # replace completion trigger by alias
+        new_completion="${new_completion% *} $alias_name"
+        echo "$new_completion" >> "$tmp_file"
+    done < <(alias -p | sed -Ene "s/$alias_regex/\1 '\2' '\3'/p")
+    source "$tmp_file" && rm -f "$tmp_file"
+};
+
+export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
+export M2_HOME=/usr/share/maven
+export MAVEN_OPTS="-Xss16M"
+export GRADLE_HOME=/opt/gradle/gradle-8.10.2
+
+PATH="$JAVA_HOME/bin:$M2_HOME/bin:$GRADLE_HOME/bin:$PATH:$HOME/jdtls/bin"
+export PATH="$HOME/.nvm/versions/node/v25.1.0/bin:$PATH"
+
+export EDITOR="zettlr"
+
+#export GRADLE_OPTS="-Xmx16g"
+#export MAVEN_OPTS="-Xmx16g"
+
+#export ISTIO_HOME="/home/ilaptop/dev/software/istio-1.27.1" #todo: fix
+#export PATH=$ISTIO_HOME/bin:$PATH #todo: fix
+
+# Placed in ~/.secrets.d/secrets.sh
+# export RENOVATION_VAULT_TOKEN=
+# export RENOVATION_VAULT_UNSEAL_KEY=
+# export NOTIFICATION_TELEGRAM_BOT_TOKEN=
+# export NOTIFICATION_TELEGRAM_BOT_CHAT_ID=
+# export NOTIFICATION_TELEGRAM_CHAT_ID=
+
+# ~/.bashrc
+load_renovation_env() {
+  # shellcheck disable=SC1090
+  source ~/.secrets.d/secrets.sh
+  echo "Sensitive env loaded for this shell."
+}
+
+load_renovation_env
+
+##Aliases
+#Common
+#alias j17="export JAVA_HOME=/usr/lib/jvm/jdk-17" #todo: fix
+alias j21='export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 21"'
+alias j25='export JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 25"'
+
+alias .="cd .."
+alias l="ls"
+alias c="cd "
+alias wd="cd /home/eug/dev/projects/my/renovation"
+alias r="reset"
+alias cl="clear"
+alias e="exit"
+alias n="npm"
+alias nr="npm run"
+alias ni="npm install"
+alias no="node"
+alias ns="netstat -lpn | grep "
+alias ki="sudo kill -9 "
+alias sau="sudo apt update -y && sudo apt autoremove -y && sudo apt update -y"
+alias w="watch -n 1 "
+
+alias cla="claude"
+
+#Git (it considers git aliases described in the snippet: https://bitbucket.org/snippets/iCreators/dRdyj)
+alias g='git'
+alias gf='git fetch'
+alias gpu='git push'
+alias gp='git pull'
+alias gl='git log -5 --oneline'
+alias gpl='git pull origin develop'
+alias gps='git push origin develop'
+alias gb='git branch'
+alias gch='git checkout'
+alias gs='git status'
+alias gc='git commit -m'
+alias ga='git add'
+alias gaa='git add .'
+alias gac='git add . && git commit -m'
+alias gd='git diff'
+#alias gr='git reset'
+alias grs='git reset --soft'
+alias gcl='git clean -f'
+alias grc='g rc' #!git reset --hard && git clean -f
+alias gm='git merge'
+alias gco='git commit'
+alias gca='git commit --amend'
+alias gt='git tag'
+
+#Maven
+alias m="mvn"
+alias mc="mvn clean"
+alias mco="mvn compile"
+alias mp="mvn package"
+alias mt="mvn test"
+#alias mi="mvn install"
+alias mcc="mvn clean compile"
+alias mctc="mvn clean test-compile"
+alias mcp="mvn clean package"
+alias mct="mvn clean test"
+alias mcv="mvn clean verify"
+alias mcin="mvn clean integration-test"
+alias mci="mvn clean install"
+alias mcis="mvn clean install -DskipTests=true"
+alias mid="mvn idea:clean idea:idea"
+alias mdr="mvn dependency:resolve dependency:sources"
+alias mcva="mvn clean validate"
+alias mdt="mvn dependency:tree"
+alias mdg="mvn dependency:tree | grep "
+alias mdi='function mdi(){ mvn dependency:tree -Dincludes=$1; };mdi'
+
+#Gradle
+alias gr="./gradlew"
+alias grc="./gradlew clean"
+alias grb="./gradlew build"
+alias grt="./gradlew test"
+alias grj="./gradlew jar"
+alias grcb="./gradlew clean build --no-build-cache"
+alias idea="/bin/bash -l -c ~/dev/software/idea-IU-253.30387.90/bin/idea"
+
+#Docker
+alias d='docker'
+alias dl='docker logs'
+alias dp='docker ps -a'
+alias di='docker images'
+alias dc='docker compose' 
+alias dcu='docker compose up'
+alias dcd='docker compose up -d'
+alias dcp='docker compose ps'
+alias dcdw='docker compose down'
+alias dkc='docker kill $(docker ps -q) && docker rm $(docker ps -a -q)'
+alias des='function des(){ docker exec -it $1 sh; };des'
+alias deb='function deb(){ docker exec -it $1 bash; };deb'
+
+#Kubenetes
+alias k="kubectl"
+#alias ka="kubectl get pod && kubectl get service && kubectl get deployments && kubectl get replicasets.apps && kubectl get statefulsets.apps"
+alias kg="kubectl get"
+alias kd="kubectl delete"
+alias kde="kubectl describe"
+alias kga="kubectl get all"
+alias kgp="kubectl get pv"
+alias kgpc="kubectl get pvc"
+alias kn="kubectl config view --minify -o jsonpath='{..namespace}' && echo"
+alias kns="kubectl config set-context --current --namespace"
+
+#Minikube
+alias mi="minikube"
+alias min="minikube -p mn"
+alias mis="minikube ssh"
+
+#Helm
+alias h="helm"
+alias fcon="sudo openfortivpn vpn.regnology.net:443   --saml-login   --pppd-use-peerdns=1 --set-dns=1   --trusted-cert f116223a10c0bd719fa31bb470866ee9cbe681df6c01558ea5949694b8699d3b"
+
+# after any command just put tnot(), e.g. gradle build; tnot
+alias tnsimple="curl -X POST \"https://api.telegram.org/bot$NOTIFICATION_TELEGRAM_BOT_TOKEN/sendMessage\" -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\": \\\"$NOTIFICATION_TELEGRAM_CHAT_ID\\\", \\\"text\\\": \\\"🔔 Job finished 🔔\\\"}\""
+
+# using: tnot "<message>"
+tn() {
+  local msg="${*:-🔔 Job finished 🔔}"
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data-urlencode "text=$msg"
+}
+
+tncut() {
+  local raw="${*:-🔔 Job finished 🔔}"
+  # Fast substring (may cut a multi-byte char in UTF-8 edge cases)
+  local msg="${raw:0:1000}"
+
+  # HTML-escape for parse_mode=HTML
+  local esc
+  esc=$(printf '%s' "$msg" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g')
+
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data "parse_mode=HTML" \
+    --data-urlencode "text=<pre><code>${esc}</code></pre>"
+}
+
+
+#ALIAS COMPLETION !!! should be in the end !!!
+alias_completion
+
+# Mirror `make` completion onto the `ma` alias.
+# Runs after alias_completion so it overrides any half-working entry, and
+# handles bash-completion's lazy loader (whether named _comp_load or
+# _completion_loader) plus a direct-source fallback.
+_install_ma_completion() {
+    if ! complete -p make &>/dev/null; then
+        if declare -F _comp_load &>/dev/null; then
+            _comp_load make 2>/dev/null
+        elif declare -F _completion_loader &>/dev/null; then
+            _completion_loader make 2>/dev/null
+        fi
+    fi
+    if ! complete -p make &>/dev/null; then
+        for f in /usr/share/bash-completion/completions/make \
+                 /etc/bash_completion.d/make; do
+            [ -r "$f" ] && . "$f" && break
+        done
+    fi
+    local def
+    def=$(complete -p make 2>/dev/null) && eval "${def% make} ma"
+}
+_install_ma_completion
+unset -f _install_ma_completion
+
+
+# !!! Should be in the end
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Created by `pipx` on 2026-02-26 13:13:20
+export PATH="$PATH:/home/eug/.local/bin"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/home/eug/.bun/bin/bun "/home/eug/.claude/plugins/cache/thedotmack/claude-mem/10.5.5/scripts/worker-service.cjs"'
+And it doesn't work
+---
+
+## 2026-04-29T11:01:24Z
+ # ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+###
+# Automatically add completion for all aliases to commands having completion functions
+function alias_completion {
+    local namespace="alias_completion"
+
+    # parse function based completion definitions, where capture group 2 => function and 3 => trigger
+    local compl_regex='complete( +[^ ]+)* -F ([^ ]+) ("[^"]+"|[^ ]+)'
+    # parse alias definitions, where capture group 1 => trigger, 2 => command, 3 => command arguments
+    local alias_regex="alias ([^=]+)='(\"[^\"]+\"|[^ ]+)(( +[^ ]+)*)'"
+
+    # create array of function completion triggers, keeping multi-word triggers together
+    eval "local completions=($(complete -p | sed -Ene "/$compl_regex/s//'\3'/p"))"
+    (( ${#completions[@]} == 0 )) && return 0
+
+    # create temporary file for wrapper functions and completions
+    rm -f "/tmp/${namespace}-*.tmp" # preliminary cleanup
+    local tmp_file; tmp_file="$(mktemp "/tmp/${namespace}-${RANDOM}XXX.tmp")" || return 1
+
+    local completion_loader; completion_loader="$(complete -p -D 2>/dev/null | sed -Ene 's/.* -F ([^ ]*).*/\1/p')"
+
+    # read in "<alias> '<aliased command>' '<command args>'" lines from defined aliases
+    local line; while read line; do
+        eval "local alias_tokens; alias_tokens=($line)" 2>/dev/null || continue # some alias arg patterns cause an eval parse error
+        local alias_name="${alias_tokens[0]}" alias_cmd="${alias_tokens[1]}" alias_args="${alias_tokens[2]# }"
+
+        # skip aliases to pipes, boolean control structures and other command lists
+        # (leveraging that eval errs out if $alias_args contains unquoted shell metacharacters)
+        eval "local alias_arg_words; alias_arg_words=($alias_args)" 2>/dev/null || continue
+        # avoid expanding wildcards
+        read -a alias_arg_words <<< "$alias_args"
+
+        # skip alias if there is no completion function triggered by the aliased command
+        if [[ ! " ${completions[*]} " =~ " $alias_cmd " ]]; then
+            if [[ -n "$completion_loader" ]]; then
+                # force loading of completions for the aliased command
+                eval "$completion_loader $alias_cmd"
+                # 124 means completion loader was successful
+                [[ $? -eq 124 ]] || continue
+                completions+=($alias_cmd)
+            else
+                continue
+            fi
+        fi
+        local new_completion="$(complete -p "$alias_cmd")"
+
+        # create a wrapper inserting the alias arguments if any
+        if [[ -n $alias_args ]]; then
+            local compl_func="${new_completion/#* -F /}"; compl_func="${compl_func%% *}"
+            # avoid recursive call loops by ignoring our own functions
+            if [[ "${compl_func#_$namespace::}" == $compl_func ]]; then
+                local compl_wrapper="_${namespace}::${alias_name}"
+                    echo "function $compl_wrapper {
+                        (( COMP_CWORD += ${#alias_arg_words[@]} ))
+                        COMP_WORDS=($alias_cmd $alias_args \${COMP_WORDS[@]:1})
+                        (( COMP_POINT -= \${#COMP_LINE} ))
+                        COMP_LINE=\${COMP_LINE/$alias_name/$alias_cmd $alias_args}
+                        (( COMP_POINT += \${#COMP_LINE} ))
+                        $compl_func
+                    }" >> "$tmp_file"
+                    new_completion="${new_completion/ -F $compl_func / -F $compl_wrapper }"
+            fi
+        fi
+
+        # replace completion trigger by alias
+        new_completion="${new_completion% *} $alias_name"
+        echo "$new_completion" >> "$tmp_file"
+    done < <(alias -p | sed -Ene "s/$alias_regex/\1 '\2' '\3'/p")
+    source "$tmp_file" && rm -f "$tmp_file"
+};
+
+export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
+export M2_HOME=/usr/share/maven
+export MAVEN_OPTS="-Xss16M"
+export GRADLE_HOME=/opt/gradle/gradle-8.10.2
+
+PATH="$JAVA_HOME/bin:$M2_HOME/bin:$GRADLE_HOME/bin:$PATH:$HOME/jdtls/bin"
+export PATH="$HOME/.nvm/versions/node/v25.1.0/bin:$PATH"
+
+export EDITOR="zettlr"
+
+#export GRADLE_OPTS="-Xmx16g"
+#export MAVEN_OPTS="-Xmx16g"
+
+#export ISTIO_HOME="/home/ilaptop/dev/software/istio-1.27.1" #todo: fix
+#export PATH=$ISTIO_HOME/bin:$PATH #todo: fix
+
+# Placed in ~/.secrets.d/secrets.sh
+# export RENOVATION_VAULT_TOKEN=
+# export RENOVATION_VAULT_UNSEAL_KEY=
+# export NOTIFICATION_TELEGRAM_BOT_TOKEN=
+# export NOTIFICATION_TELEGRAM_BOT_CHAT_ID=
+# export NOTIFICATION_TELEGRAM_CHAT_ID=
+
+# ~/.bashrc
+load_renovation_env() {
+  # shellcheck disable=SC1090
+  source ~/.secrets.d/secrets.sh
+  echo "Sensitive env loaded for this shell."
+}
+
+load_renovation_env
+
+##Aliases
+#Common
+#alias j17="export JAVA_HOME=/usr/lib/jvm/jdk-17" #todo: fix
+alias j21='export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 21"'
+alias j25='export JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 25"'
+
+alias .="cd .."
+alias l="ls"
+alias c="cd "
+alias wd="cd /home/eug/dev/projects/my/renovation"
+alias r="reset"
+alias cl="clear"
+alias e="exit"
+alias n="npm"
+alias nr="npm run"
+alias ni="npm install"
+alias no="node"
+alias ns="netstat -lpn | grep "
+alias ki="sudo kill -9 "
+alias sau="sudo apt update -y && sudo apt autoremove -y && sudo apt update -y"
+alias w="watch -n 1 "
+
+alias cla="claude"
+
+#Git (it considers git aliases described in the snippet: https://bitbucket.org/snippets/iCreators/dRdyj)
+alias g='git'
+alias gf='git fetch'
+alias gpu='git push'
+alias gp='git pull'
+alias gl='git log -5 --oneline'
+alias gpl='git pull origin develop'
+alias gps='git push origin develop'
+alias gb='git branch'
+alias gch='git checkout'
+alias gs='git status'
+alias gc='git commit -m'
+alias ga='git add'
+alias gaa='git add .'
+alias gac='git add . && git commit -m'
+alias gd='git diff'
+#alias gr='git reset'
+alias grs='git reset --soft'
+alias gcl='git clean -f'
+alias grc='g rc' #!git reset --hard && git clean -f
+alias gm='git merge'
+alias gco='git commit'
+alias gca='git commit --amend'
+alias gt='git tag'
+
+#Maven
+alias m="mvn"
+alias mc="mvn clean"
+alias mco="mvn compile"
+alias mp="mvn package"
+alias mt="mvn test"
+#alias mi="mvn install"
+alias mcc="mvn clean compile"
+alias mctc="mvn clean test-compile"
+alias mcp="mvn clean package"
+alias mct="mvn clean test"
+alias mcv="mvn clean verify"
+alias mcin="mvn clean integration-test"
+alias mci="mvn clean install"
+alias mcis="mvn clean install -DskipTests=true"
+alias mid="mvn idea:clean idea:idea"
+alias mdr="mvn dependency:resolve dependency:sources"
+alias mcva="mvn clean validate"
+alias mdt="mvn dependency:tree"
+alias mdg="mvn dependency:tree | grep "
+alias mdi='function mdi(){ mvn dependency:tree -Dincludes=$1; };mdi'
+
+alias ma="make"
+
+#Gradle
+alias gr="./gradlew"
+alias grc="./gradlew clean"
+alias grb="./gradlew build"
+alias grt="./gradlew test"
+alias grj="./gradlew jar"
+alias grcb="./gradlew clean build --no-build-cache"
+alias idea="/bin/bash -l -c ~/dev/software/idea-IU-253.30387.90/bin/idea"
+
+#Docker
+alias d='docker'
+alias dl='docker logs'
+alias dp='docker ps -a'
+alias di='docker images'
+alias dc='docker compose' 
+alias dcu='docker compose up'
+alias dcd='docker compose up -d'
+alias dcp='docker compose ps'
+alias dcdw='docker compose down'
+alias dkc='docker kill $(docker ps -q) && docker rm $(docker ps -a -q)'
+alias des='function des(){ docker exec -it $1 sh; };des'
+alias deb='function deb(){ docker exec -it $1 bash; };deb'
+
+#Kubenetes
+alias k="kubectl"
+#alias ka="kubectl get pod && kubectl get service && kubectl get deployments && kubectl get replicasets.apps && kubectl get statefulsets.apps"
+alias kg="kubectl get"
+alias kd="kubectl delete"
+alias kde="kubectl describe"
+alias kga="kubectl get all"
+alias kgp="kubectl get pv"
+alias kgpc="kubectl get pvc"
+alias kn="kubectl config view --minify -o jsonpath='{..namespace}' && echo"
+alias kns="kubectl config set-context --current --namespace"
+
+#Minikube
+alias mi="minikube"
+alias min="minikube -p mn"
+alias mis="minikube ssh"
+
+#Helm
+alias h="helm"
+alias fcon="sudo openfortivpn vpn.regnology.net:443   --saml-login   --pppd-use-peerdns=1 --set-dns=1   --trusted-cert f116223a10c0bd719fa31bb470866ee9cbe681df6c01558ea5949694b8699d3b"
+
+# after any command just put tnot(), e.g. gradle build; tnot
+alias tnsimple="curl -X POST \"https://api.telegram.org/bot$NOTIFICATION_TELEGRAM_BOT_TOKEN/sendMessage\" -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\": \\\"$NOTIFICATION_TELEGRAM_CHAT_ID\\\", \\\"text\\\": \\\"🔔 Job finished 🔔\\\"}\""
+
+# using: tnot "<message>"
+tn() {
+  local msg="${*:-🔔 Job finished 🔔}"
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data-urlencode "text=$msg"
+}
+
+tncut() {
+  local raw="${*:-🔔 Job finished 🔔}"
+  # Fast substring (may cut a multi-byte char in UTF-8 edge cases)
+  local msg="${raw:0:1000}"
+
+  # HTML-escape for parse_mode=HTML
+  local esc
+  esc=$(printf '%s' "$msg" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g')
+
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data "parse_mode=HTML" \
+    --data-urlencode "text=<pre><code>${esc}</code></pre>"
+}
+
+
+#ALIAS COMPLETION !!! should be in the end !!!
+alias_completion
+
+
+# !!! Should be in the end
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Created by `pipx` on 2026-02-26 13:13:20
+export PATH="$PATH:/home/eug/.local/bin"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/home/eug/.bun/bin/bun "/home/eug/.claude/plugins/cache/thedotmack/claude-mem/10.5.5/scripts/worker-service.cjs"'
+whti is my updated file
+---
+
+## 2026-04-29T11:05:55Z
+so I changed to:
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+###
+# Automatically add completion for all aliases to commands having completion functions
+function alias_completion {
+    local namespace="alias_completion"
+
+    # parse function based completion definitions, where capture group 2 => function and 3 => trigger
+    local compl_regex='complete( +[^ ]+)* -F ([^ ]+) ("[^"]+"|[^ ]+)'
+    # parse alias definitions, where capture group 1 => trigger, 2 => command, 3 => command arguments
+    local alias_regex="alias ([^=]+)='(\"[^\"]+\"|[^ ]+)(( +[^ ]+)*)'"
+
+    # create array of function completion triggers, keeping multi-word triggers together
+    eval "local completions=($(complete -p | sed -Ene "/$compl_regex/s//'\3'/p"))"
+    (( ${#completions[@]} == 0 )) && return 0
+
+    # create temporary file for wrapper functions and completions
+    rm -f "/tmp/${namespace}-*.tmp" # preliminary cleanup
+    local tmp_file; tmp_file="$(mktemp "/tmp/${namespace}-${RANDOM}XXX.tmp")" || return 1
+
+    local completion_loader; completion_loader="$(complete -p -D 2>/dev/null | sed -Ene 's/.* -F ([^ ]*).*/\1/p')"
+
+    # read in "<alias> '<aliased command>' '<command args>'" lines from defined aliases
+    local line; while read line; do
+        eval "local alias_tokens; alias_tokens=($line)" 2>/dev/null || continue # some alias arg patterns cause an eval parse error
+        local alias_name="${alias_tokens[0]}" alias_cmd="${alias_tokens[1]}" alias_args="${alias_tokens[2]# }"
+
+        # skip aliases to pipes, boolean control structures and other command lists
+        # (leveraging that eval errs out if $alias_args contains unquoted shell metacharacters)
+        eval "local alias_arg_words; alias_arg_words=($alias_args)" 2>/dev/null || continue
+        # avoid expanding wildcards
+        read -a alias_arg_words <<< "$alias_args"
+
+        # skip alias if there is no completion function triggered by the aliased command
+        if [[ ! " ${completions[*]} " =~ " $alias_cmd " ]]; then
+            if [[ -n "$completion_loader" ]]; then
+                # force loading of completions for the aliased command
+                eval "$completion_loader $alias_cmd"
+                # 124 means completion loader was successful
+                [[ $? -eq 124 ]] || continue
+                completions+=($alias_cmd)
+            else
+                continue
+            fi
+        fi
+        local new_completion="$(complete -p "$alias_cmd")"
+
+        # create a wrapper inserting the alias arguments if any
+        if [[ -n $alias_args ]]; then
+            local compl_func="${new_completion/#* -F /}"; compl_func="${compl_func%% *}"
+            # avoid recursive call loops by ignoring our own functions
+            if [[ "${compl_func#_$namespace::}" == $compl_func ]]; then
+                local compl_wrapper="_${namespace}::${alias_name}"
+                    echo "function $compl_wrapper {
+                        (( COMP_CWORD += ${#alias_arg_words[@]} ))
+                        COMP_WORDS=($alias_cmd $alias_args \${COMP_WORDS[@]:1})
+                        (( COMP_POINT -= \${#COMP_LINE} ))
+                        COMP_LINE=\${COMP_LINE/$alias_name/$alias_cmd $alias_args}
+                        (( COMP_POINT += \${#COMP_LINE} ))
+                        $compl_func
+                    }" >> "$tmp_file"
+                    new_completion="${new_completion/ -F $compl_func / -F $compl_wrapper }"
+            fi
+        fi
+
+        # replace completion trigger by alias
+        new_completion="${new_completion% *} $alias_name"
+        echo "$new_completion" >> "$tmp_file"
+    done < <(alias -p | sed -Ene "s/$alias_regex/\1 '\2' '\3'/p")
+    source "$tmp_file" && rm -f "$tmp_file"
+};
+
+export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
+export M2_HOME=/usr/share/maven
+export MAVEN_OPTS="-Xss16M"
+export GRADLE_HOME=/opt/gradle/gradle-8.10.2
+
+PATH="$JAVA_HOME/bin:$M2_HOME/bin:$GRADLE_HOME/bin:$PATH:$HOME/jdtls/bin"
+export PATH="$HOME/.nvm/versions/node/v25.1.0/bin:$PATH"
+
+export EDITOR="zettlr"
+
+#export GRADLE_OPTS="-Xmx16g"
+#export MAVEN_OPTS="-Xmx16g"
+
+#export ISTIO_HOME="/home/ilaptop/dev/software/istio-1.27.1" #todo: fix
+#export PATH=$ISTIO_HOME/bin:$PATH #todo: fix
+
+# Placed in ~/.secrets.d/secrets.sh
+# export RENOVATION_VAULT_TOKEN=
+# export RENOVATION_VAULT_UNSEAL_KEY=
+# export NOTIFICATION_TELEGRAM_BOT_TOKEN=
+# export NOTIFICATION_TELEGRAM_BOT_CHAT_ID=
+# export NOTIFICATION_TELEGRAM_CHAT_ID=
+
+# ~/.bashrc
+load_renovation_env() {
+  # shellcheck disable=SC1090
+  source ~/.secrets.d/secrets.sh
+  echo "Sensitive env loaded for this shell."
+}
+
+load_renovation_env
+
+##Aliases
+#Common
+#alias j17="export JAVA_HOME=/usr/lib/jvm/jdk-17" #todo: fix
+alias j21='export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 21"'
+alias j25='export JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64 && export PATH=$JAVA_HOME/bin:$PATH && echo "Switched to Java 25"'
+
+alias .="cd .."
+alias l="ls"
+alias c="cd "
+alias wd="cd /home/eug/dev/projects/my/renovation"
+alias r="reset"
+alias cl="clear"
+alias e="exit"
+alias n="npm"
+alias nr="npm run"
+alias ni="npm install"
+alias no="node"
+alias ns="netstat -lpn | grep "
+alias ki="sudo kill -9 "
+alias sau="sudo apt update -y && sudo apt autoremove -y && sudo apt update -y"
+alias w="watch -n 1 "
+
+alias cla="claude"
+
+#Git (it considers git aliases described in the snippet: https://bitbucket.org/snippets/iCreators/dRdyj)
+alias g='git'
+alias gf='git fetch'
+alias gpu='git push'
+alias gp='git pull'
+alias gl='git log -5 --oneline'
+alias gpl='git pull origin develop'
+alias gps='git push origin develop'
+alias gb='git branch'
+alias gch='git checkout'
+alias gs='git status'
+alias gc='git commit -m'
+alias ga='git add'
+alias gaa='git add .'
+alias gac='git add . && git commit -m'
+alias gd='git diff'
+#alias gr='git reset'
+alias grs='git reset --soft'
+alias gcl='git clean -f'
+alias grc='g rc' #!git reset --hard && git clean -f
+alias gm='git merge'
+alias gco='git commit'
+alias gca='git commit --amend'
+alias gt='git tag'
+
+#Maven
+alias m="mvn"
+alias mc="mvn clean"
+alias mco="mvn compile"
+alias mp="mvn package"
+alias mt="mvn test"
+#alias mi="mvn install"
+alias mcc="mvn clean compile"
+alias mctc="mvn clean test-compile"
+alias mcp="mvn clean package"
+alias mct="mvn clean test"
+alias mcv="mvn clean verify"
+alias mcin="mvn clean integration-test"
+alias mci="mvn clean install"
+alias mcis="mvn clean install -DskipTests=true"
+alias mid="mvn idea:clean idea:idea"
+alias mdr="mvn dependency:resolve dependency:sources"
+alias mcva="mvn clean validate"
+alias mdt="mvn dependency:tree"
+alias mdg="mvn dependency:tree | grep "
+alias mdi='function mdi(){ mvn dependency:tree -Dincludes=$1; };mdi'
+
+alias ma="make"
+
+#Gradle
+alias gr="./gradlew"
+alias grc="./gradlew clean"
+alias grb="./gradlew build"
+alias grt="./gradlew test"
+alias grj="./gradlew jar"
+alias grcb="./gradlew clean build --no-build-cache"
+alias idea="/bin/bash -l -c ~/dev/software/idea-IU-253.30387.90/bin/idea"
+
+#Docker
+alias d='docker'
+alias dl='docker logs'
+alias dp='docker ps -a'
+alias di='docker images'
+alias dc='docker compose' 
+alias dcu='docker compose up'
+alias dcd='docker compose up -d'
+alias dcp='docker compose ps'
+alias dcdw='docker compose down'
+alias dkc='docker kill $(docker ps -q) && docker rm $(docker ps -a -q)'
+alias des='function des(){ docker exec -it $1 sh; };des'
+alias deb='function deb(){ docker exec -it $1 bash; };deb'
+
+#Kubenetes
+alias k="kubectl"
+#alias ka="kubectl get pod && kubectl get service && kubectl get deployments && kubectl get replicasets.apps && kubectl get statefulsets.apps"
+alias kg="kubectl get"
+alias kd="kubectl delete"
+alias kde="kubectl describe"
+alias kga="kubectl get all"
+alias kgp="kubectl get pv"
+alias kgpc="kubectl get pvc"
+alias kn="kubectl config view --minify -o jsonpath='{..namespace}' && echo"
+alias kns="kubectl config set-context --current --namespace"
+
+#Minikube
+alias mi="minikube"
+alias min="minikube -p mn"
+alias mis="minikube ssh"
+
+#Helm
+alias h="helm"
+alias fcon="sudo openfortivpn vpn.regnology.net:443   --saml-login   --pppd-use-peerdns=1 --set-dns=1   --trusted-cert f116223a10c0bd719fa31bb470866ee9cbe681df6c01558ea5949694b8699d3b"
+
+# after any command just put tnot(), e.g. gradle build; tnot
+alias tnsimple="curl -X POST \"https://api.telegram.org/bot$NOTIFICATION_TELEGRAM_BOT_TOKEN/sendMessage\" -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\": \\\"$NOTIFICATION_TELEGRAM_CHAT_ID\\\", \\\"text\\\": \\\"🔔 Job finished 🔔\\\"}\""
+
+# using: tnot "<message>"
+tn() {
+  local msg="${*:-🔔 Job finished 🔔}"
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data-urlencode "text=$msg"
+}
+
+tncut() {
+  local raw="${*:-🔔 Job finished 🔔}"
+  # Fast substring (may cut a multi-byte char in UTF-8 edge cases)
+  local msg="${raw:0:1000}"
+
+  # HTML-escape for parse_mode=HTML
+  local esc
+  esc=$(printf '%s' "$msg" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g')
+
+  local api="https://api.telegram.org/bot${NOTIFICATION_TELEGRAM_BOT_TOKEN}/sendMessage"
+  curl -sS -X POST "$api" \
+    --data "chat_id=${NOTIFICATION_TELEGRAM_CHAT_ID}" \
+    --data "parse_mode=HTML" \
+    --data-urlencode "text=<pre><code>${esc}</code></pre>"
+}
+
+
+#ALIAS COMPLETION !!! should be in the end !!!
+alias_completion
+
+# Mirror `make` completion onto the `ma` alias.
+_install_ma_completion() {
+    if ! complete -p make &>/dev/null; then
+        if declare -F _comp_load &>/dev/null; then
+            _comp_load make 2>/dev/null
+        elif declare -F _completion_loader &>/dev/null; then
+            _completion_loader make 2>/dev/null
+        fi
+    fi
+    if ! complete -p make &>/dev/null; then
+        for f in /usr/share/bash-completion/completions/make \
+                 /etc/bash_completion.d/make; do
+            [ -r "$f" ] && . "$f" && break
+        done
+    fi
+    local def
+    def=$(complete -p make 2>/dev/null) && eval "${def% make} ma"
+}
+_install_ma_completion
+unset -f _install_ma_completion                     
+
+
+# !!! Should be in the end
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Created by `pipx` on 2026-02-26 13:13:20
+export PATH="$PATH:/home/eug/.local/bin"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/home/eug/.bun/bin/bun "/home/eug/.claude/plugins/cache/thedotmack/claude-mem/10.5.5/scripts/worker-service.cjs"'
+
+And run:
+
+eug@top:~/dev/projects/my/renovation$ alias ma
+alias ma='make'
+eug@top:~/dev/projects/my/renovation$ type _comp_load 2>&1 | head -1
+bash: type: _comp_load: not found
+eug@top:~/dev/projects/my/renovation$ type _completion_loader 2>&1 | head -1
+_completion_loader is a function
+eug@top:~/dev/projects/my/renovation$ complete -p make
+complete -F _make make
+eug@top:~/dev/projects/my/renovation$ make
+make                        make-ssl-cert
+make-first-existing-target  
+eug@top:~/dev/projects/my/renovation$ make 
+build            compile          docker_down      Makefile
+check_all        default_message  help             message
+clean            docker_all       integrationTest  style
+eug@top:~/dev/projects/my/renovation$ complete -p ma
+complete -F _make ma
+eug@top:~/dev/projects/my/renovation$ ls /usr/share/bash-completion/completions/make /etc/bash_completion.d/make 2>/dev/null
+/usr/share/bash-completion/completions/make
+---
+
+## 2026-04-29T11:07:26Z
+it doesn't work run `ma <tab>` your self and check
+---
+
+## 2026-04-29T11:10:52Z
+ma <Tab> isn't working
+---
+
+## 2026-04-29T11:15:12Z
+It works. What did you change and where (resume all)?
+---
+
+## 2026-04-29T11:16:17Z
+It works. What did you change and where (resume all)? (output here in console)
+---
+
+## 2026-04-29T11:17:33Z
+thanks
+---
+
+## 2026-04-29T11:26:06Z
+/statusline
+---

@@ -62,5 +62,6 @@
       "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot log --oneline -5)"
     ],
     "deny": []
-  }
+  },
+  "model": "opusplan"
 }
