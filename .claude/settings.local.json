@@ -70,5 +70,6 @@
       "mcp__backlog__*"
     ],
     "deny": []
-  }
+  },
+  "model": "opusplan"
 }

@@ -1263,3 +1263,8 @@
 - .claude/settings.local.json
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T17:45:24Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+<!-- end-snapshot -->

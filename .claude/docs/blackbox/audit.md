@@ -3039,3 +3039,13 @@ Read and execute TASK-2 and its subtasks (TASK-2.1, TASK-2.2) from the backlog."
 ## 2026-04-29T16:43:28Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-29T17:44:46Z
+Please create separate tasks in the backlog for described problems:
+- Consider Makefile in CLAUDE.md and README.md files for root project and its submoduel.
+- Change occurances of `claude-ai-spring-boot-frontend` to `frontend` as it was previousely done for `backend`. Fix occurance of `claude-ai-spring-boot-app` by changing to `backend`
+---
+
+## 2026-04-29T17:48:46Z
+execute git add all changes and commit them with suitable message
+---
