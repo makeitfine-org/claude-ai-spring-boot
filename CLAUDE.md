@@ -67,7 +67,7 @@ Before marking any task done:
 2. Root `README.md` updated if ports, services, or quick-start steps changed
 3. GitHub Actions `.github/workflows/ci.yml` updated if pipeline steps changed
 4. If Dockerfile, docker-compose, or env vars changed: `cd e2e && npm test` to confirm all scenarios still pass
-5. If files in `backend`, `frontend`, `e2e` folders, except `CLAUDE.md` and `README.md`, were added/modified/deleted: run `make build` and confirm it passes before closing the task
+5. If files in `backend`, `frontend`, `e2e` modules, except `CLAUDE.md` and `README.md`, were added/modified/deleted: run `make build` and confirm it passes before closing the task
 
 <!-- BACKLOG.MD MCP GUIDELINES START -->
 
@@ -78,6 +78,8 @@ Before marking any task done:
 This project uses Backlog.md MCP for all task and project management activities.
 
 **CRITICAL GUIDANCE**
+
+- **Task execution**: When asked to work on or complete a backlog task, move it to `in progress` status IMMEDIATELY — before writing any code or taking any implementation steps.
 
 - If your client supports MCP resources, read `backlog://workflow/overview` to understand when and how to use Backlog for this project.
 - If your client only supports tools or the above request fails, call `backlog.get_backlog_instructions()` to load the tool-oriented overview. Use the `instruction` selector when you need `task-creation`, `task-execution`, or `task-finalization`.

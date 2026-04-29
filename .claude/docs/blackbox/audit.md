@@ -3085,3 +3085,12 @@ rename  docker images: frontend -> claude-ai-spring-boot-frontend and backend ->
 ## 2026-04-29T19:05:46Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-29T19:11:08Z
+Add an instruction to CLAUDE.md about backlog.md that when the implementation of task begins the on task status imidiatly move it to `in progress`
+For example if I prompt: `Complete the backlog task-N` you should immidiatly move backlog task `task-N` in `in progress` and procced working and completing on it.
+---
+
+## 2026-04-29T19:13:42Z
+execute git add all changes and commit them with suitable message
+---

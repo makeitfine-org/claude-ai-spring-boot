@@ -111,6 +111,6 @@ fix it
 Improve CLAUDE.md files by running `makefile build` after adding new features 
 
 ---
-Write multi-user support for they can registracte with login, password 
+Write multi-user support for they can register with login, password 
 and get confirmation on email.
 Save it in cognito or propose something else

@@ -1313,3 +1313,8 @@
 - "backlog/tasks/task-4 - Rename-claude-ai-spring-boot-frontend-\342\206\222-frontend-and-claude-ai-spring-boot-app-\342\206\222-backend-throughout-the-project.md"
 - docker-compose.yml
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T19:11:23Z -->
+- .claude/docs/blackbox/audit.md
+- CLAUDE.md
+<!-- end-snapshot -->
