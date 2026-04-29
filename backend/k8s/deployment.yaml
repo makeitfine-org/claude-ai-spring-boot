@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: claude-ai-spring-boot
+  name: backend
   labels:
-    app: claude-ai-spring-boot
+    app: backend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: claude-ai-spring-boot
+      app: backend
   template:
     metadata:
       labels:
-        app: claude-ai-spring-boot
+        app: backend
     spec:
       initContainers:
       - name: wait-for-postgres
@@ -20,7 +20,7 @@ spec:
         command: ['sh', '-c', 'until pg_isready -h postgres-service -p 5432; do echo "waiting for postgres"; sleep 2; done']
       containers:
       - name: app
-        image: claude-ai-spring-boot
+        image: backend
         ports:
         - containerPort: 8080
           name: http

@@ -23,7 +23,7 @@ config/         → Spring @Configuration classes
 ## Coding Rules
 
 - Group ID / base package: `pl.piomin.services`
-- Maven `artifactId` = `claude-ai-spring-boot`, version = semantic `MAJOR.MINOR.PATCH`
+- Maven `artifactId` = `backend`, version = semantic `MAJOR.MINOR.PATCH`
 - No Lombok — use plain Java records or classes
 - Use **Context7 MCP** before writing any Spring Boot / library API code — training data drifts
 

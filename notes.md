@@ -59,7 +59,7 @@ to
 <artifactId>backend</artifactId>
 
 ---
-Add alias to ~/.bashrc of 'make' as 'ma'
+✅ Add alias to ~/.bashrc of 'make' as 'ma'
 
 ---
 Deploy to AWS (as lambda or talk with AI how's better)
@@ -69,3 +69,13 @@ backlog.md work with
 
 ---
 Make changes for `make build` to execute without stop Skaffold of (back and front)
+
+---
+In docker
+COPY target/backend-1.0.1.jar app.jar
+change `1.0.1` to `*`
+
+---
+While `make build` docker are being created with some port exposing in docker compose.
+And this port can overlap with skaffold(s) backend and frontend instances in minikube ports.
+Fix these for `make build` works normally while minikube running 

@@ -161,7 +161,7 @@ Verify pods are ready:
 ```bash
 kubectl get pods
 # NAME                                  READY   STATUS    RESTARTS
-# claude-ai-spring-boot-<hash>          1/1     Running   0
+# backend-<hash>          1/1     Running   0
 # postgres-0                            1/1     Running   0
 ```
 
@@ -217,5 +217,5 @@ minikube delete   # full reset
 |---|---|---|
 | `ImagePullBackOff` | minikube can't find the image | Re-run `eval $(minikube docker-env)` then redeploy |
 | Pod stuck `Pending` | Insufficient cluster resources | Restart minikube with more `--memory` / `--cpus` |
-| Frontend can't reach backend | Backend service missing | Run `kubectl get svc claude-ai-spring-boot` and confirm it exists |
+| Frontend can't reach backend | Backend service missing | Run `kubectl get svc backend` and confirm it exists |
 | 502 Bad Gateway on `/api/` | Backend not ready yet | Wait for backend pods to pass readiness probes |

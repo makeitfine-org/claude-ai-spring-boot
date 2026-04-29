@@ -396,7 +396,7 @@ JaCoCo enforces **85% line coverage per package**. `mvn verify` fails if the gat
 
 ```bash
 # Build image
-docker build -t claude-ai-spring-boot .
+docker build -t backend .
 
 # Start all services
 docker-compose up -d
@@ -420,13 +420,13 @@ skaffold dev
 skaffold run
 
 # Port-forward to localhost
-kubectl port-forward svc/claude-ai-spring-boot 8080:8080
+kubectl port-forward svc/backend 8080:8080
 
 # Check pod status
 kubectl get pods
 
 # View logs
-kubectl logs -f deployment/claude-ai-spring-boot
+kubectl logs -f deployment/backend
 ```
 
 ---

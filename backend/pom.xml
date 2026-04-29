@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>pl.piomin.services</groupId>
-    <artifactId>claude-ai-spring-boot</artifactId>
+    <artifactId>backend</artifactId>
     <version>1.0.1</version>
-    <name>claude-ai-spring-boot</name>
+    <name>backend</name>
     <description>Spring Boot REST API with JWT authentication and PostgreSQL</description>
 
     <properties>

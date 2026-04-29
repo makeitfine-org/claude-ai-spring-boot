@@ -1194,3 +1194,31 @@
 - .claude/docs/blackbox/session-log.md
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T13:24:31Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T14:07:59Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/rules/version-bump-procedure.md
+- .claude/settings.local.json
+- .github/workflows/ci.yml
+- README.md
+- backend/CLAUDE.md
+- backend/Dockerfile
+- backend/README.md
+- backend/k8s/configmap.yaml
+- backend/k8s/deployment.yaml
+- backend/k8s/secret.yaml
+- backend/k8s/service.yaml
+- backend/pom.xml
+- backend/skaffold.yaml
+- backend/src/main/resources/application.yml
+- docker-compose.yml
+- frontend/k8s/configmap.yaml
+- notes.md
+<!-- end-snapshot -->

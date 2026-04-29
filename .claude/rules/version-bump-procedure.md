@@ -1,10 +1,10 @@
 # Version Bump Procedure
 
-Triggered whenever `<version>` changes under the `claude-ai-spring-boot` artifact in `pom.xml`:
+Triggered whenever `<version>` changes under the `backend` artifact in `pom.xml`:
 
 ```xml
 <groupId>pl.piomin.services</groupId>
-<artifactId>claude-ai-spring-boot</artifactId>
+<artifactId>backend</artifactId>
 <version>X.Y.Z</version>
 ```
 
@@ -12,7 +12,7 @@ Triggered whenever `<version>` changes under the `claude-ai-spring-boot` artifac
 
 1. **Update Dockerfile** — change the `COPY` line to reference the new version:
    ```
-   COPY target/claude-ai-spring-boot-{NEW_VERSION}.jar app.jar
+   COPY target/backend-{NEW_VERSION}.jar app.jar
    ```
 
 2. **Build** — `mvn clean install`

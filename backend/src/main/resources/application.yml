@@ -1,6 +1,6 @@
 spring:
   application:
-    name: claude-ai-spring-boot
+    name: backend
 
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/persondb}

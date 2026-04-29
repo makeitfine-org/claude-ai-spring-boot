@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: app-config
   labels:
-    app: claude-ai-spring-boot
+    app: backend
 data:
   database.url: jdbc:postgresql://postgres-service:5432/persondb
   spring.profiles.active: prod

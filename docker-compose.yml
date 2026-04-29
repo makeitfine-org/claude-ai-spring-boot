@@ -25,7 +25,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: claude-ai-spring-boot
+    container_name: backend
     depends_on:
       postgres:
         condition: service_healthy

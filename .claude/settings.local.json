@@ -59,7 +59,11 @@
       "Bash(echo \"Exit: $?\")",
       "Bash(make help *)",
       "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot diff)",
-      "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot log --oneline -5)"
+      "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot log --oneline -5)",
+      "mcp__backlog__task_search",
+      "mcp__backlog__task_create",
+      "mcp__backlog__task_complete",
+      "mcp__backlog__task_edit"
     ],
     "deny": []
   },
