@@ -1268,3 +1268,13 @@
 - .claude/docs/blackbox/audit.md
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-29T18:07:44Z -->
+- .claude/docs/blackbox/audit.md
+- CLAUDE.md
+- README.md
+- backend/CLAUDE.md
+- backlog/tasks/task-3 - Document-Makefile-usage-in-CLAUDE.md-and-README.md-for-root-project-and-submodules.md
+- e2e/CLAUDE.md
+- frontend/CLAUDE.md
+<!-- end-snapshot -->

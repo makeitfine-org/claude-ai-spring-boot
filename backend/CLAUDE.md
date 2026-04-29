@@ -44,6 +44,16 @@ config/         → Spring @Configuration classes
   - `*IntegrationTest.java` — full slice via `@SpringBootTest`
 - Both positive and negative cases required for every test class
 
+## Makefile Targets (backend)
+
+Use these from the **repo root** instead of running Maven directly:
+
+| Target | Command |
+|---|---|
+| `make buildBackend` | `cd backend && mvn install` |
+| `make clean` | Docker down + remove images + `mvn clean` + reinstall frontend deps |
+| `make cleanShallow` | Same as `clean` but skips reinstalling `node_modules` |
+
 ## Version & Delivery Checklist
 
 Before marking any backend task done:

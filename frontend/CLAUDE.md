@@ -63,5 +63,16 @@ src/
 - E2E: Playwright (`npx playwright test`).
 - Test files co-locate with the code they test or live in a `__tests__/` sibling.
 
+## Makefile Targets (frontend)
+
+Use these from the **repo root**:
+
+| Target | Command |
+|---|---|
+| `make buildFrontend` | `cd frontend && npm install && npm run build` |
+| `make updateFrontend` | Upgrade deps via `npm-check-updates -u && npm install` |
+| `make cleanShallow` | Remove `dist` only (keeps `node_modules`) |
+| `make clean` | Remove `dist` + `node_modules` + reinstall |
+
 ## Testing Requirements
 - For new or updated functionality add or update tests 

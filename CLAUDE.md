@@ -42,6 +42,24 @@ Delegate to subagents liberally — keep the main context window clean.
 Load skills from `.claude/skills/` for targeted in-context capabilities
 (e.g. `jpa-patterns` for N+1 issues, `api-contract-review` before releasing endpoints).
 
+## Makefile
+
+A root `Makefile` provides convenience targets for all common developer workflows. Run `make help` to see the full list.
+
+| Target | What it does |
+|---|---|
+| `make build` | Full build: backend (Maven) + frontend (npm) + e2e tests (docker up/down) |
+| `make buildBackend` | `cd backend && mvn install` |
+| `make buildFrontend` | `cd frontend && npm install && npm run build` |
+| `make acceptanceTest` | `cd e2e && npm install && npm test` (stack must be running) |
+| `make dockerAll` | Full build then `docker compose up` (foreground) — use for first-run |
+| `make dockerDown` | `docker compose down` |
+| `make clean` | Docker down + remove images + `mvn clean` + reinstall frontend deps |
+| `make cleanShallow` | Same as `clean` but skips reinstalling `node_modules` |
+| `make updateFrontend` | Upgrade frontend deps with `npm-check-updates -u && npm install` |
+
+Prefer `make <target>` over raw commands — targets chain steps correctly and emit pass/fail Telegram notifications.
+
 ## Delivery Checklist (cross-cutting)
 
 Before marking any task done:

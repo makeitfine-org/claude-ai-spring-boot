@@ -19,10 +19,19 @@ Browser
 ## Quick Start
 
 ```bash
-docker-compose up
+make dockerAll
 ```
 
-Starts all three services. Verify the backend is healthy:
+Builds backend + frontend, runs acceptance tests, then starts all three services with `docker compose up`.
+Run `make help` to see all available targets.
+
+Alternatively, start only the pre-built images (no build step):
+
+```bash
+docker compose up
+```
+
+Verify the backend is healthy:
 
 ```bash
 curl http://localhost:8080/actuator/health
