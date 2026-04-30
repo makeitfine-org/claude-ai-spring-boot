@@ -1885,3 +1885,8 @@
 - keycloak/realm-export.json
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:57:30Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
