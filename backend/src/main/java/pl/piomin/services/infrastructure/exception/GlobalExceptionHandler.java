@@ -8,7 +8,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import pl.piomin.services.domain.identity.DuplicateUsernameException;
 
 import java.net.URI;
 import java.time.Instant;
@@ -17,15 +16,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(DuplicateUsernameException.class)
-    public ProblemDetail handleDuplicateUsernameException(DuplicateUsernameException exception) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());
-        problemDetail.setTitle("Duplicate Username");
-        problemDetail.setType(URI.create("https://api.example.com/errors/duplicate-username"));
-        problemDetail.setProperty("timestamp", Instant.now());
-        return problemDetail;
-    }
 
     @ExceptionHandler(PersonNotFoundException.class)
     public ProblemDetail handlePersonNotFoundException(PersonNotFoundException exception) {

@@ -35,15 +35,6 @@ jwt:
   expiration: 900000
   refresh-expiration: 604800000
 
-oidc:
-  issuer-uri: ${OIDC_ISSUER_URI:}
-  client-id: ${OIDC_CLIENT_ID:}
-  client-secret: ${OIDC_CLIENT_SECRET:}
-
-idp:
-  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:}
-  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:}
-
 server:
   port: 8080
   shutdown: graceful
