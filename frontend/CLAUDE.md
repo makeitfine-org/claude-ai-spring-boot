@@ -77,7 +77,6 @@ Use these from the **repo root**:
 |---|---|
 | `make buildFrontend` | `cd frontend && npm install && npm run build` |
 | `make updateFrontend` | Upgrade deps via `npm-check-updates -u && npm install` |
-| `make cleanShallow` | Remove `dist` only (keeps `node_modules`) |
 | `make clean` | Remove `dist` + `node_modules` + reinstall |
 
 ## Testing Requirements

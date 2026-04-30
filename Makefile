@@ -1,6 +1,6 @@
 # Makefile for claude-ai-spring-boot
 
-.PHONY: clean cleanShallow updateFrontend buildBackend buildFrontend acceptanceTest build dockerAll dockerDown \
+.PHONY: clean updateFrontend buildBackend buildFrontend acceptanceTest build dockerAll dockerDown \
         ghList ghView defaultMessage message help
 
 # Function to execute commands sequentially with success and failure messages
@@ -10,16 +10,6 @@ define execute_commands
 endef
 
 clean:
-	@echo "### Cleaning (claude-ai-spring-boot) ..."
-	$(call execute_commands,\
-		docker compose down ; \
-		docker rmi -f claude-ai-spring-boot-backend:latest claude-ai-spring-boot-frontend:latest 2>/dev/null || true && \
-		cd backend && mvn clean && \
-		cd ../frontend && rm -rf dist node_modules package-lock.json,\
-		"✅ CLEAN SUCCESSFUL (claude-ai-spring-boot) ✅",\
-		"❌ CLEAN FAILED (claude-ai-spring-boot) ❌")
-
-cleanShallow:
 	@echo "### Cleaning (claude-ai-spring-boot) ..."
 	$(call execute_commands,\
 		docker compose down ; \
@@ -126,7 +116,6 @@ help:
 	@echo ""
 	@echo "🔨 Build Targets:"
 	@echo "  clean             - Docker down, remove images, mvn clean, reinstall frontend deps"
-	@echo "  cleanShallow      - Same as clean but skip reinstalling frontend node_modules"
 	@echo "  updateFrontend    - Update frontend deps (npm-check-updates -u && npm install)"
 	@echo "  buildBackend      - Build backend with Maven (cd backend && mvn install)"
 	@echo "  buildFrontend     - Build frontend (npm install && npm run build)"

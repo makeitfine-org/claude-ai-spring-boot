@@ -58,7 +58,6 @@ Use these from the **repo root** instead of running Maven directly:
 |---|---|
 | `make buildBackend` | `cd backend && mvn install` |
 | `make clean` | Docker down + remove images + `mvn clean` + reinstall frontend deps |
-| `make cleanShallow` | Same as `clean` but skips reinstalling `node_modules` |
 
 ## Version & Delivery Checklist
 

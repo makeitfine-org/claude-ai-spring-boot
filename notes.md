@@ -57,3 +57,9 @@ Help me to create description by interviewing me.
 And evenually write the description.
 
 This is draft of the feature description:  
+
+---
+Any issues with the team:
+$> ps aux | grep 'claude.*--agent-id'
+$> pgrep -la claude
+$> kill the processes

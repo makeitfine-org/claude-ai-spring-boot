@@ -55,7 +55,6 @@ A root `Makefile` provides convenience targets for all common developer workflow
 | `make dockerAll` | Full build then `docker compose up` (foreground) — use for first-run |
 | `make dockerDown` | `docker compose down` |
 | `make clean` | Docker down + remove images + `mvn clean` + reinstall frontend deps |
-| `make cleanShallow` | Same as `clean` but skips reinstalling `node_modules` |
 | `make updateFrontend` | Upgrade frontend deps with `npm-check-updates -u && npm install` |
 
 Prefer `make <target>` over raw commands — targets chain steps correctly and emit pass/fail Telegram notifications.
