@@ -3788,3 +3788,36 @@ It hasn't helped fix it until `docker compose up -d --wait` completed without en
 ## 2026-04-30T22:42:33Z
 is it fine to remove healtcheck for keycloak docker?
 ---
+
+## 2026-04-30T23:02:41Z
+I changed: rm -rf dist node_modules package-lock.json && npx npm-check-updates -u && npm install
+to
+rm -rf dist node_modules package-lock.json && npx npm-check-updates -u && npm ci and got:
+
+All dependencies match the latest package versions :)
+npm error code EUSAGE
+npm error
+npm error The `npm ci` command can only install with an existing package-lock.json or
+npm error npm-shrinkwrap.json with lockfileVersion >= 1. Run an install with npm@5 or
+npm error later to generate a package-lock.json file, then try again.
+npm error
+npm error Clean install a project
+npm error
+npm error Usage:
+npm error npm ci
+npm error
+npm error Options:
+npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+npm error [--no-bin-links] [--no-fund] [--dry-run]
+npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+npm error [--workspaces] [--include-workspace-root] [--install-links]
+npm error
+npm error aliases: clean-install, ic, install-clean, isntall-clean
+npm error
+npm error Run "npm help ci" for more info
+npm error A complete log of this run can be found in: /home/eug/.npm/_logs/2026-04-30T23_00_26_282Z-debug-0.log
+make[1]: Entering directory '/home/eug/dev/projects/my/claude-ai-spring-boot'
+---

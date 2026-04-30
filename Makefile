@@ -59,7 +59,7 @@ build:
 		"✅ BUILD SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ BUILD FAILED (claude-ai-spring-boot) ❌")
 
-ciCheck:
+ciCheck: # if it's not working try `make updateFrontend`
 	@echo "### CI simulation (claude-ai-spring-boot) ..."
 	$(call execute_commands,\
 		cd backend && mvn clean verify && \

@@ -1990,3 +1990,9 @@
 - backend/README.md
 - docker-compose.yml
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T23:03:08Z -->
+- .claude/docs/blackbox/audit.md
+- frontend/package-lock.json
+- frontend/package.json
+<!-- end-snapshot -->
