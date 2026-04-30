@@ -1958,3 +1958,35 @@
 - .claude/docs/blackbox/audit.md
 - .claude/docs/blackbox/session-log.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:16:36Z -->
+- .claude/docs/blackbox/audit.md
+- Makefile
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:28:14Z -->
+- .claude/docs/blackbox/audit.md
+- docker-compose.yml
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:34:51Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- docker-compose.yml
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:40:53Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.json
+- backend/README.md
+- docker-compose.yml
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:42:44Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.json
+- backend/README.md
+- docker-compose.yml
+<!-- end-snapshot -->

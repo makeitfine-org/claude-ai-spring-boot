@@ -54,3 +54,6 @@ Set timeout for build in `github actions` CI/CD
 ---
 connect to PC Claude code from phone and handle by approving
 (share termina with claude/session in web?)
+
+---
+Makefile ciCheck

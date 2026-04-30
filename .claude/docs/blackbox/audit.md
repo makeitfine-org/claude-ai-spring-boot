@@ -3747,3 +3747,44 @@ Change in @Makefile `buildBackend` goal `mvn install` to `mvn clean install`
 ## 2026-04-30T22:07:33Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-30T22:13:55Z
+Improve @Makefile goals for build was better checked after changes.
+Cause there are cases that locally `make build` passed successfuly but on `github actions` it fails
+---
+
+## 2026-04-30T22:15:01Z
+Improve @Makefile goals for better checking after changes.
+Cause there are cases that locally `make build` passed successfuly but on `github actions` it fails
+---
+
+## 2026-04-30T22:27:58Z
+WARN[0000] /home/eug/dev/projects/my/claude-ai-spring-boot/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion
+Fix
+---
+
+## 2026-04-30T22:33:53Z
+when run `make build` it hangs endlessly:
+ce for metadata file                                                                                                                                                                                               0.0s 
+ => [frontend] resolving provenance for metadata file                                                                                                                                                                                          0.0s 
+[+] build 2/2                                                                                                                                                                                                                                       
+ ✔ Image claude-ai-spring-boot-backend  Built                                                                                                                                                                                                   1.7s
+ ✔ Image claude-ai-spring-boot-frontend Built                                                                                                                                                                                                   1.7s
+[+] up 5/6
+ ✔ Network claude-ai-spring-boot_app-network Created                                                                                                                                                                                            0.0s
+ ✔ Container mailhog                         Healthy                                                                                                                                                                                           22.0s
+ ✔ Container persondb                        Healthy                                                                                                                                                                                           22.0s
+ ⠴ Container keycloak                        Waiting                                                                                                                                                                                           23.8s
+ ✔ Container backend                         Healthy                                                                                                                                                                                           22.0s
+ ✔ Container frontend                        Healthy                                                                                                                                                                                           21.9s
+
+Fix it
+---
+
+## 2026-04-30T22:40:20Z
+It hasn't helped fix it until `docker compose up -d --wait` completed without endless hunging
+---
+
+## 2026-04-30T22:42:33Z
+is it fine to remove healtcheck for keycloak docker?
+---

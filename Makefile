@@ -1,7 +1,7 @@
 # Makefile for claude-ai-spring-boot
 
 .PHONY: clean updateFrontend buildBackend buildFrontend acceptanceTest build dockerAll dockerDown \
-        ghList ghView defaultMessage message help
+        ghList ghView defaultMessage message help ciCheck
 
 # Function to execute commands sequentially with success and failure messages
 # Usage: $(call execute_commands,command1 && command2 && .. && commandN, success_msg, fail_msg)
@@ -29,7 +29,7 @@ updateFrontend:
 buildBackend:
 	@echo "### Building backend (claude-ai-spring-boot) ..."
 	$(call execute_commands,\
-		cd backend && mvn clean install,\
+		cd backend && mvn clean verify,\
 		"✅ BUILD BACKEND SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ BUILD BACKEND FAILED (claude-ai-spring-boot) ❌")
 
@@ -43,7 +43,7 @@ buildFrontend:
 acceptanceTest:
 	@echo "### Running acceptance tests (claude-ai-spring-boot) ..."
 	$(call execute_commands,\
-		cd e2e && npm install && npm test,\
+		cd e2e && npm ci && npm test,\
 		"✅ ACCEPTANCE TESTS SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ ACCEPTANCE TESTS FAILED (claude-ai-spring-boot) ❌")
 
@@ -52,11 +52,24 @@ build:
 	$(call execute_commands,\
 		$(MAKE) buildBackend && \
 		$(MAKE) buildFrontend && \
-		docker compose up -d && \
+		docker compose build && \
+		docker compose up -d --wait && \
 		$(MAKE) acceptanceTest && \
 		docker compose down,\
 		"✅ BUILD SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ BUILD FAILED (claude-ai-spring-boot) ❌")
+
+ciCheck:
+	@echo "### CI simulation (claude-ai-spring-boot) ..."
+	$(call execute_commands,\
+		cd backend && mvn clean verify && \
+		cd .. && cd frontend && npm ci && npm run build && \
+		cd .. && docker compose build --no-cache && \
+		docker compose up -d --wait && \
+		cd e2e && npm ci && npm test && \
+		cd .. && docker compose down,\
+		"✅ CI CHECK SUCCESSFUL (claude-ai-spring-boot) ✅",\
+		"❌ CI CHECK FAILED (claude-ai-spring-boot) ❌")
 
 dockerAll:
 	@echo "### Building and docker up locally (claude-ai-spring-boot) ..."
@@ -117,9 +130,10 @@ help:
 	@echo "🔨 Build Targets:"
 	@echo "  clean             - Docker down, remove images, mvn clean, reinstall frontend deps"
 	@echo "  updateFrontend    - Update frontend deps (npm-check-updates -u && npm install)"
-	@echo "  buildBackend      - Build backend with Maven (cd backend && mvn clean install)"
+	@echo "  buildBackend      - Build backend with Maven (mvn clean verify, enforces JaCoCo)"
 	@echo "  buildFrontend     - Build frontend (npm install && npm run build)"
-	@echo "  build             - Full build: backend + frontend + e2e tests (spins docker up/down)"
+	@echo "  build             - Full build: backend + frontend + docker rebuild + e2e (--wait)"
+	@echo "  ciCheck           - Strict CI simulation: no-cache docker build, npm ci, mvn verify"
 	@echo ""
 	@echo "🧪 Test Targets:"
 	@echo "  acceptanceTest    - Run Cucumber+Playwright e2e tests (stack must be running)"
