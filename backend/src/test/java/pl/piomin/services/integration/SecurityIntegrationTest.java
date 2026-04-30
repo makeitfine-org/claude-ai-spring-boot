@@ -49,12 +49,12 @@ class SecurityIntegrationTest {
     @Test
     void registerEndpoint_NoAuthentication_IsPermitted() throws Exception {
         // POST /api/register is public — security allows it through.
-        // The endpoint itself does not exist yet, so expect 404 (not 401/403).
+        // Sending an incomplete body returns 400 (validation), not 401/403.
         mockMvc.perform(post("/api/register")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"username\":\"test\"}"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 
     // -------------------------------------------------------------------------

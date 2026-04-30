@@ -1896,3 +1896,39 @@
 - backlog/tasks/task-7 - Run-make-clean-build-and-fix-unit-test-coverage-until-mvn-clean-install-passes.md
 - notes.md
 <!-- end-snapshot -->
+
+## 2026-04-30T21:56:00+02:00
+### Decisions
+- TASK-6.4: Implemented POST /api/register — validation, IdP provisioning, local users row insert, email verification trigger, compensating rollback on failure
+- TASK-6.5: Implemented GET/PATCH/DELETE /api/users/me — profile retrieval, display_name update, account deletion with IdP cleanup and session invalidation
+- Users table (V5 migration), User entity, UserRepository created in TASK-6.4 and extended by TASK-6.5
+- PasswordPolicyViolationException and NoControlCharacters custom constraint added for registration flow
+### Constraints Stated by User
+- Execute TASK-6.4 then TASK-6.5 sequentially; validate each with `flock /tmp/make-build.lock make clean build` before proceeding
+### Files Modified
+- backend/src/main/resources/db/migration/V5__create_users_table.sql — users table with UUID PK and case-insensitive username index
+- backend/src/main/java/pl/piomin/services/domain/entity/User.java — new JPA entity
+- backend/src/main/java/pl/piomin/services/domain/repository/UserRepository.java — new repository
+- backend/src/main/java/pl/piomin/services/application/service/RegistrationService.java — orchestrates IdP + DB + compensation
+- backend/src/main/java/pl/piomin/services/application/service/ProfileService.java — getProfile/updateProfile/deleteProfile
+- backend/src/main/java/pl/piomin/services/presentation/rest/RegistrationController.java — POST /api/register
+- backend/src/main/java/pl/piomin/services/presentation/rest/ProfileController.java — GET/PATCH/DELETE /api/users/me
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java — added 409/400/404/500 handlers
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java — CSRF ignores for /api/register, /api/users/me PATCH+DELETE
+### Deferred
+- Integration/repository tests for UserRepository (Testcontainers @DataJpaTest)
+- E2E scenarios for registration and profile management
+---
+
+<!-- git-snapshot 2026-04-30T21:59:50Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java
+- backend/src/test/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandlerTest.java
+- backend/src/test/java/pl/piomin/services/integration/SecurityIntegrationTest.java
+- backlog/drafts/todo.md
+- backlog/tasks/task-6.4 - Backend-user-registration-endpoint-POST-api-register.md
+- backlog/tasks/task-6.5 - Backend-users-table-migration-profile-API-GET-PATCH-DELETE-api-users-me.md
+- notes.md
+<!-- end-snapshot -->

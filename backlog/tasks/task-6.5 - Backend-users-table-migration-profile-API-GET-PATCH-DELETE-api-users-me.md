@@ -1,9 +1,10 @@
 ---
 id: TASK-6.5
 title: 'Backend: users table migration + profile API (GET/PATCH/DELETE /api/users/me)'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-04-30 16:39'
+updated_date: '2026-04-30 21:56'
 labels:
   - backend
   - profile
@@ -52,11 +53,28 @@ On `GET /api/users/me`, if no row exists for the authenticated `sub`, return 404
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Flyway migration runs cleanly on a fresh Postgres container.
-- [ ] #2 GET /api/users/me returns the profile for the authenticated user; returns 404 if no local row exists.
-- [ ] #3 GET /api/users/me does not include avatar bytes in the response body (only hasAvatar boolean).
-- [ ] #4 PATCH /api/users/me updates display_name and sets updated_at; rejects control characters and lengths outside 1–50 with 400.
-- [ ] #5 PATCH /api/users/me cannot change username or email (those fields are ignored or rejected).
-- [ ] #6 DELETE /api/users/me removes the local users row, calls IdentityProvider.deleteUser, invalidates the session, and returns 204.
-- [ ] #7 All three endpoints return 401 without a valid session.
+- [x] #1 Flyway migration runs cleanly on a fresh Postgres container.
+- [x] #2 GET /api/users/me returns the profile for the authenticated user; returns 404 if no local row exists.
+- [x] #3 GET /api/users/me does not include avatar bytes in the response body (only hasAvatar boolean).
+- [x] #4 PATCH /api/users/me updates display_name and sets updated_at; rejects control characters and lengths outside 1–50 with 400.
+- [x] #5 PATCH /api/users/me cannot change username or email (those fields are ignored or rejected).
+- [x] #6 DELETE /api/users/me removes the local users row, calls IdentityProvider.deleteUser, invalidates the session, and returns 204.
+- [x] #7 All three endpoints return 401 without a valid session.
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Implemented GET/PATCH/DELETE /api/users/me profile endpoints. Users table migration and entity were already created in TASK-6.4.
+
+**New files:**
+- `application/dto/ProfileResponse.java` — includes hasAvatar flag, no avatarBytes
+- `application/dto/UpdateProfileRequest.java` — displayName only, nullable, size/control-char validated
+- `domain/exception/UserNotFoundException.java`
+- `application/service/ProfileService.java` — getProfile/updateProfile/deleteProfile with UserNotFoundException
+- `presentation/rest/ProfileController.java` — GET/PATCH/DELETE /api/users/me using @AuthenticationPrincipal Jwt
+
+**Modified:** GlobalExceptionHandler (404 for UserNotFoundException), SecurityConfig (CSRF ignores for PATCH/DELETE /api/users/me)
+
+**Tests:** 218 tests passing, JaCoCo 85% gate satisfied.
+<!-- SECTION:FINAL_SUMMARY:END -->

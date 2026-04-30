@@ -47,3 +47,10 @@ I want to implement a User registration by username and password for my applicat
   User should have uqiue name which allows only symbols:[a-zA-Z0-9_] and name not less then 5 symbols not more then 15.
   User can add it's avatar picture (png or jpg).
   User password should be strong, not less then 8 symbols and defined by security rules you propose.
+
+---
+Set timeout for build in `github actions` CI/CD
+
+---
+connect to PC Claude code from phone and handle by approving
+(share termina with claude/session in web?)

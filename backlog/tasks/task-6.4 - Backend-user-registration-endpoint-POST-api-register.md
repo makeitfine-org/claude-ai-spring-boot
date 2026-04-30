@@ -1,9 +1,10 @@
 ---
 id: TASK-6.4
 title: 'Backend: user registration endpoint (POST /api/register)'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-04-30 16:39'
+updated_date: '2026-04-30 21:51'
 labels:
   - backend
   - registration
@@ -50,12 +51,35 @@ Implement `POST /api/register` — the only public registration endpoint. Valida
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 POST /api/register with valid data returns 201 and creates both the IdP user and a local users row.
-- [ ] #2 Invalid username pattern or length returns 400 with a field-level error message.
-- [ ] #3 Duplicate username returns 409.
-- [ ] #4 Duplicate email returns 409.
-- [ ] #5 Password that fails policy (too short, missing character class, equals username) returns 400.
-- [ ] #6 displayName with control characters is rejected with 400.
-- [ ] #7 If local DB insert fails after IdP user creation, the IdP user is deleted (compensating rollback) and 500 is returned.
-- [ ] #8 A verification email is dispatched to MailHog after successful registration.
+- [x] #1 POST /api/register with valid data returns 201 and creates both the IdP user and a local users row.
+- [x] #2 Invalid username pattern or length returns 400 with a field-level error message.
+- [x] #3 Duplicate username returns 409.
+- [x] #4 Duplicate email returns 409.
+- [x] #5 Password that fails policy (too short, missing character class, equals username) returns 400.
+- [x] #6 displayName with control characters is rejected with 400.
+- [x] #7 If local DB insert fails after IdP user creation, the IdP user is deleted (compensating rollback) and 500 is returned.
+- [x] #8 A verification email is dispatched to MailHog after successful registration.
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Implemented POST /api/register with full validation, atomicity, and compensation.
+
+**Files created:**
+- `db/migration/V5__create_users_table.sql` — users table with UUID PK, unique indexes
+- `domain/entity/User.java` — JPA entity
+- `domain/repository/UserRepository.java` — case-insensitive username check
+- `domain/exception/PasswordPolicyViolationException.java`
+- `domain/exception/RegistrationException.java`
+- `application/dto/RegistrationRequest.java` — JSR-380 validation
+- `application/dto/RegistrationResponse.java`
+- `application/validation/NoControlCharacters.java` + `NoControlCharactersValidator.java`
+- `application/service/PasswordValidator.java` — 7-rule policy
+- `application/service/RegistrationService.java` — orchestrates IdP + DB + compensation
+- `presentation/rest/RegistrationController.java` — POST /api/register → 201
+
+**Modified:** GlobalExceptionHandler (409 for duplicates, 400 for password policy), SecurityConfig (CSRF ignore for /api/register)
+
+**Tests:** 195 tests passing, JaCoCo 85% gate satisfied.
+<!-- SECTION:FINAL_SUMMARY:END -->

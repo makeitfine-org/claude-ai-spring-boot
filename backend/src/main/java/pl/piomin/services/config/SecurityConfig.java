@@ -83,8 +83,13 @@ public class SecurityConfig {
                 .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
                 // REST API endpoints do not use session cookies — CSRF protection is unnecessary
                 .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**"))
+                // Registration is a stateless REST endpoint — no session cookie involved
+                .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/register"))
                 // Use explicit AntPathRequestMatcher so CSRF is bypassed reliably in tests
                 .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/logout"))
+                // Profile API endpoints authenticated via JWT bearer — CSRF not needed
+                .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.PATCH, "/api/users/me"))
+                .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/api/users/me"))
             )
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session
@@ -144,7 +149,7 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "http://localhost:8080"
         ));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setExposedHeaders(List.of("X-XSRF-TOKEN"));
         configuration.setAllowCredentials(true);
