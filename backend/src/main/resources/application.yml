@@ -30,10 +30,40 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/migration
 
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: ${KEYCLOAK_CLIENT_ID:claude-ai-bff}
+            client-secret: ${KEYCLOAK_CLIENT_SECRET:claude-ai-bff-secret}
+            authorization-grant-type: authorization_code
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope: openid, profile, email
+        provider:
+          keycloak:
+            authorization-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/auth
+            token-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/token
+            user-info-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/userinfo
+            user-name-attribute: sub
+            jwk-set-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/certs
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/certs
+
 jwt:
   secret: ${JWT_SECRET:dGhpcy1pcy1hLXZlcnktbG9uZy1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tZ2VuZXJhdGlvbg==}
   expiration: 900000
   refresh-expiration: 604800000
+
+# Identity Provider (Keycloak) adapter configuration.
+# Wired via OIDC_ISSUER_URI, KEYCLOAK_ADMIN_CLIENT_ID, KEYCLOAK_ADMIN_CLIENT_SECRET.
+# No keycloak.* properties are used anywhere in this application.
+# OIDC_CLIENT_ID and OIDC_CLIENT_SECRET are consumed in TASK-6.3 (BFF session config).
+identity-provider:
+  issuer-uri: ${OIDC_ISSUER_URI:http://localhost:8180/realms/app}
+  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:admin-cli}
+  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:}
 
 server:
   port: 8080
@@ -41,6 +71,12 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: false
 
 management:
   endpoints:

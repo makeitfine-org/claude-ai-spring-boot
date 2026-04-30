@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
@@ -14,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import pl.piomin.services.application.dto.PersonRequest;
 import pl.piomin.services.application.dto.PersonResponse;
 import pl.piomin.services.application.service.PersonService;
+import pl.piomin.services.config.PasswordEncoderConfig;
+import pl.piomin.services.config.SecurityConfig;
 import pl.piomin.services.infrastructure.exception.PersonNotFoundException;
 import pl.piomin.services.infrastructure.security.JwtService;
 import pl.piomin.services.presentation.rest.PersonController;
@@ -28,6 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(PersonController.class)
+@Import({SecurityConfig.class, PasswordEncoderConfig.class})
 class PersonControllerTest {
 
     @Autowired
@@ -213,6 +217,7 @@ class PersonControllerTest {
 
         mockMvc.perform(post("/api/persons")
                         .with(csrf())
+                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isUnauthorized());

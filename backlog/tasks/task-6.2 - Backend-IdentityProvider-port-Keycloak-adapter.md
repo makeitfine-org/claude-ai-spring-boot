@@ -1,7 +1,7 @@
 ---
 id: TASK-6.2
 title: 'Backend: IdentityProvider port + Keycloak adapter'
-status: To Do
+status: in-progress
 assignee: []
 created_date: '2026-04-30 16:39'
 labels:

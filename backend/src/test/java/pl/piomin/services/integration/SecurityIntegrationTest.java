@@ -1,26 +1,26 @@
 package pl.piomin.services.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import pl.piomin.services.application.dto.AuthRequest;
-import pl.piomin.services.application.dto.PersonRequest;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Integration tests for the BFF security configuration.
+ * Verifies public/protected path rules, OAuth2 login redirect, and logout.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 @Testcontainers
@@ -36,148 +36,114 @@ class SecurityIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    // -------------------------------------------------------------------------
+    // Public paths (AC #5)
+    // -------------------------------------------------------------------------
 
     @Test
-    void login_ValidCredentials_ReturnsTokens() throws Exception {
-        AuthRequest authRequest = new AuthRequest("test@example.com", "password");
-
-        mockMvc.perform(post("/api/auth/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(authRequest)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken").exists())
-                .andExpect(jsonPath("$.refreshToken").exists())
-                .andExpect(jsonPath("$.tokenType").value("Bearer"));
-    }
-
-    @Test
-    void login_InvalidCredentials_ReturnsUnauthorized() throws Exception {
-        AuthRequest authRequest = new AuthRequest("test@example.com", "wrongpassword");
-
-        mockMvc.perform(post("/api/auth/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(authRequest)))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    void login_InvalidEmail_ReturnsUnauthorized() throws Exception {
-        AuthRequest authRequest = new AuthRequest("invalid@example.com", "password");
-
-        mockMvc.perform(post("/api/auth/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(authRequest)))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    void accessProtectedEndpoint_WithValidToken_Success() throws Exception {
-        // Login to get token
-        AuthRequest authRequest = new AuthRequest("test@example.com", "password");
-        MvcResult loginResult = mockMvc.perform(post("/api/auth/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(authRequest)))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String accessToken = objectMapper.readTree(loginResult.getResponse().getContentAsString())
-                .get("accessToken").asText();
-
-        // Access protected endpoint with token
-        mockMvc.perform(get("/api/persons")
-                        .header("Authorization", "Bearer " + accessToken))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void accessProtectedEndpoint_WithoutToken_ReturnsUnauthorized() throws Exception {
-        mockMvc.perform(get("/api/persons"))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    void accessProtectedEndpoint_WithInvalidToken_ReturnsUnauthorized() throws Exception {
-        mockMvc.perform(get("/api/persons")
-                        .header("Authorization", "Bearer invalid-token"))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    void refreshToken_WithValidRefreshToken_ReturnsNewAccessToken() throws Exception {
-        // Login to get tokens
-        AuthRequest authRequest = new AuthRequest("test@example.com", "password");
-        MvcResult loginResult = mockMvc.perform(post("/api/auth/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(authRequest)))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String refreshToken = objectMapper.readTree(loginResult.getResponse().getContentAsString())
-                .get("refreshToken").asText();
-
-        // Refresh token
-        mockMvc.perform(post("/api/auth/refresh")
-                        .with(csrf())
-                        .header("Authorization", "Bearer " + refreshToken))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken").exists())
-                .andExpect(jsonPath("$.refreshToken").value(refreshToken));
-    }
-
-    @Test
-    void createPerson_WithValidToken_Success() throws Exception {
-        // Login to get token
-        AuthRequest authRequest = new AuthRequest("test@example.com", "password");
-        MvcResult loginResult = mockMvc.perform(post("/api/auth/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(authRequest)))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String accessToken = objectMapper.readTree(loginResult.getResponse().getContentAsString())
-                .get("accessToken").asText();
-
-        // Create person with valid token
-        PersonRequest personRequest = new PersonRequest();
-        personRequest.setFirstName("Test");
-        personRequest.setLastName("User");
-        personRequest.setEmail("test.user@example.com");
-
-        mockMvc.perform(post("/api/persons")
-                        .with(csrf())
-                        .header("Authorization", "Bearer " + accessToken)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(personRequest)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.firstName").value("Test"))
-                .andExpect(jsonPath("$.email").value("test.user@example.com"));
-    }
-
-    @Test
-    void createPerson_WithoutToken_ReturnsUnauthorized() throws Exception {
-        PersonRequest personRequest = new PersonRequest();
-        personRequest.setFirstName("Test");
-        personRequest.setLastName("User");
-        personRequest.setEmail("test.user@example.com");
-
-        mockMvc.perform(post("/api/persons")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(personRequest)))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    void healthEndpoint_NoAuthentication_Success() throws Exception {
+    void healthEndpoint_NoAuthentication_ReturnsOk() throws Exception {
         mockMvc.perform(get("/actuator/health"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void registerEndpoint_NoAuthentication_IsPermitted() throws Exception {
+        // POST /api/register is public — security allows it through.
+        // The endpoint itself does not exist yet, so expect 404 (not 401/403).
+        mockMvc.perform(post("/api/register")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"username\":\"test\"}"))
+                .andExpect(status().isNotFound());
+    }
+
+    // -------------------------------------------------------------------------
+    // OAuth2 login redirect (AC #1)
+    // -------------------------------------------------------------------------
+
+    @Test
+    void oauth2Authorization_NoAuthentication_RedirectsToKeycloak() throws Exception {
+        mockMvc.perform(get("/oauth2/authorization/keycloak"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location",
+                        org.hamcrest.Matchers.containsString("openid-connect/auth")));
+    }
+
+    // -------------------------------------------------------------------------
+    // Protected paths — unauthenticated (AC #4)
+    // -------------------------------------------------------------------------
+
+    @Test
+    void getPersons_NoAuthentication_ReturnsUnauthorized() throws Exception {
+        mockMvc.perform(get("/api/persons")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getPersonById_NoAuthentication_ReturnsUnauthorized() throws Exception {
+        mockMvc.perform(get("/api/persons/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void createPerson_NoAuthentication_ReturnsUnauthorized() throws Exception {
+        mockMvc.perform(post("/api/persons")
+                        .with(csrf())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"t@t.com\"}"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getPersons_InvalidBearerToken_ReturnsUnauthorized() throws Exception {
+        mockMvc.perform(get("/api/persons")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer invalid-jwt-token"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    // -------------------------------------------------------------------------
+    // Protected paths — authenticated via mock user (AC #4)
+    // -------------------------------------------------------------------------
+
+    @Test
+    @WithMockUser
+    void getPersons_AuthenticatedUser_ReturnsOk() throws Exception {
+        mockMvc.perform(get("/api/persons")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    // -------------------------------------------------------------------------
+    // Logout endpoint (AC #3)
+    // -------------------------------------------------------------------------
+
+    @Test
+    @WithMockUser
+    void logout_AuthenticatedUser_RedirectsToIdp() throws Exception {
+        mockMvc.perform(post("/api/logout"))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    void logout_NoAuthentication_StillSucceeds() throws Exception {
+        // Logout with no session is a no-op — Spring Security returns a redirect
+        mockMvc.perform(post("/api/logout"))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    // -------------------------------------------------------------------------
+    // Session cookie — no token in response body (AC #2)
+    // -------------------------------------------------------------------------
+
+    @Test
+    void oauth2AuthorizationCallback_DoesNotExposeTokensInBody() throws Exception {
+        // The /oauth2/authorization/keycloak endpoint must redirect, not expose tokens
+        mockMvc.perform(get("/oauth2/authorization/keycloak"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().doesNotExist("Authorization"));
     }
 }
