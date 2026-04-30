@@ -64,8 +64,7 @@ Run every 5 minutes:
    the second waits for the first to complete before running. This avoids docker compose collisions.
 
 
-4. 
-   I'd like to create a feature description for backlog.md.
+4. I'd like to create a feature description for backlog.md.
    Help me to create description by interactivly interviewing me.
    And evenually output me on the screen the description.
 
@@ -124,9 +123,23 @@ Run every 5 minutes:
    Create a parent task called 'API Security' and 4 subtasks as individual 
    backlog items. Link them together.
    
+   ===
 
+   Read backlog task TASK-7 via the backlog MCP, move it to In Progress, implement it.
+   When ready to validate, run: flock /tmp/make-build.lock make clean build
 
-Any issues with the team:
-$> ps aux | grep 'claude.*--agent-id'
-$> pgrep -la claude
-$> kill the processes
+   ====
+
+   From backlog.md read sequentially and complete sequentially task-6.4, task-6.5.
+
+   For each task:
+   1. Move it to `In Progress`
+   2. When ready to validate, run: flock /tmp/make-build.lock `make clean build`
+   3. Do not move to the next task until the current one is fully complete and validation is successful.
+   
+   Start with task-6.4.
+
+5. Any issues with the team:
+   $> ps aux | grep 'claude.*--agent-id'
+   $> pgrep -la claude
+   $> kill the processes

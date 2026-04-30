@@ -1890,3 +1890,9 @@
 - .claude/docs/blackbox/audit.md
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T21:15:05Z -->
+- .claude/docs/blackbox/audit.md
+- backlog/tasks/task-7 - Run-make-clean-build-and-fix-unit-test-coverage-until-mvn-clean-install-passes.md
+- notes.md
+<!-- end-snapshot -->
