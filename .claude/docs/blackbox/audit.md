@@ -3599,3 +3599,30 @@ clean up teams
 ## 2026-04-30T18:14:35Z
 remove team forcefully
 ---
+
+## 2026-04-30T18:52:32Z
+Create an agent team.
+Spawn three agents in parallel. Load the TeamCreate tool schema and spawn the agent team
+
+Agent 1 — docker-expert — implement TASK-6.1:                                                                                                                                                                                                               
+Read backlog task TASK-6.1 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run:                                                                                                                                                                                                                            
+flock /tmp/make-build.lock make build
+
+Agent 2 — java-architect — implement TASK-6.2:                                                                                                                                                                                                            
+Read backlog task TASK-6.2 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run:                                                                                                                                                                                                                            
+flock /tmp/make-build.lock make build
+
+Agent 3 — spring-boot-engineer — implement TASK-6.3:                                                                                                                                                                                                        
+Read backlog task TASK-6.3 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                   
+When ready to validate, run:                                                                                                                                                                                                                              
+flock /tmp/make-build.lock make build
+
+NOTE: flock serializes make build — if two agents finish at the same time,                                                                                                                                                                                  
+the second waits for the first to complete before running. This avoids docker compose collisions.
+---
+
+## 2026-04-30T19:01:06Z
+Clean up and remove agent team forcefully
+---

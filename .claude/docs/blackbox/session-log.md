@@ -1534,3 +1534,71 @@
 - .claude/docs/blackbox/audit.md
 - .claude/docs/blackbox/session-log.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T18:52:59Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T18:57:09Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T18:57:13Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T18:58:35Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T18:58:38Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:01:15Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:01:16Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:01:18Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:01:21Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+<!-- end-snapshot -->
