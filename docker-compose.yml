@@ -71,6 +71,13 @@ services:
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
       JWT_SECRET: dGhpcy1pcy1hLXZlcnktbG9uZy1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tZ2VuZXJhdGlvbg==
+      KEYCLOAK_URL: http://keycloak:8180
+      KEYCLOAK_REALM: claude-ai
+      KEYCLOAK_CLIENT_ID: claude-ai-bff
+      KEYCLOAK_CLIENT_SECRET: claude-ai-bff-secret
+      OIDC_ISSUER_URI: http://keycloak:8180/realms/claude-ai
+      KEYCLOAK_ADMIN_CLIENT_ID: claude-ai-backend
+      KEYCLOAK_ADMIN_CLIENT_SECRET: claude-ai-backend-secret
     ports:
       - "8080:8080"
     networks:

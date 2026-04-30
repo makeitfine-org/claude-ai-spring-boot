@@ -1,7 +1,7 @@
 ---
 id: TASK-6.3
 title: 'Backend: Spring Security BFF session config (login / logout)'
-status: To Do
+status: done
 assignee: []
 created_date: '2026-04-30 16:39'
 labels:

@@ -32,6 +32,31 @@
   },
   "clients": [
     {
+      "clientId": "claude-ai-bff",
+      "name": "Claude AI BFF",
+      "description": "Confidential BFF client — backend completes OAuth2 code+PKCE flow",
+      "enabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "secret": "claude-ai-bff-secret",
+      "redirectUris": [
+        "http://localhost:8080/login/oauth2/code/keycloak",
+        "http://backend:8080/login/oauth2/code/keycloak"
+      ],
+      "webOrigins": [
+        "http://localhost:8080",
+        "http://localhost:3000"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:8080/*##http://localhost:3000/*"
+      }
+    },
+    {
       "clientId": "claude-ai-spa",
       "name": "Claude AI SPA",
       "description": "Public SPA client with PKCE",

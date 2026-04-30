@@ -2,6 +2,12 @@ spring:
   jpa:
     show-sql: false
 
+server:
+  servlet:
+    session:
+      cookie:
+        secure: true
+
 logging:
   level:
     pl.piomin.services: INFO

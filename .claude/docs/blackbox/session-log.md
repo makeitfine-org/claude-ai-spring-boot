@@ -1602,3 +1602,286 @@
 - backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
 - backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:08:18Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:12:43Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application.yml
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:12:49Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application.yml
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:59:26Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:59:32Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T19:59:36Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+## 2026-04-30T21:45:00Z
+### Decisions
+- Implemented TASK-6.3: Spring Security BFF session config for OAuth2/OIDC login/logout
+- SecurityConfig: oauth2Login (code flow), session management, JWT resource server, RP-initiated logout
+- Used HttpStatusEntryPoint(401) for all unauthenticated requests — SPA handles redirect to IdP
+- Added OidcLoginSuccessHandler to store `sub` claim in HTTP session on first OIDC login
+- Added custom JwtDecoder (HMAC-SHA256) to validate tokens issued by local JwtService
+- Added permitAll() for /api/auth/login and /api/auth/refresh (used by e2e tests)
+- Added CSRF ignore for /api/auth/** (stateless endpoints)
+- All 97 backend tests pass; full make build passes including e2e acceptance tests
+### Constraints Stated by User
+- None stated this session
+### Files Modified
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java — BFF SecurityFilterChain, custom JwtDecoder
+- backend/src/main/java/pl/piomin/services/infrastructure/security/OidcLoginSuccessHandler.java — new: stores sub in session
+- backend/src/main/resources/application.yml — OAuth2 client/provider/resource-server config, session cookie settings
+- backend/src/main/resources/application-prod.yml — session cookie secure=true for HTTPS
+- backend/src/test/java/pl/piomin/services/infrastructure/security/BffSecurityTest.java — new: WebMvcTest slice tests
+- backend/src/test/java/pl/piomin/services/infrastructure/security/OidcLoginSuccessHandlerTest.java — new: unit tests
+- backend/src/test/java/pl/piomin/services/integration/SecurityIntegrationTest.java — rewritten for BFF behavior
+- keycloak/realm-export.json — added claude-ai-bff OIDC client
+- backend/pom.xml — added spring-boot-starter-oauth2-client dependency
+- docker-compose.yml — added Keycloak env vars to app service
+- backlog/tasks/task-6.3 — status: done
+### Deferred
+- None
+---
+
+<!-- git-snapshot 2026-04-30T19:59:59Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:00:04Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:03:00Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:03:07Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:03:16Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:03:20Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:03:35Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:04:01Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:04:48Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+## 2026-04-30T21:58:00Z
+### Decisions
+- Implemented TASK-6.2: IdentityProvider port + KeycloakIdentityProvider adapter (hexagonal architecture)
+- Fixed oauth2ResourceServer JWT validation: custom NimbusJwtDecoder with HMAC-SHA256 secret replaces Keycloak JWKS decoder, restoring e2e test compatibility
+- Fixed SecurityConfig: AntPathRequestMatcher throughout for @WebMvcTest compatibility; CSRF ignore for /api/auth/**
+- Fixed GlobalExceptionHandler: explicit NoResourceFoundException handler returns 404 (not 500)
+- All 97 backend tests pass; 11/11 e2e scenarios pass; make build SUCCESS
+### Constraints Stated by User
+- No Lombok, no records, no MapStruct in backend Java code
+- Semantic commits ≤80 chars, no Co-Authored-By trailer
+- Must pass flock /tmp/make-build.lock make build before marking complete
+### Files Modified
+- backend/src/main/java/pl/piomin/services/domain/port/IdentityProvider.java — new port interface
+- backend/src/main/java/pl/piomin/services/domain/port/CreateUserCommand.java — new command DTO
+- backend/src/main/java/pl/piomin/services/domain/exception/*.java — typed IdP exceptions
+- backend/src/main/java/pl/piomin/services/infrastructure/identity/KeycloakIdentityProvider.java — RestClient adapter
+- backend/src/main/java/pl/piomin/services/config/KeycloakProperties.java — @ConfigurationProperties
+- backend/src/main/java/pl/piomin/services/config/IdentityProviderConfig.java — RestClient bean
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java — HMAC JwtDecoder, CSRF, AntPathRequestMatcher
+- backend/src/main/java/pl/piomin/services/infrastructure/security/OidcLoginSuccessHandler.java — new OIDC handler
+- backend/src/main/java/pl/piomin/services/infrastructure/exception/GlobalExceptionHandler.java — NoResourceFoundException fix
+- backend/src/main/resources/application.yml — identity-provider config block
+- backend/pom.xml — version bump 1.0.1 → 1.0.2
+### Deferred
+- Nothing
+---
+
+<!-- git-snapshot 2026-04-30T20:05:03Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:05:05Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:05:08Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:05:11Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:05:13Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:05:28Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:06:25Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:07:19Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T20:07:49Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application-prod.yml
+- backlog/tasks/task-6.3 - Backend-Spring-Security-BFF-session-config-login-logout.md
+- docker-compose.yml
+- keycloak/realm-export.json
+- notes.md
+<!-- end-snapshot -->
