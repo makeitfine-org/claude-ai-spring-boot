@@ -1,7 +1,7 @@
 ---
 id: TASK-6.1
 title: Keycloak & MailHog infrastructure setup
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-04-30 16:39'
 labels:
@@ -36,10 +36,10 @@ Add Keycloak and MailHog to docker-compose and provide a pre-imported realm so t
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 docker compose up starts Keycloak, MailHog, Postgres, backend, and frontend without errors.
-- [ ] #2 Keycloak admin console (http://localhost:8180) shows realm 'claude-ai' with both clients present.
-- [ ] #3 MailHog UI (http://localhost:8025) is reachable.
-- [ ] #4 Realm password policy rejects passwords shorter than 8 chars or missing required character classes.
-- [ ] #5 Brute-force protection is enabled on the realm.
-- [ ] #6 README.md lists the new services and their ports.
+- [x] #1 docker compose up starts Keycloak, MailHog, Postgres, backend, and frontend without errors.
+- [x] #2 Keycloak admin console (http://localhost:8180) shows realm 'claude-ai' with both clients present.
+- [x] #3 MailHog UI (http://localhost:8025) is reachable.
+- [x] #4 Realm password policy rejects passwords shorter than 8 chars or missing required character classes.
+- [x] #5 Brute-force protection is enabled on the realm.
+- [x] #6 README.md lists the new services and their ports.
 <!-- AC:END -->

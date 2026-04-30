@@ -11,7 +11,11 @@ Browser
   └─► Nginx  (port 3000)
         ├─► React SPA          (static files)
         └─► /api/*  ──────►  Spring Boot  (port 8080)
-                                  └─► PostgreSQL  (port 5432)
+                                  ├─► PostgreSQL  (port 5432)
+                                  └─► Keycloak    (port 8180)
+
+Keycloak  (port 8180)  ──► MailHog SMTP (port 1025)
+MailHog Web UI         (port 8025)
 ```
 
 ---
@@ -47,6 +51,8 @@ Then open **http://localhost:3000** in your browser.
 | Service | Port | Description |
 |---|---|---|
 | `postgres` | 5432 | PostgreSQL 16 database |
+| `keycloak` | 8180 | Keycloak identity provider (admin: admin/admin) |
+| `mailhog` | 1025 / 8025 | MailHog dev SMTP server / web UI |
 | `app` | 8080 | Spring Boot REST API |
 | `frontend` | 3000 | React SPA served by Nginx |
 
