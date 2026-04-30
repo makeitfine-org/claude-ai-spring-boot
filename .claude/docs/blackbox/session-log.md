@@ -1440,3 +1440,40 @@
 - backlog/drafts/todo.md
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T16:55:10Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T16:59:22Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T17:05:41Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T17:08:49Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T17:10:26Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T17:13:38Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T17:14:40Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.1 - Keycloak-MailHog-infrastructure-setup.md
+- backlog/tasks/task-6.2 - Backend-IdentityProvider-port-Keycloak-adapter.md
+- docker-compose.yml
+<!-- end-snapshot -->

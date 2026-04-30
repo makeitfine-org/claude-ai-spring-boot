@@ -3489,3 +3489,91 @@ What about TASK-6, did you left it?
 ## 2026-04-30T16:47:50Z
 yes
 ---
+
+## 2026-04-30T16:55:01Z
+which tasks can be run in parallel by different agents?
+---
+
+## 2026-04-30T16:59:05Z
+how to say claude code to run task-6.1,6.2,6.3 in parallel with agent team?
+---
+
+## 2026-04-30T17:05:32Z
+but running `make build` can fell if the simultaniously run docker compose?
+---
+
+## 2026-04-30T17:08:42Z
+so propose good prompt
+---
+
+## 2026-04-30T17:10:15Z
+But I want it would be run. If the already uses it other just wait until docker compose down
+---
+
+## 2026-04-30T17:12:14Z
+Create an agent team.
+Spawn three agents in parallel in the same response (all three Agent tool calls in one message):
+
+Agent 1 — docker-expert — implement TASK-6.1:                                                                                                                                                                                                               
+Read backlog task TASK-6.1 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run:                                                                                                                                                                                                                            
+flock /tmp/make-build.lock make build
+
+Agent 2 — java-architect — implement TASK-6.2:                                                                                                                                                                                                            
+Read backlog task TASK-6.2 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run:                                                                                                                                                                                                                            
+flock /tmp/make-build.lock make build
+
+Agent 3 — spring-boot-engineer — implement TASK-6.3:                                                                                                                                                                                                        
+Read backlog task TASK-6.3 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                   
+When ready to validate, run:                                                                                                                                                                                                                              
+flock /tmp/make-build.lock make build
+
+NOTE: flock serializes make build — if two agents finish at the same time,                                                                                                                                                                                  
+the second waits for the first to complete before running. This avoids docker compose collisions.
+---
+
+## 2026-04-30T17:13:19Z
+Create an agent team.
+Spawn three agents in parallel in the same response (all three Agent tool calls in one message):
+
+Agent 1 — docker-expert — implement TASK-6.1:                                                                                                                                                                                                               
+Read backlog task TASK-6.1 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run:                                                                                                                                                                                                                            
+flock /tmp/make-build.lock make build
+
+Agent 2 — java-architect — implement TASK-6.2:                                                                                                                                                                                                            
+Read backlog task TASK-6.2 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run:                                                                                                                                                                                                                            
+flock /tmp/make-build.lock make build
+
+Agent 3 — spring-boot-engineer — implement TASK-6.3:                                                                                                                                                                                                        
+Read backlog task TASK-6.3 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                   
+When ready to validate, run:                                                                                                                                                                                                                              
+flock /tmp/make-build.lock make build
+
+NOTE: flock serializes make build — if two agents finish at the same time,                                                                                                                                                                                  
+the second waits for the first to complete before running. This avoids docker compose collisions.
+---
+
+## 2026-04-30T17:14:18Z
+<task-notification>
+<task-id>a4215362aff9b01d8</task-id>
+<tool-use-id>toolu_01Cu4UGA9h3KpqAYzqor62ZC</tool-use-id>
+<output-file>/tmp/claude-1000/-home-eug-dev-projects-my-claude-ai-spring-boot/ff0c0f5e-9523-43f7-9065-7c0373e0624f/tasks/a4215362aff9b01d8.output</output-file>
+<status>killed</status>
+<summary>Agent "Implement TASK-6.3 (spring-boot-engineer)" was stopped</summary>
+<result>Now let me look at other relevant task files to understand what's already done for TASK-6.2 (IdentityProvider port) since TASK-6.3 might depend on it:</result>
+</task-notification>
+---
+
+## 2026-04-30T17:14:33Z
+<task-notification>
+<task-id>aa4ebbbc358ee1402</task-id>
+<tool-use-id>toolu_01VXmVKrU29U6HkaEi3YAuMF</tool-use-id>
+<output-file>/tmp/claude-1000/-home-eug-dev-projects-my-claude-ai-spring-boot/ff0c0f5e-9523-43f7-9065-7c0373e0624f/tasks/aa4ebbbc358ee1402.output</output-file>
+<status>killed</status>
+<summary>Agent "Re-implement TASK-6.3 (spring-boot-engineer)" was stopped</summary>
+<result>I'll start by reading the backlog task to understand what needs to be implemented.</result>
+</task-notification>
+---
