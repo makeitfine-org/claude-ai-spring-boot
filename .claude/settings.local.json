@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "teammateMode": "tmux",
   "permissions": {
     "allow": [
       "Bash(chmod +x *)",
@@ -73,7 +74,11 @@
       "Bash(docker builder *)",
       "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot add frontend/package-lock.json)",
       "Bash(git -C /home/eug/dev/projects/my/claude-ai-spring-boot commit -m \"fix: sync frontend package-lock.json with package.json\")",
-      "Bash(docker run *)"
+      "Bash(docker run *)",
+      "Bash(tmux rename-window *)",
+      "Bash(tmux new-window *)",
+      "Bash(tmux list-windows *)",
+      "Bash(echo \"exit: $?\")"
     ],
     "deny": []
   }
