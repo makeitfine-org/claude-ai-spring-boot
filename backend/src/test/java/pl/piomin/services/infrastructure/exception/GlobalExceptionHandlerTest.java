@@ -11,6 +11,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import pl.piomin.services.application.dto.PersonRequest;
 
+import pl.piomin.services.domain.identity.DuplicateUsernameException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GlobalExceptionHandlerTest {
@@ -20,6 +22,16 @@ class GlobalExceptionHandlerTest {
     @BeforeEach
     void setUp() {
         handler = new GlobalExceptionHandler();
+    }
+
+    @Test
+    void handleDuplicateUsernameException() {
+        DuplicateUsernameException ex = new DuplicateUsernameException("john");
+        ProblemDetail result = handler.handleDuplicateUsernameException(ex);
+
+        assertThat(result.getStatus()).isEqualTo(HttpStatus.CONFLICT.value());
+        assertThat(result.getTitle()).isEqualTo("Duplicate Username");
+        assertThat(result.getDetail()).contains("john");
     }
 
     @Test
