@@ -12,9 +12,6 @@ Browser
         ├─► React SPA          (static files)
         └─► /api/*  ──────►  Spring Boot  (port 8080)
                                   └─► PostgreSQL  (port 5432)
-
-Keycloak  (port 8180)  ◄──  realm: claude-ai  (auto-imported)
-MailHog   (port 8025)  ◄──  SMTP sink for Keycloak email verification
 ```
 
 ---
@@ -52,8 +49,6 @@ Then open **http://localhost:3000** in your browser.
 | `postgres` | 5432 | PostgreSQL 16 database |
 | `app` | 8080 | Spring Boot REST API |
 | `frontend` | 3000 | React SPA served by Nginx |
-| `keycloak` | 8180 | Keycloak identity provider (admin: `admin` / `admin`) |
-| `mailhog` | 8025 (UI), 1025 (SMTP) | MailHog dev mail catcher |
 
 ---
 
