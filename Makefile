@@ -29,7 +29,7 @@ updateFrontend:
 buildBackend:
 	@echo "### Building backend (claude-ai-spring-boot) ..."
 	$(call execute_commands,\
-		cd backend && mvn install,\
+		cd backend && mvn clean install,\
 		"✅ BUILD BACKEND SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ BUILD BACKEND FAILED (claude-ai-spring-boot) ❌")
 
@@ -117,7 +117,7 @@ help:
 	@echo "🔨 Build Targets:"
 	@echo "  clean             - Docker down, remove images, mvn clean, reinstall frontend deps"
 	@echo "  updateFrontend    - Update frontend deps (npm-check-updates -u && npm install)"
-	@echo "  buildBackend      - Build backend with Maven (cd backend && mvn install)"
+	@echo "  buildBackend      - Build backend with Maven (cd backend && mvn clean install)"
 	@echo "  buildFrontend     - Build frontend (npm install && npm run build)"
 	@echo "  build             - Full build: backend + frontend + e2e tests (spins docker up/down)"
 	@echo ""

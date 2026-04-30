@@ -49,7 +49,7 @@ A root `Makefile` provides convenience targets for all common developer workflow
 | Target | What it does |
 |---|---|
 | `make build` | Full build: backend (Maven) + frontend (npm) + e2e tests (docker up/down) |
-| `make buildBackend` | `cd backend && mvn install` |
+| `make buildBackend` | `cd backend && mvn clean install` |
 | `make buildFrontend` | `cd frontend && npm install && npm run build` |
 | `make acceptanceTest` | `cd e2e && npm install && npm test` (stack must be running) |
 | `make dockerAll` | Full build then `docker compose up` (foreground) — use for first-run |

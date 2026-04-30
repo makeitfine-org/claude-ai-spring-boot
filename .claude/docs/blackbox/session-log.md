@@ -1932,3 +1932,29 @@
 - backlog/tasks/task-6.5 - Backend-users-table-migration-profile-API-GET-PATCH-DELETE-api-users-me.md
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:04:21Z -->
+- .claude/docs/blackbox/audit.md
+- Makefile
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:05:33Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- CLAUDE.md
+- Makefile
+- backend/CLAUDE.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:06:37Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- CLAUDE.md
+- Makefile
+- backend/CLAUDE.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-04-30T22:07:51Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->

@@ -3731,3 +3731,19 @@ Start with task-6.4.
 ## 2026-04-30T22:01:56Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-04-30T22:04:13Z
+Change in @Makefile `buildBackend` goal `mvn install` to `mvn clean install`
+---
+
+## 2026-04-30T22:05:01Z
+Check whether in project related changes with that are necessary?
+---
+
+## 2026-04-30T22:06:31Z
+Change in @Makefile `buildBackend` goal `mvn install` to `mvn clean install`
+---
+
+## 2026-04-30T22:07:33Z
+execute git add all changes and commit them with suitable message
+---
