@@ -3450,3 +3450,42 @@ Want me to apply any subset? 1, 2, 4, and 6 are the highest-value ones (correctn
 ## 2026-04-30T11:59:17Z
 Propose improvement to improve .gitiginore
 ---
+
+## 2026-04-30T16:00:11Z
+I'd like to create a feature description for backlog.md.
+Help me to create description by interviewing me.
+And evenually output me on the screen the description.
+
+This is draft of the feature description:
+I want to implement a User registration by username and password for my application.
+- It should use keycloak up and running locally with docker for handling these.
+- After registration, can login to application. 
+- Also User should have a posibility to edit it's name.
+  User should have uqiue name which allows only symbols:[a-zA-Z0-9_] and name not less then 5 symbols not more then 15.
+  User can add it's avatar picture (png or jpg).
+  User password should be strong, not less then 8 symbols and defined by security rules you propose.
+---
+
+## 2026-04-30T16:04:37Z
+ask all this questions interactivly
+---
+
+## 2026-04-30T16:11:54Z
+back to ineractive questioning
+---
+
+## 2026-04-30T16:35:46Z
+save this as a backlog task via the Backlog MCP
+---
+
+## 2026-04-30T16:38:39Z
+Use the backlog mcp to decompose this `Task-6` into smaller subtasks. Each task must have clear 'Acceptance Criteria' in its description.
+---
+
+## 2026-04-30T16:45:17Z
+What about TASK-6, did you left it?
+---
+
+## 2026-04-30T16:47:50Z
+yes
+---

@@ -76,6 +76,5 @@
       "Bash(docker run *)"
     ],
     "deny": []
-  },
-  "model": "opus"
+  }
 }
