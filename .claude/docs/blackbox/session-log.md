@@ -192,3 +192,7 @@
 - backend/src/test/java/pl/piomin/services/application/service/RegistrationServiceTest.java
 - backlog/tasks/task-8 - Fix-failing-RegistrationServiceTest-causing-make-build-failure.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T13:04:28Z -->
+- notes.md
+<!-- end-snapshot -->
