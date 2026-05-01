@@ -67,6 +67,7 @@ Before marking any task done:
 3. GitHub Actions `.github/workflows/ci.yml` updated if pipeline steps changed
 4. If Dockerfile, docker-compose, or env vars changed: `cd e2e && npm test` to confirm all scenarios still pass
 5. If any files in `backend`, `frontend`, `e2e` modules, except `CLAUDE.md` and `README.md`, were added/modified/deleted: run `make build` and confirm it passes before closing the task
+6. Every backlog task Acceptance Criteria **must** include `- [ ] \`make clean build\` passes`
 
 <!-- BACKLOG.MD MCP GUIDELINES START -->
 

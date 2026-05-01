@@ -56,4 +56,10 @@ connect to PC Claude code from phone and handle by approving
 (share termina with claude/session in web?)
 
 ---
-Makefile ciCheck
+✅ Check: Makefile ciCheck
+
+---
+Improve prompts in nodes.md
+
+---
+Include into each backlog task `Acceptance Criteria` checklist the point: `make clean build` during task creation.

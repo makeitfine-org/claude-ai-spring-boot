@@ -54,3 +54,19 @@ Complete the backlog task-8
 ## 2026-05-01T12:57:46Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-05-01T13:28:39Z
+Include into each backlog task `Acceptance Criteria` checklist the point: `make clean build` during task creation.
+---
+
+## 2026-05-01T13:31:17Z
+how to save it in project?
+---
+
+## 2026-05-01T13:31:51Z
+yes
+---
+
+## 2026-05-01T13:35:50Z
+execute git add all changes and commit them with suitable message
+---

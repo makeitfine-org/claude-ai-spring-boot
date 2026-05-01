@@ -109,7 +109,7 @@ Prompt which created 2 pane
    ```
    ```
    You are test-automator which is implementing TASK-6.12:                                                                                                                                                                                                               
-   Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress, check what was done in scope of the task, and then complete its implementation.                                                                                                                                                                     
+   Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress (if it wasn't done), check what was done in scope of the task, and then complete its implementation.                                                                                                                                                                     
    When ready to validate, run: flock /tmp/make-build.lock `make clean build`.
    When validation is successful commit changes, include also this task description Markdown file into commit.
    ```
@@ -137,7 +137,9 @@ Prompt which created 2 pane
    ```
    
 5. 
-   which tasks can be run in parallel by different agents?
+   ```
+   Which tasks can be run in parallel by different agents?
+   ```
 
 6. Any issues with the team:
    $> ps aux | grep 'claude.*--agent-id'

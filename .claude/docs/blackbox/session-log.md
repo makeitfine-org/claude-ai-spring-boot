@@ -196,3 +196,25 @@
 <!-- git-snapshot 2026-05-01T13:04:28Z -->
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T13:28:46Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- backlog/drafts/todo.md
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T13:31:24Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/drafts/todo.md
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T13:32:01Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- CLAUDE.md
+- backlog/drafts/todo.md
+- notes.md
+<!-- end-snapshot -->
