@@ -21,7 +21,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function LoginPage() {
-  const { login, isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
 
@@ -38,8 +38,7 @@ export function LoginPage() {
   const onSubmit = async (data: FormData) => {
     setError(null)
     try {
-      const res = await api.post<AuthResponse>('/api/auth/login', data)
-      login(res.data)
+      await api.post<AuthResponse>('/api/auth/login', data)
       navigate('/persons', { replace: true })
     } catch {
       setError('Invalid email or password')

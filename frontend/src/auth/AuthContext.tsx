@@ -1,41 +1,58 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
-import type { AuthResponse } from '@/types/auth'
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react'
+import { api } from '@/lib/api'
+import type { UserProfile } from '@/types/auth'
 
-interface AuthState {
-  accessToken: string | null
-  refreshToken: string | null
-}
-
-interface AuthContextValue extends AuthState {
-  login: (response: AuthResponse) => void
-  logout: () => void
+interface AuthContextValue {
   isAuthenticated: boolean
+  user: UserProfile | null
+  isLoading: boolean
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<AuthState>({
-    accessToken: localStorage.getItem('accessToken'),
-    refreshToken: localStorage.getItem('refreshToken'),
-  })
+  const [user, setUser] = useState<UserProfile | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
-  const login = useCallback((response: AuthResponse) => {
-    localStorage.setItem('accessToken', response.accessToken)
-    localStorage.setItem('refreshToken', response.refreshToken)
-    setState({ accessToken: response.accessToken, refreshToken: response.refreshToken })
+  useEffect(() => {
+    let cancelled = false
+    api
+      .get<UserProfile>('/api/users/me')
+      .then((res) => {
+        if (!cancelled) {
+          setUser(res.data)
+          setIsAuthenticated(true)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setUser(null)
+          setIsAuthenticated(false)
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false)
+      })
+    return () => {
+      cancelled = true
+    }
   }, [])
 
-  const logout = useCallback(() => {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-    setState({ accessToken: null, refreshToken: null })
+  const logout = useCallback(async () => {
+    try {
+      await api.post('/api/logout')
+    } catch {
+      // ignore errors on logout
+    }
+    setUser(null)
+    setIsAuthenticated(false)
+    window.location.href = '/'
   }, [])
 
   return (
-    <AuthContext.Provider
-      value={{ ...state, login, logout, isAuthenticated: !!state.accessToken }}
-    >
+    <AuthContext.Provider value={{ isAuthenticated, user, isLoading, logout }}>
       {children}
     </AuthContext.Provider>
   )

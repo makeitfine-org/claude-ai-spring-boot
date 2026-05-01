@@ -34,7 +34,7 @@
     {
       "clientId": "claude-ai-bff",
       "name": "Claude AI BFF",
-      "description": "Confidential BFF client — backend completes OAuth2 code+PKCE flow",
+      "description": "Confidential BFF client \u2014 backend completes OAuth2 code+PKCE flow",
       "enabled": true,
       "publicClient": false,
       "standardFlowEnabled": true,
@@ -45,7 +45,9 @@
       "secret": "claude-ai-bff-secret",
       "redirectUris": [
         "http://localhost:8080/login/oauth2/code/keycloak",
-        "http://backend:8080/login/oauth2/code/keycloak"
+        "http://backend:8080/login/oauth2/code/keycloak",
+        "http://localhost:3000/login/oauth2/code/keycloak",
+        "http://localhost/login/oauth2/code/keycloak"
       ],
       "webOrigins": [
         "http://localhost:8080",
@@ -111,5 +113,22 @@
     "user"
   ],
   "scopeMappings": [],
-  "clientScopeMappings": {}
+  "clientScopeMappings": {},
+  "users": [
+    {
+      "username": "testuser",
+      "email": "test@example.com",
+      "firstName": "Test",
+      "lastName": "User",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password1!",
+          "temporary": false
+        }
+      ]
+    }
+  ]
 }

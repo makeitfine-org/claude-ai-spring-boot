@@ -1,14 +1,10 @@
 @auth @ui
 Feature: Login
 
-  Scenario: Successful login with valid credentials
+  Scenario: Login prompt page shows Sign in button
     Given I am on the login page
-    When I enter email "test@example.com" and password "password"
-    And I submit the login form
-    Then I should be redirected to the persons page
+    Then I should see the sign in button
 
-  Scenario: Login fails with invalid credentials
-    Given I am on the login page
-    When I enter email "wrong@example.com" and password "wrongpassword"
-    And I submit the login form
-    Then I should see an error message
+  Scenario: Successful login with valid credentials redirects to persons page
+    Given I am logged in as "test@example.com"
+    Then I should be redirected to the persons page

@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import {
   PlusIcon,
   SearchIcon,
@@ -71,8 +70,7 @@ function SortableHead({ field, currentField, currentDir, onSort, children, class
 }
 
 export function PersonsPage() {
-  const { logout } = useAuth()
-  const navigate = useNavigate()
+  const { logout, user } = useAuth()
 
   const [page, setPage] = useState(0)
   const [size, setSize] = useState(20)
@@ -156,7 +154,6 @@ export function PersonsPage() {
 
   const handleLogout = () => {
     logout()
-    navigate('/login', { replace: true })
   }
 
   const sortProps = { currentField: sortField, currentDir: sortDir, onSort: handleSort }
@@ -167,6 +164,11 @@ export function PersonsPage() {
         <h1 className="text-base font-semibold">Persons</h1>
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          {(user?.displayName ?? user?.username) && (
+            <span className="text-sm text-muted-foreground">
+              {user?.displayName ?? user?.username}
+            </span>
+          )}
           <Button variant="ghost" size="sm" onClick={handleLogout}>
             <LogOutIcon className="size-4 mr-1.5" />
             Logout

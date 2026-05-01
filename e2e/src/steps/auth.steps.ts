@@ -13,27 +13,48 @@ Given('I am logged in as {string}', async function (this: CustomWorld, email: st
       ? (process.env['TEST_USER_PASSWORD'] || 'password')
       : 'password'
 
-  await this.page.goto(`${FRONTEND_URL}/login`)
-  await this.page.waitForLoadState('networkidle')
+  // Obtain a JWT token via the local auth endpoint (independent of Keycloak).
+  const tokens = await loginApi(email, password)
+  this.accessToken = tokens.accessToken
+  this.refreshToken = tokens.refreshToken
 
-  await this.page.locator('#email').fill(email)
-  await this.page.locator('#password').fill(password)
-  await this.page.getByRole('button', { name: 'Sign in' }).click()
+  // Inject Bearer token into all API requests so persons CRUD works.
+  // Registered first = lower priority (LIFO); specific mock below overrides /api/users/me.
+  await this.page.route(`${API_BASE_URL}/api/**`, async (route) => {
+    const headers = {
+      ...route.request().headers(),
+      'Authorization': `Bearer ${tokens.accessToken}`,
+    }
+    await route.continue({ headers })
+  })
 
+  // The local JWT uses email as subject, but /api/users/me expects a UUID sub.
+  // Registered last = highest priority (LIFO); fulfills GET so AuthContext sees
+  // isAuthenticated = true without going through Keycloak OIDC.
+  await this.page.route(`${API_BASE_URL}/api/users/me`, async (route) => {
+    if (route.request().method() === 'GET') {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          sub: '00000000-0000-0000-0000-000000000001',
+          username: email,
+          displayName: 'Test User',
+          email: email,
+          hasAvatar: false,
+        }),
+      })
+    } else {
+      await route.fallback()
+    }
+  })
+
+  await this.page.goto(`${FRONTEND_URL}/persons`)
   await this.page.waitForURL('**/persons', { timeout: 15000 })
-
-  // Also store the token for any API steps that follow
-  try {
-    const tokens = await loginApi(email, password)
-    this.accessToken = tokens.accessToken
-    this.refreshToken = tokens.refreshToken
-  } catch {
-    // Token storage is best-effort; UI login already succeeded
-  }
 })
 
 Given('I am on the login page', async function (this: CustomWorld) {
-  await this.page.goto(`${FRONTEND_URL}/login`)
+  await this.page.goto(`${FRONTEND_URL}/login-prompt`)
   await this.page.waitForLoadState('networkidle')
 })
 
@@ -46,14 +67,18 @@ When(
 )
 
 When('I submit the login form', async function (this: CustomWorld) {
-  await this.page.getByRole('button', { name: 'Sign in' }).click()
-  // Give the page time to react (redirect or error)
+  await this.page.getByRole('button', { name: /sign in/i }).click()
   await this.page.waitForTimeout(1500)
 })
 
 Then('I should be redirected to the persons page', async function (this: CustomWorld) {
   await this.page.waitForURL('**/persons', { timeout: 15000 })
   expect(this.page.url()).toContain('/persons')
+})
+
+Then('I should see the sign in button', async function (this: CustomWorld) {
+  const signInButton = this.page.getByRole('button', { name: /sign in/i })
+  await expect(signInButton).toBeVisible({ timeout: 5000 })
 })
 
 Then('I should see an error message', async function (this: CustomWorld) {

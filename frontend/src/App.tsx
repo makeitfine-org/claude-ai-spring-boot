@@ -1,12 +1,17 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { LoginPage } from './features/auth/LoginPage'
+import { LoginPromptPage } from './features/auth/LoginPromptPage'
+import { RegisterPage } from './features/auth/RegisterPage'
+import { RegisterSuccessPage } from './features/auth/RegisterSuccessPage'
 import { PersonsPage } from './features/persons/PersonsPage'
 import { ProtectedRoute } from './auth/ProtectedRoute'
 
 function App() {
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<Navigate to="/login-prompt" replace />} />
+      <Route path="/login-prompt" element={<LoginPromptPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/register/success" element={<RegisterSuccessPage />} />
       <Route
         path="/persons"
         element={

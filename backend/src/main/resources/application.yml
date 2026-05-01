@@ -68,6 +68,7 @@ identity-provider:
 server:
   port: 8080
   shutdown: graceful
+  forward-headers-strategy: native
   error:
     include-message: always
     include-binding-errors: always
