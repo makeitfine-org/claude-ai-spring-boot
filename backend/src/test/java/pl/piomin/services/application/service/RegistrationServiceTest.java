@@ -62,7 +62,6 @@ class RegistrationServiceTest {
         when(userRepository.existsByUsernameLowerCase("john_doe")).thenReturn(false);
         when(identityProvider.createUser(any(CreateUserCommand.class))).thenReturn(VALID_SUB);
         when(userRepository.saveAndFlush(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
-        doNothing().when(identityProvider).triggerEmailVerification(VALID_SUB);
 
         RegistrationResponse response = registrationService.register(validRequest);
 
@@ -75,7 +74,7 @@ class RegistrationServiceTest {
         verify(userRepository).existsByUsernameLowerCase("john_doe");
         verify(identityProvider).createUser(any(CreateUserCommand.class));
         verify(userRepository).saveAndFlush(any(User.class));
-        verify(identityProvider).triggerEmailVerification(VALID_SUB);
+        verify(identityProvider, never()).deleteUser(any());
     }
 
     @Test
@@ -140,20 +139,6 @@ class RegistrationServiceTest {
                 .isInstanceOf(RegistrationException.class)
                 .hasMessageContaining("Registration failed after IdP user creation")
                 .hasCauseInstanceOf(RuntimeException.class);
-
-        verify(identityProvider).deleteUser(VALID_SUB);
-    }
-
-    @Test
-    void register_EmailVerificationFailure_CompensatesByDeletingIdpUser() {
-        when(userRepository.existsByUsernameLowerCase("john_doe")).thenReturn(false);
-        when(identityProvider.createUser(any(CreateUserCommand.class))).thenReturn(VALID_SUB);
-        when(userRepository.saveAndFlush(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
-        doThrow(new RuntimeException("Email verification failed"))
-                .when(identityProvider).triggerEmailVerification(VALID_SUB);
-
-        assertThatThrownBy(() -> registrationService.register(validRequest))
-                .isInstanceOf(RegistrationException.class);
 
         verify(identityProvider).deleteUser(VALID_SUB);
     }

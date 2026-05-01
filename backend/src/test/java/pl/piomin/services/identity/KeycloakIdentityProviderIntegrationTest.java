@@ -84,11 +84,6 @@ class KeycloakIdentityProviderIntegrationTest {
         identityProvider.deleteUser("any-sub"); // must not throw
     }
 
-    @Test
-    void triggerEmailVerification_WithStub_NoException() {
-        identityProvider.triggerEmailVerification("any-sub"); // must not throw
-    }
-
     // -------------------------------------------------------------------------
     // Stub — simulates a non-Keycloak IdentityProvider (proves swappability)
     // -------------------------------------------------------------------------
@@ -105,11 +100,6 @@ class KeycloakIdentityProviderIntegrationTest {
 
         @Override
         public void deleteUser(String sub) {
-            // no-op
-        }
-
-        @Override
-        public void triggerEmailVerification(String sub) {
             // no-op
         }
     }

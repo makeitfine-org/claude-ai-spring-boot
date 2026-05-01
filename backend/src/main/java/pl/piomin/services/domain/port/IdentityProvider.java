@@ -20,11 +20,4 @@ public interface IdentityProvider {
      * @param sub the IdP subject identifier
      */
     void deleteUser(String sub);
-
-    /**
-     * Triggers an email verification for the user identified by the given subject.
-     *
-     * @param sub the IdP subject identifier
-     */
-    void triggerEmailVerification(String sub);
 }

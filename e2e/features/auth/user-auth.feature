@@ -7,8 +7,7 @@ Feature: User registration and profile management
     When I fill in valid registration details
     And I submit the registration form
     Then I see the registration success message
-    When the email is verified via MailHog
-    And I sign in via the login form with the registered email
+    When I sign in via the login form with the registered email
     Then I am on the persons page and can see my display name in the nav
 
   Scenario: Protected routes require login

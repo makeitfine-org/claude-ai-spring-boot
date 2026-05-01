@@ -86,7 +86,7 @@ public class SecurityConfig {
 
         OidcClientInitiatedLogoutSuccessHandler oidcLogoutHandler =
                 new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-        oidcLogoutHandler.setPostLogoutRedirectUri("{baseUrl}");
+        oidcLogoutHandler.setPostLogoutRedirectUri("{baseUrl}/login");
 
         http
             .csrf(csrf -> csrf

@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -26,7 +25,6 @@ import pl.piomin.services.application.dto.RegistrationRequest;
 import pl.piomin.services.domain.entity.User;
 import pl.piomin.services.domain.repository.AuditEventRepository;
 import pl.piomin.services.domain.repository.UserRepository;
-import pl.piomin.services.infrastructure.identity.KeycloakIdentityProvider;
 
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -40,8 +38,6 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -56,9 +52,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Full-stack integration tests covering all user registration and profile scenarios.
  *
  * <p>Testcontainers spins up real Keycloak (with realm import) and Postgres instances.
- * The {@link KeycloakIdentityProvider#triggerEmailVerification} step is stubbed via
- * {@code @MockitoSpyBean} because the test environment has no SMTP server — all other
- * IdP interactions use the real Keycloak container.
+ * Registered users are created with {@code emailVerified=true} so no SMTP integration is
+ * required at test time — all IdP interactions use the real Keycloak container.
  *
  * <p>Acceptance criteria covered:
  * <ul>
@@ -153,23 +148,12 @@ class UserRegistrationIntegrationTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    /**
-     * Spy on the real KeycloakIdentityProvider so we can no-op
-     * {@code triggerEmailVerification} (no SMTP in test environment)
-     * while keeping real {@code createUser} / {@code deleteUser} behaviour.
-     */
-    @MockitoSpyBean
-    private KeycloakIdentityProvider keycloakIdentityProvider;
-
     // -------------------------------------------------------------------------
     // Test lifecycle
     // -------------------------------------------------------------------------
 
     @BeforeEach
     void setUp() {
-        // No-op email verification: avoids SMTP errors without losing real IdP calls.
-        doNothing().when(keycloakIdentityProvider).triggerEmailVerification(any());
-
         // Clean DB state — audit_events first (sub is not a FK, but clean order is nice)
         auditEventRepository.deleteAll();
         userRepository.deleteAll();

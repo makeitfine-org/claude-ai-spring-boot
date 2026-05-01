@@ -10,3 +10,9 @@ Feature: Login
   Scenario: Successful login with valid credentials redirects to persons page
     Given I am logged in as "test@example.com"
     Then I should be redirected to the persons page
+
+  Scenario: Logout returns the user to the login page
+    Given I am logged in as "test@example.com"
+    Then I should be redirected to the persons page
+    When I click the logout button
+    Then I am redirected to the login page

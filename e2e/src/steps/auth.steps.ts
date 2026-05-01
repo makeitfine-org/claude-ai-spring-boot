@@ -122,6 +122,11 @@ When(
   }
 )
 
+When('I click the logout button', async function (this: CustomWorld) {
+  await this.page.getByRole('button', { name: /^logout$/i }).click()
+  await this.page.waitForURL('**/login', { timeout: 15000 })
+})
+
 Then('I should receive a new access token', async function (this: CustomWorld) {
   const response = this.lastResponse as { status: number; data: { accessToken?: string } }
   expect(response.status).toBe(200)

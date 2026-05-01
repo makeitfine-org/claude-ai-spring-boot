@@ -324,3 +324,11 @@ Create a task in the backlog to solve the described problem:
 - When I log out I should be redirected to "/login" page
 - Create e2e tests covered the above functionality
 ---
+
+## 2026-05-01T20:55:11Z
+Complete the backlog task-12
+---
+
+## 2026-05-01T21:07:45Z
+execute git add all changes and commit them with suitable message
+---

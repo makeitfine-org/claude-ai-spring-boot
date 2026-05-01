@@ -523,3 +523,26 @@
 - .claude/settings.local.json
 - backlog/drafts/todo.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T21:04:25Z -->
+- .claude/docs/blackbox/audit.md
+- backend/src/main/java/pl/piomin/services/application/service/RegistrationService.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/domain/port/IdentityProvider.java
+- backend/src/main/java/pl/piomin/services/infrastructure/identity/KeycloakIdentityProvider.java
+- backend/src/test/java/pl/piomin/services/application/service/RegistrationServiceTest.java
+- backend/src/test/java/pl/piomin/services/identity/KeycloakIdentityProviderIntegrationTest.java
+- backend/src/test/java/pl/piomin/services/identity/KeycloakIdentityProviderTest.java
+- backend/src/test/java/pl/piomin/services/integration/UserRegistrationIntegrationTest.java
+- backlog/tasks/task-12 - Registration-without-email-verification-logout-redirect-to-login-e2e-coverage.md
+- e2e/features/auth/login.feature
+- e2e/features/auth/user-auth.feature
+- e2e/src/steps/auth.steps.ts
+- e2e/src/steps/user-auth.steps.ts
+- frontend/src/features/auth/RegisterSuccessPage.tsx
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T21:08:25Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->

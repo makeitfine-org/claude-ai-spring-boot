@@ -195,48 +195,6 @@ class KeycloakIdentityProviderTest {
     }
 
     // -------------------------------------------------------------------------
-    // triggerEmailVerification — positive cases
-    // -------------------------------------------------------------------------
-
-    @Test
-    void triggerEmailVerification_Success_NoException() {
-        String sub = "550e8400-e29b-41d4-a716-446655440000";
-
-        mockServer.expect(requestTo(TOKEN_ENDPOINT))
-                .andExpect(method(HttpMethod.POST))
-                .andRespond(withSuccess(VALID_TOKEN_RESPONSE, MediaType.APPLICATION_JSON));
-
-        mockServer.expect(requestTo(ADMIN_USERS_URL + "/" + sub + "/send-verify-email"))
-                .andExpect(method(HttpMethod.PUT))
-                .andRespond(withNoContent());
-
-        identityProvider.triggerEmailVerification(sub); // must not throw
-        mockServer.verify();
-    }
-
-    // -------------------------------------------------------------------------
-    // triggerEmailVerification — negative cases
-    // -------------------------------------------------------------------------
-
-    @Test
-    void triggerEmailVerification_Error_ThrowsIdentityProviderException() {
-        String sub = "550e8400-e29b-41d4-a716-446655440000";
-
-        mockServer.expect(requestTo(TOKEN_ENDPOINT))
-                .andExpect(method(HttpMethod.POST))
-                .andRespond(withSuccess(VALID_TOKEN_RESPONSE, MediaType.APPLICATION_JSON));
-
-        mockServer.expect(requestTo(ADMIN_USERS_URL + "/" + sub + "/send-verify-email"))
-                .andExpect(method(HttpMethod.PUT))
-                .andRespond(withStatus(HttpStatus.BAD_REQUEST)
-                        .body("{\"errorMessage\":\"Failed to send email\"}")
-                        .contentType(MediaType.APPLICATION_JSON));
-
-        assertThatThrownBy(() -> identityProvider.triggerEmailVerification(sub))
-                .isInstanceOf(IdentityProviderException.class);
-    }
-
-    // -------------------------------------------------------------------------
     // KeycloakProperties URL derivation
     // -------------------------------------------------------------------------
 

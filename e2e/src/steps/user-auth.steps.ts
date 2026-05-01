@@ -4,12 +4,6 @@ import * as path from 'path'
 import * as fs from 'fs'
 import * as os from 'os'
 import { CustomWorld } from '../world'
-import {
-  clearMailHog,
-  waitForEmailTo,
-  extractVerificationLink,
-  rewriteInternalUrl,
-} from '../support/mailhog-client'
 import { createTestJwt } from '../support/jwt-helper'
 
 const FRONTEND_URL = process.env['FRONTEND_URL'] || 'http://localhost:3000'
@@ -124,13 +118,9 @@ Given('I have a registered and active test account', async function (this: Custo
 
 When('I fill in valid registration details', async function (this: CustomWorld) {
   const user = generateTestUser()
-  // Store for use in subsequent steps (email needed for MailHog lookup)
   this.registeredUserEmail = user.email
   this.registeredUserPassword = user.password
   this.registeredUserDisplayName = user.displayName
-
-  // Clear MailHog so only this scenario's email is present
-  await clearMailHog()
 
   await this.page.locator('#username').fill(user.username)
   await this.page.locator('#email').fill(user.email)
@@ -142,61 +132,16 @@ When('I submit the registration form', async function (this: CustomWorld) {
   await this.page.getByRole('button', { name: /create account/i }).click()
 })
 
-When('the email is verified via MailHog', async function (this: CustomWorld) {
-  if (!this.registeredUserEmail) {
-    throw new Error('No registered user email stored. Run the registration steps first.')
-  }
-
-  // Wait for verification email
-  const emailBody = await waitForEmailTo(this.registeredUserEmail)
-  if (!emailBody) {
-    throw new Error(
-      `Verification email for ${this.registeredUserEmail} not found in MailHog after retries`,
-    )
-  }
-
-  const rawLink = extractVerificationLink(emailBody)
-  if (!rawLink) {
-    throw new Error(`Could not extract verification link from email body:\n${emailBody.slice(0, 500)}`)
-  }
-
-  const verificationUrl = rewriteInternalUrl(rawLink)
-
-  // Stash the registered user's sub for later assertions; the local /api/auth/login flow
-  // (used by the login form) issues the access token, so we deliberately do NOT inject
-  // a pre-built JWT here — that would short-circuit the form-based sign-in we want to test.
-  const dbUser = await this.dbClient.queryUserByEmail(this.registeredUserEmail)
-  if (dbUser) {
-    this.registeredUserSub = dbUser.sub
-  }
-
-  // Visit the verification link (may redirect through Keycloak)
-  await this.page.goto(verificationUrl, { waitUntil: 'networkidle', timeout: 30000 })
-
-  // Handle a "Proceed" or "Continue" button that Keycloak may show after verification
-  try {
-    const continueLocator = this.page.locator(
-      'a[href*="/login"], button:has-text("Continue"), a:has-text("Proceed"), a:has-text("Continue to log in")',
-    )
-    const visible = await continueLocator.first().isVisible({ timeout: 4000 })
-    if (visible) {
-      await continueLocator.first().click()
-      await this.page.waitForLoadState('networkidle', { timeout: 15000 })
-    }
-  } catch {
-    // No continue button — that's fine
-  }
-})
-
 When('I sign in via the login form with the registered email', { timeout: 60000 }, async function (this: CustomWorld) {
   if (!this.registeredUserEmail) {
     throw new Error('Registered user email not stored.')
   }
 
-  // The email-verification flow leaves a Keycloak OIDC session cookie behind. Clearing
-  // cookies here guarantees /login renders the credentials form (instead of LoginPage
-  // detecting an already-authenticated session and redirecting straight to /persons).
-  await this.page.context().clearCookies()
+  // Stash the registered user's sub for later assertions.
+  const dbUser = await this.dbClient.queryUserByEmail(this.registeredUserEmail)
+  if (dbUser) {
+    this.registeredUserSub = dbUser.sub
+  }
 
   // Local /api/auth/login looks the user up in the DB by email and validates against
   // the demo password configured in CustomUserDetailsService. The actual Keycloak
@@ -304,9 +249,8 @@ When('I delete my account from the profile page', async function (this: CustomWo
 
 Then('I see the registration success message', async function (this: CustomWorld) {
   await this.page.waitForURL('**/register/success', { timeout: 15000 })
-  // The success page should mention email verification
   const body = this.page.locator('body')
-  await expect(body).toContainText(/email|verif/i, { timeout: 10000 })
+  await expect(body).toContainText(/account created|sign in/i, { timeout: 10000 })
 })
 
 Then('I am on the persons page and can see my display name in the nav', async function (this: CustomWorld) {

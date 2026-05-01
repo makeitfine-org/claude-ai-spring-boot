@@ -99,22 +99,6 @@ public class KeycloakIdentityProvider implements IdentityProvider {
         }
     }
 
-    @Override
-    public void triggerEmailVerification(String sub) {
-        String token = obtainAdminToken();
-
-        try {
-            restClient.put()
-                    .uri(properties.getAdminUsersUrl() + "/{id}/send-verify-email", sub)
-                    .header("Authorization", "Bearer " + token)
-                    .retrieve()
-                    .toBodilessEntity();
-        } catch (HttpClientErrorException ex) {
-            throw new IdentityProviderException(
-                    "Failed to trigger email verification for user " + sub + ": " + ex.getMessage(), ex);
-        }
-    }
-
     // -------------------------------------------------------------------------
     // Private helpers
     // -------------------------------------------------------------------------
@@ -151,7 +135,7 @@ public class KeycloakIdentityProvider implements IdentityProvider {
                 "firstName", command.getFirstName() != null ? command.getFirstName() : "",
                 "lastName", command.getLastName() != null ? command.getLastName() : "",
                 "enabled", true,
-                "emailVerified", false,
+                "emailVerified", true,
                 "credentials", List.of(Map.of(
                         "type", "password",
                         "value", command.getPassword(),

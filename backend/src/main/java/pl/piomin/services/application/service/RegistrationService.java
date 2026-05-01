@@ -34,11 +34,11 @@ public class RegistrationService {
      * <ol>
      *   <li>Validating the password policy</li>
      *   <li>Checking for a duplicate username (case-insensitive)</li>
-     *   <li>Creating the user in the identity provider</li>
+     *   <li>Creating the user in the identity provider (already email-verified)</li>
      *   <li>Persisting a local users row</li>
-     *   <li>Triggering email verification via the identity provider</li>
      * </ol>
-     * If step 4 or 5 fails, the IdP user is deleted as compensation before rethrowing.
+     * If the local persistence step fails, the IdP user is deleted as compensation
+     * before rethrowing.
      *
      * @param request the registration request
      * @return the registration response containing sub, username, and email
@@ -69,8 +69,6 @@ public class RegistrationService {
             user.setEmail(request.getEmail());
             user.setDisplayName(request.getDisplayName().trim());
             userRepository.saveAndFlush(user);
-
-            identityProvider.triggerEmailVerification(sub);
         } catch (Exception e) {
             identityProvider.deleteUser(sub);
             throw new RegistrationException("Registration failed after IdP user creation", e);
