@@ -36,3 +36,13 @@ Clean up and remove agent team forcefully
 ## 2026-05-01T12:18:51Z
 Clean up and remove agent team forcefully
 ---
+
+## 2026-05-01T12:26:45Z
+`make build` is failed.
+Create a task in the backlog for the described problem
+---
+
+## 2026-05-01T12:31:52Z
+When run `make clean build` it is failed.
+Create a task in the backlog to solve the described problem.
+---

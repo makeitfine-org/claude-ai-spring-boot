@@ -102,7 +102,12 @@ Run every 5 minutes:
 
    Create a parent task called 'API Security' and 4 subtasks as individual 
    backlog items. Link them together.
-   
+
+   ===
+
+   When run `make clean build` it is failed.                                                                                                                                                                                                                 
+   Create a task in the backlog to solve the described problem.
+
    ===
 
    Read backlog task TASK-6.10 via the backlog MCP, move it to In Progress, implement it.                                                                                     
