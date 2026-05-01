@@ -45,3 +45,59 @@
 - backlog/tasks/task-6.8 - Frontend-registration-login-logout-UI.md
 - notes.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T09:21:15Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T09:22:27Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T09:34:41Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.9 - Frontend-profile-edit-avatar-upload-UI.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T09:43:04Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T09:59:56Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T10:14:05Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.11 - Tests-backend-integration-tests-with-Testcontainers-Keycloak-Postgres.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T10:14:16Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-6.11 - Tests-backend-integration-tests-with-Testcontainers-Keycloak-Postgres.md
+<!-- end-snapshot -->
+
+## 2026-05-01T10:45:00Z
+### Decisions
+- TASK-6.11: RegistrationService.save() changed to saveAndFlush() so DB constraint violation fires inside try-catch and compensating deleteUser() executes correctly
+- TASK-6.11: JpaAuditingConfig extended with OffsetDateTime-aware DateTimeProvider bean to fix User entity audit fields
+- TASK-6.11: UserRegistrationIntegrationTest uses unique X-Forwarded-For IPs per test to avoid rate-limiter cross-test interference
+- TASK-6.11: Keycloak container uses GenericContainer with --import-realm and realm JSON mounted via MountableFile
+### Constraints Stated by User
+- No Lombok, no MapStruct, no Java records in backend
+- Semantic commit messages ≤80 chars, no Co-Authored-By trailer
+### Files Modified
+- backend/src/main/java/pl/piomin/services/application/service/RegistrationService.java — save→saveAndFlush for compensating delete
+- backend/src/main/java/pl/piomin/services/config/JpaAuditingConfig.java — OffsetDateTime DateTimeProvider
+- backend/src/test/java/pl/piomin/services/integration/UserRegistrationIntegrationTest.java — new; 11 integration tests
+- backend/src/test/resources/keycloak/test-realm.json — new; Keycloak test realm with backend-admin service account
+### Deferred
+- Nothing
+---
