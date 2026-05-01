@@ -555,3 +555,23 @@
 <!-- git-snapshot 2026-05-01T22:04:54Z -->
 - .claude/docs/blackbox/audit.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T22:16:16Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- backend/README.md
+- backend/k8s/configmap.yaml
+- backend/k8s/deployment.yaml
+- backend/k8s/secret.yaml
+- backend/skaffold.yaml
+- backlog/drafts/todo.md
+- backlog/tasks/task-13 - Configure-Keycloak-for-Kubernetes-Skaffold-deployment.md
+- frontend/k8s/configmap.yaml
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T22:26:49Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backlog/drafts/todo.md
+<!-- end-snapshot -->

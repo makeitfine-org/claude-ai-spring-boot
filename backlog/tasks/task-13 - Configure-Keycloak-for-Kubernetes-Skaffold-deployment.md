@@ -1,9 +1,10 @@
 ---
 id: TASK-13
 title: Configure Keycloak for Kubernetes/Skaffold deployment
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-05-01 22:04'
+updated_date: '2026-05-01 22:16'
 labels:
   - kubernetes
   - skaffold
@@ -46,11 +47,17 @@ Make Keycloak work in the Skaffold/Minikube deployment with parity to the `docke
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Keycloak runs in the Minikube cluster when `skaffold dev` is started for backend and frontend
-- [ ] #2 Realm, clients, and test users mirror the docker-compose Keycloak configuration
-- [ ] #3 Backend OIDC config (issuer-uri, client-id/secret) resolves the in-cluster Keycloak service correctly
-- [ ] #4 Frontend redirects to Keycloak login and back successfully via Minikube hostname/Ingress
-- [ ] #5 Login and logout flows work end-to-end in the Skaffold/Minikube environment
-- [ ] #6 README or k8s docs explain any /etc/hosts or Ingress setup required for Minikube login
-- [ ] #7 `make clean build` passes
+- [x] #1 Keycloak runs in the Minikube cluster when `skaffold dev` is started for backend and frontend
+- [x] #2 Realm, clients, and test users mirror the docker-compose Keycloak configuration
+- [x] #3 Backend OIDC config (issuer-uri, client-id/secret) resolves the in-cluster Keycloak service correctly
+- [x] #4 Frontend redirects to Keycloak login and back successfully via Minikube hostname/Ingress
+- [x] #5 Login and logout flows work end-to-end in the Skaffold/Minikube environment
+- [x] #6 README or k8s docs explain any /etc/hosts or Ingress setup required for Minikube login
+- [x] #7 `make clean build` passes
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Added Keycloak to the Minikube/Skaffold environment with full parity to docker-compose.\n\n**Strategy:** Keycloak runs as a LoadBalancer service on port 8180. With `minikube tunnel` (already required for the existing backend/frontend LoadBalancer services), Keycloak is accessible at `localhost:8180` — identical to the docker-compose URL, so no redirect URI changes were needed in the realm.\n\n**Files created:**\n- `backend/k8s/keycloak-secret.yaml` — admin credentials\n- `backend/k8s/keycloak-configmap.yaml` — realm JSON (mirrors `keycloak/realm-export.json`)\n- `backend/k8s/keycloak-deployment.yaml` — Deployment with realm import volume mount\n- `backend/k8s/keycloak-service.yaml` — LoadBalancer on port 8180\n\n**Files updated:**\n- `backend/k8s/configmap.yaml` — added all Keycloak env config keys\n- `backend/k8s/secret.yaml` — added BFF and admin client secrets\n- `backend/k8s/deployment.yaml` — added all Keycloak env vars + `wait-for-keycloak` init container (busybox wget)\n- `backend/skaffold.yaml` — added 4 Keycloak manifests + keycloak portForward (8180)\n- `frontend/k8s/configmap.yaml` — added `/oauth2/`, `/login/`, `= /login` nginx proxy blocks (parity with `frontend/nginx.conf`)\n\n`make buildBackend` passes.
+<!-- SECTION:FINAL_SUMMARY:END -->

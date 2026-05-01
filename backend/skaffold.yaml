@@ -18,6 +18,10 @@ manifests:
     - k8s/secret.yaml
     - k8s/postgres-deployment.yaml
     - k8s/postgres-service.yaml
+    - k8s/keycloak-secret.yaml
+    - k8s/keycloak-configmap.yaml
+    - k8s/keycloak-deployment.yaml
+    - k8s/keycloak-service.yaml
     - k8s/deployment.yaml
     - k8s/service.yaml
 
@@ -29,3 +33,7 @@ portForward:
     resourceName: backend
     port: 8080
     localPort: 8080
+  - resourceType: service
+    resourceName: keycloak
+    port: 8180
+    localPort: 8180

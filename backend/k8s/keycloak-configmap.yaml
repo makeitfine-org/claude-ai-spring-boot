@@ -1,0 +1,156 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-realm
+  labels:
+    app: keycloak
+data:
+  realm-export.json: |
+    {
+      "id": "claude-ai",
+      "realm": "claude-ai",
+      "displayName": "Claude AI",
+      "enabled": true,
+      "sslRequired": "external",
+      "registrationAllowed": true,
+      "loginWithEmailAllowed": true,
+      "duplicateEmailsAllowed": false,
+      "verifyEmail": true,
+      "resetPasswordAllowed": true,
+      "editUsernameAllowed": false,
+      "bruteForceProtected": true,
+      "failureFactor": 5,
+      "waitIncrementSeconds": 900,
+      "maxFailureWaitSeconds": 900,
+      "minimumQuickLoginWaitSeconds": 60,
+      "quickLoginCheckMilliSeconds": 1000,
+      "maxDeltaTimeSeconds": 43200,
+      "passwordPolicy": "length(8) and upperCase(1) and lowerCase(1) and digits(1) and specialChars(1) and notUsername(undefined)",
+      "smtpServer": {
+        "host": "mailhog",
+        "port": "1025",
+        "from": "keycloak@claude-ai.local",
+        "fromDisplayName": "Claude AI",
+        "replyTo": "",
+        "replyToDisplayName": "",
+        "envelopeFrom": "",
+        "ssl": "false",
+        "starttls": "false",
+        "auth": "false"
+      },
+      "clients": [
+        {
+          "clientId": "claude-ai-bff",
+          "name": "Claude AI BFF",
+          "description": "Confidential BFF client — backend completes OAuth2 code+PKCE flow",
+          "enabled": true,
+          "publicClient": false,
+          "standardFlowEnabled": true,
+          "implicitFlowEnabled": false,
+          "directAccessGrantsEnabled": false,
+          "serviceAccountsEnabled": false,
+          "protocol": "openid-connect",
+          "secret": "claude-ai-bff-secret",
+          "redirectUris": [
+            "http://localhost:8080/login/oauth2/code/keycloak",
+            "http://backend:8080/login/oauth2/code/keycloak",
+            "http://localhost:3000/login/oauth2/code/keycloak",
+            "http://localhost/login/oauth2/code/keycloak"
+          ],
+          "webOrigins": [
+            "http://localhost:8080",
+            "http://localhost:3000"
+          ],
+          "attributes": {
+            "pkce.code.challenge.method": "S256",
+            "post.logout.redirect.uris": "http://localhost:8080/*##http://localhost:3000/*"
+          }
+        },
+        {
+          "clientId": "claude-ai-spa",
+          "name": "Claude AI SPA",
+          "description": "Public SPA client with PKCE",
+          "enabled": true,
+          "publicClient": true,
+          "standardFlowEnabled": true,
+          "implicitFlowEnabled": false,
+          "directAccessGrantsEnabled": false,
+          "serviceAccountsEnabled": false,
+          "protocol": "openid-connect",
+          "redirectUris": [
+            "http://localhost:3000/*",
+            "http://localhost:8080/*"
+          ],
+          "webOrigins": [
+            "http://localhost:3000",
+            "http://localhost:8080"
+          ],
+          "attributes": {
+            "pkce.code.challenge.method": "S256",
+            "post.logout.redirect.uris": "http://localhost:3000/*##http://localhost:8080/*"
+          }
+        },
+        {
+          "clientId": "claude-ai-backend",
+          "name": "Claude AI Backend",
+          "description": "Confidential backend client for service-to-service auth",
+          "enabled": true,
+          "publicClient": false,
+          "standardFlowEnabled": false,
+          "implicitFlowEnabled": false,
+          "directAccessGrantsEnabled": false,
+          "serviceAccountsEnabled": true,
+          "protocol": "openid-connect",
+          "secret": "claude-ai-backend-secret",
+          "attributes": {}
+        }
+      ],
+      "roles": {
+        "realm": [
+          {
+            "name": "user",
+            "description": "Regular user role"
+          },
+          {
+            "name": "admin",
+            "description": "Administrator role"
+          }
+        ]
+      },
+      "defaultRoles": [
+        "user"
+      ],
+      "scopeMappings": [],
+      "clientScopeMappings": {},
+      "users": [
+        {
+          "username": "testuser",
+          "email": "test@example.com",
+          "firstName": "Test",
+          "lastName": "User",
+          "enabled": true,
+          "emailVerified": true,
+          "credentials": [
+            {
+              "type": "password",
+              "value": "Password1!",
+              "temporary": false
+            }
+          ]
+        },
+        {
+          "username": "service-account-claude-ai-backend",
+          "enabled": true,
+          "email": "service-account-claude-ai-backend@placeholder.org",
+          "serviceAccountClientId": "claude-ai-backend",
+          "clientRoles": {
+            "realm-management": [
+              "manage-users",
+              "view-users",
+              "query-users",
+              "manage-realm"
+            ]
+          }
+        }
+      ]
+    }

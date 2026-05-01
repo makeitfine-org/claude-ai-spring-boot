@@ -416,8 +416,34 @@ docker-compose down
 rebuild automatically (no manual `mvn` step required). Expected round-trip time after a
 source change: **2–5 minutes** (Maven runs inside Docker on each rebuild).
 
+### Prerequisites
+
 ```bash
-# Deploy (live rebuild on file changes)
+# Point Docker at the Minikube daemon so images are built in-cluster
+eval $(minikube docker-env)
+
+# Run minikube tunnel in a separate terminal (required for all LoadBalancer services)
+minikube tunnel
+```
+
+`minikube tunnel` assigns `localhost` IPs to the three LoadBalancer services:
+
+| Service | URL |
+|---|---|
+| backend | `http://localhost:8080` |
+| frontend | `http://localhost:3000` |
+| keycloak | `http://localhost:8180` |
+
+This is identical to the docker-compose URLs, so no `/etc/hosts` entries or Ingress setup is required.
+
+### Keycloak in Minikube
+
+Keycloak starts automatically when `skaffold dev` is run from the `backend/` directory. It imports the `claude-ai` realm from `k8s/keycloak-configmap.yaml` (mirrors `keycloak/realm-export.json`). The backend waits for Keycloak to be ready before starting (via an init container).
+
+Test credentials: `testuser` / `Password1!`
+
+```bash
+# Deploy backend + Keycloak + Postgres (live rebuild on file changes)
 skaffold dev
 
 # One-shot production deploy
@@ -431,6 +457,7 @@ kubectl get pods
 
 # View logs
 kubectl logs -f deployment/backend
+kubectl logs -f deployment/keycloak
 ```
 
 ---

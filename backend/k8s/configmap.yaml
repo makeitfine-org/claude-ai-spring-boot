@@ -7,3 +7,10 @@ metadata:
 data:
   database.url: jdbc:postgresql://postgres-service:5432/persondb
   spring.profiles.active: prod
+  keycloak.url: http://keycloak:8180
+  keycloak.auth.url: http://localhost:8180
+  keycloak.realm: claude-ai
+  keycloak.client.id: claude-ai-bff
+  keycloak.admin.client.id: claude-ai-backend
+  oidc.issuer.uri: http://keycloak:8180/realms/claude-ai
+  oidc.redirect.base.url: http://localhost:3000

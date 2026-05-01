@@ -93,6 +93,5 @@
     ],
     "deny": []
   },
-  "model": "opus",
   "teammateMode": "tmux"
 }

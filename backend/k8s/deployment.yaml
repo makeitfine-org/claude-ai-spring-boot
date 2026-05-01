@@ -18,6 +18,9 @@ spec:
       - name: wait-for-postgres
         image: postgres:16-alpine
         command: ['sh', '-c', 'until pg_isready -h postgres-service -p 5432; do echo "waiting for postgres"; sleep 2; done']
+      - name: wait-for-keycloak
+        image: busybox:1.36
+        command: ['sh', '-c', 'until wget -q --spider http://keycloak:8180/realms/claude-ai; do echo "waiting for keycloak"; sleep 5; done']
       containers:
       - name: app
         image: backend
@@ -50,6 +53,51 @@ spec:
             secretKeyRef:
               name: app-secrets
               key: jwt.secret
+        - name: KEYCLOAK_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: keycloak.url
+        - name: KEYCLOAK_AUTH_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: keycloak.auth.url
+        - name: KEYCLOAK_REALM
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: keycloak.realm
+        - name: KEYCLOAK_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: keycloak.client.id
+        - name: KEYCLOAK_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: keycloak.client.secret
+        - name: KEYCLOAK_ADMIN_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: keycloak.admin.client.id
+        - name: KEYCLOAK_ADMIN_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: keycloak.admin.client.secret
+        - name: OIDC_ISSUER_URI
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: oidc.issuer.uri
+        - name: OIDC_REDIRECT_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: oidc.redirect.base.url
         livenessProbe:
           httpGet:
             path: /actuator/health/liveness

@@ -69,3 +69,20 @@ create browser test UI scenarios (open browser with playwrite and do all actions
 
 ---
 Make allow rule in settings.json universal
+
+---
+run existence e2e tests on skaffold k8s env. 
+
+---
+best way to create helm chart/charts for my backend + frontend application.
+And best way to deploy it.
+Tutorial of a deployment.
+
+---
+Intro https (with certificate)
+
+---
+Remove hardcoded on the backend `test@example.com` user with password
+
+---
+Show small pic of avatar on the frontend near/instead of Profile bottom
