@@ -175,7 +175,7 @@ class RegistrationServiceTest {
                 "john.doe@example.com".equals(cmd.getEmail()) &&
                 "Str0ng!Pass".equals(cmd.getPassword()) &&
                 "John Doe".equals(cmd.getFirstName()) &&
-                cmd.getLastName() == null
+                "John Doe".equals(cmd.getLastName())
         ));
     }
 }

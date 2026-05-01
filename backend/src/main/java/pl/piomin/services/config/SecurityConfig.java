@@ -20,6 +20,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestCustomizers;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -69,6 +72,14 @@ public class SecurityConfig {
         return new OidcLoginSuccessHandler();
     }
 
+    private OAuth2AuthorizationRequestResolver pkceAuthorizationRequestResolver(
+            ClientRegistrationRepository clientRegistrationRepository) {
+        DefaultOAuth2AuthorizationRequestResolver resolver = new DefaultOAuth2AuthorizationRequestResolver(
+                clientRegistrationRepository, "/oauth2/authorization");
+        resolver.setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce());
+        return resolver;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
             ClientRegistrationRepository clientRegistrationRepository) throws Exception {
@@ -112,6 +123,11 @@ public class SecurityConfig {
             )
             .oauth2Login(oauth2 -> oauth2
                 .successHandler(oidcLoginSuccessHandler())
+                // Keycloak realm requires PKCE (code_challenge_method=S256). Spring only auto-enables
+                // PKCE for public clients, so attach the customizer explicitly for our confidential BFF.
+                .authorizationEndpoint(endpoint -> endpoint
+                    .authorizationRequestResolver(pkceAuthorizationRequestResolver(clientRegistrationRepository))
+                )
             )
             .oauth2ResourceServer(rs -> rs
                 .jwt(Customizer.withDefaults())

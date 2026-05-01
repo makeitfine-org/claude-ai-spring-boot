@@ -28,6 +28,12 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_PORT: 8180
+      # Canonical frontend URL — used in token `iss` claims, action-token links and OIDC redirects.
+      # Pinning this prevents iss-mismatch when the backend triggers admin actions through the
+      # internal hostname (`keycloak:8180`) but the browser/test clicks the resulting links at
+      # `localhost:8180`. Backchannel calls (token, JWKS, admin API) keep working because
+      # KC_HOSTNAME_STRICT_BACKCHANNEL defaults to false.
+      KC_HOSTNAME: http://localhost:8180
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "false"
     volumes:

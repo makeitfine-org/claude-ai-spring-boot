@@ -72,21 +72,30 @@ export async function waitForEmailTo(
 
 /**
  * Extracts the Keycloak email-verification link from an email body.
- * The link contains "action-token" in its path.
+ * The link contains "action-token" in its path. Handles quoted-printable
+ * MIME encoding (Keycloak's plain-text part wraps long URLs with `=\n`
+ * soft breaks and encodes `=` as `=3D`).
  */
 export function extractVerificationLink(emailBody: string): string | null {
+  const decoded = decodeQuotedPrintable(emailBody)
   // Keycloak links appear in plain-text bodies as bare URLs and in HTML as hrefs.
   const patterns = [
     /https?:\/\/[^\s<>"]+action-token[^\s<>"]+/gi,
     /https?:\/\/[^\s<>"]+verify-email[^\s<>"]+/gi,
   ]
   for (const pattern of patterns) {
-    const match = emailBody.match(pattern)
+    const match = decoded.match(pattern)
     if (match) {
       return match[0].replace(/&amp;/g, '&')
     }
   }
   return null
+}
+
+function decodeQuotedPrintable(input: string): string {
+  return input
+    .replace(/=\r?\n/g, '')
+    .replace(/=([0-9A-Fa-f]{2})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
 }
 
 /**

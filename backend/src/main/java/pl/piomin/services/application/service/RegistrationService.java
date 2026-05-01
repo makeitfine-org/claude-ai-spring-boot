@@ -50,12 +50,15 @@ public class RegistrationService {
             throw new DuplicateUsernameException(request.getUsername());
         }
 
+        // Keycloak's default user profile requires both firstName and lastName.
+        // The SPA only collects a single displayName, so mirror it into both
+        // attributes — otherwise Keycloak triggers UPDATE_PROFILE on first login.
         CreateUserCommand command = new CreateUserCommand(
                 request.getUsername(),
                 request.getEmail(),
                 request.getPassword(),
                 request.getDisplayName(),
-                null
+                request.getDisplayName()
         );
         String sub = identityProvider.createUser(command);
 

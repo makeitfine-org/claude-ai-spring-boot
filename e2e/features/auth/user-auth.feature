@@ -1,7 +1,7 @@
 @auth @ui
 Feature: User registration and profile management
 
-  @wip
+
   Scenario: Successful registration and login
     Given I visit the registration page
     When I fill in valid registration details
