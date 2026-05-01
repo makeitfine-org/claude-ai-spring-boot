@@ -63,3 +63,6 @@ Improve prompts in nodes.md
 
 ---
 Include into each backlog task `Acceptance Criteria` checklist the point: `make clean build` during task creation.
+
+---
+create browser test UI scenarios (open browser with playwrite and do all actions)

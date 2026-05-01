@@ -387,3 +387,30 @@
 - backlog/tasks/task-6 - User-Registration-Login-Profile-Management.md
 - backlog/tasks/task-6.12 - Tests-E2E-Cucumber-Playwright-user-journey.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T18:02:37Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T18:03:16Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T18:10:02Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/src/main/java/pl/piomin/services/presentation/rest/AvatarController.java
+- backend/src/main/java/pl/piomin/services/presentation/rest/ProfileController.java
+- backlog/drafts/todo.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T18:16:54Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backlog/drafts/todo.md
+<!-- end-snapshot -->

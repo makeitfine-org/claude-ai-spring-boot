@@ -4,7 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,27 +31,34 @@ public class ProfileController {
     }
 
     @GetMapping
-    public ProfileResponse getProfile(@AuthenticationPrincipal Jwt jwt) {
-        UUID sub = UUID.fromString(jwt.getSubject());
-        return profileService.getProfile(sub);
+    public ProfileResponse getProfile(Authentication authentication) {
+        return profileService.getProfile(extractSub(authentication));
     }
 
     @PatchMapping
-    public ProfileResponse updateProfile(@AuthenticationPrincipal Jwt jwt,
+    public ProfileResponse updateProfile(Authentication authentication,
                                          @Valid @RequestBody UpdateProfileRequest request) {
-        UUID sub = UUID.fromString(jwt.getSubject());
-        return profileService.updateProfile(sub, request);
+        return profileService.updateProfile(extractSub(authentication), request);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProfile(@AuthenticationPrincipal Jwt jwt,
-                              HttpServletRequest request) {
-        UUID sub = UUID.fromString(jwt.getSubject());
-        profileService.deleteProfile(sub);
+    public void deleteProfile(Authentication authentication, HttpServletRequest request) {
+        profileService.deleteProfile(extractSub(authentication));
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
+    }
+
+    private UUID extractSub(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof Jwt jwt) {
+            return UUID.fromString(jwt.getSubject());
+        }
+        if (principal instanceof OidcUser oidcUser) {
+            return UUID.fromString(oidcUser.getSubject());
+        }
+        throw new IllegalStateException("Unsupported principal type: " + principal.getClass());
     }
 }

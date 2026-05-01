@@ -242,3 +242,20 @@ Backlog task-9 and task-10 are now done. Check whether task-6 and task-6.12 can 
 ## 2026-05-01T17:06:31Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-05-01T18:02:28Z
+I run `docker compose up` and try to connect to application.
+How can I do it?
+---
+
+## 2026-05-01T18:03:04Z
+What username/password
+---
+
+## 2026-05-01T18:05:40Z
+use playwrite and login yourself testuser, check where it work:
+---
+
+## 2026-05-01T18:16:30Z
+execute git add all changes and commit them with suitable message
+---
