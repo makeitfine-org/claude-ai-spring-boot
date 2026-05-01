@@ -56,7 +56,7 @@ Use these from the **repo root** instead of running Maven directly:
 
 | Target | Command |
 |---|---|
-| `make buildBackend` | `cd backend && mvn clean install` |
+| `make buildBackend` | `cd backend && mvn clean verify` |
 | `make clean` | Docker down + remove images + `mvn clean` + reinstall frontend deps |
 
 ## Version & Delivery Checklist

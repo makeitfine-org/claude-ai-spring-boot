@@ -13,7 +13,7 @@ no Dockerfile edit is needed when bumping the version.
 
 ## Steps (execute in order; fix any errors before continuing)
 
-1. **Build** — `mvn clean install`
+1. **Build** — `mvn clean verify`
 
 2. **Remove old Docker image** — `docker rmi spring-cloud2-api-gateway:latest`
    (ignore "image not found" errors)
