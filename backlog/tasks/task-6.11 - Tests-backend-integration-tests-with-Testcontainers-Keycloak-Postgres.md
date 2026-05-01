@@ -1,7 +1,7 @@
 ---
 id: TASK-6.11
 title: 'Tests: backend integration tests with Testcontainers (Keycloak + Postgres)'
-status: To Do
+status: in-progress
 assignee: []
 created_date: '2026-04-30 16:41'
 labels:

@@ -65,7 +65,7 @@ public class RegistrationService {
             user.setUsername(request.getUsername());
             user.setEmail(request.getEmail());
             user.setDisplayName(request.getDisplayName().trim());
-            userRepository.save(user);
+            userRepository.saveAndFlush(user);
 
             identityProvider.triggerEmailVerification(sub);
         } catch (Exception e) {
