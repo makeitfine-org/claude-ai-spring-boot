@@ -42,28 +42,6 @@ Run every 5 minutes:
    
    "teammateMode": "tmux" in settings.local.json
 
-   Create an agent team.
-   Spawn three agents in parallel. Load the TeamCreate tool schema and spawn the agent team
-
-   Agent 1 — docker-expert — implement TASK-6.1:                                                                                                                                                                                                               
-   Read backlog task TASK-6.1 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
-   When ready to validate, run:                                                                                                                                                                                                                            
-   flock /tmp/make-build.lock make build
-   
-   Agent 2 — java-architect — implement TASK-6.2:                                                                                                                                                                                                            
-   Read backlog task TASK-6.2 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
-   When ready to validate, run:                                                                                                                                                                                                                            
-   flock /tmp/make-build.lock make build
-   
-   Agent 3 — spring-boot-engineer — implement TASK-6.3:                                                                                                                                                                                                        
-   Read backlog task TASK-6.3 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                   
-   When ready to validate, run:                                                                                                                                                                                                                              
-   flock /tmp/make-build.lock make build
-   
-   NOTE: flock serializes make build — if two agents finish at the same time,                                                                                                                                                                                  
-   the second waits for the first to complete before running. This avoids docker compose collisions.
-
-
 4. I'd like to create a feature description for backlog.md.
    Help me to create description by interactivly interviewing me.
    And evenually output me on the screen the description.
@@ -125,9 +103,9 @@ Run every 5 minutes:
    
    ===
 
-   Read backlog task TASK-7 via the backlog MCP, move it to In Progress, implement it.
-   When ready to validate, run: flock /tmp/make-build.lock make clean build
-   When validation is successful commit changes (include also this task Markdown file)
+   Read backlog task TASK-6.10 via the backlog MCP, move it to In Progress, implement it.                                                                                     
+   When ready to validate, run: flock /tmp/make-build.lock make clean build.                                                                                                                                                                                   
+   When validation is successful commit changes, include also this task description Markdown file into commit.
 
    ====
 
@@ -136,10 +114,33 @@ Run every 5 minutes:
    For each task:
    1. Move it to `In Progress`
    2. When ready to validate, run: flock /tmp/make-build.lock `make clean build`
-   3. When validation is successful commit changes (include also this task Markdown file)
+   3. When validation is successful commit changes, include also this task description Markdown file into commit.
    4. Do not move to the next task until the current one is fully complete, validation is successful and changes commited.
    
    Start with task-6.4.
+
+   ===
+
+   Create an agent team.
+   Spawn three agents in parallel. Load the TeamCreate tool schema and spawn the agent team
+   
+   Agent 1 — test-automator — implement TASK-6.11:                                                                                                                                                                                                               
+   Read backlog task TASK-6.11 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+   When ready to validate, run: flock /tmp/make-build.lock make build
+   When validation is successful commit changes, include also this task description Markdown file into commit.
+   
+   Agent 2 — test-automator — implement TASK-6.12:                                                                                                                                                                                                               
+   Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+   When ready to validate, run: flock /tmp/make-build.lock make build
+   When validation is successful commit changes, include also this task description Markdown file into commit.
+   
+   Agent 3 — test-automator — implement TASK-6.13:                                                                                                                                                                                                               
+   Read backlog task TASK-6.13 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+   When ready to validate, run: flock /tmp/make-build.lock make build
+   When validation is successful commit changes, include also this task description Markdown file into commit.
+   
+   NOTE: flock serializes make build — if two agents finish at the same time,                                                                                                                                                                                  
+   the second waits for the first to complete before running. This avoids docker compose collisions.
 
 5. Any issues with the team:
    $> ps aux | grep 'claude.*--agent-id'

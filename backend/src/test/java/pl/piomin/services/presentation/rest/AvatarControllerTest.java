@@ -14,6 +14,8 @@ import pl.piomin.services.application.service.AvatarService;
 import pl.piomin.services.config.PasswordEncoderConfig;
 import pl.piomin.services.config.SecurityConfig;
 import pl.piomin.services.domain.exception.AvatarNotFoundException;
+import pl.piomin.services.domain.exception.AvatarTooLargeException;
+import pl.piomin.services.domain.exception.InvalidAvatarException;
 import pl.piomin.services.domain.exception.UnsupportedAvatarTypeException;
 import pl.piomin.services.infrastructure.security.JwtService;
 
@@ -91,6 +93,44 @@ class AvatarControllerTest {
                         .with(request -> { request.setMethod("PUT"); return request; })
                         .with(jwt().jwt(j -> j.subject(SUB))))
                 .andExpect(status().isUnsupportedMediaType());
+    }
+
+    // -------------------------------------------------------------------------
+    // PUT /api/users/me/avatar — file too large returns 413
+    // -------------------------------------------------------------------------
+
+    @Test
+    void uploadAvatar_FileTooLarge_Returns413() throws Exception {
+        doThrow(new AvatarTooLargeException(1_048_577L, 1_048_576L))
+                .when(avatarService).uploadAvatar(eq(UUID.fromString(SUB)), any());
+
+        MockMultipartFile file = new MockMultipartFile("file", "big.png",
+                "image/png", new byte[100]);
+
+        mockMvc.perform(multipart("/api/users/me/avatar")
+                        .file(file)
+                        .with(request -> { request.setMethod("PUT"); return request; })
+                        .with(jwt().jwt(j -> j.subject(SUB))))
+                .andExpect(status().isPayloadTooLarge());
+    }
+
+    // -------------------------------------------------------------------------
+    // PUT /api/users/me/avatar — magic-byte mismatch returns 400
+    // -------------------------------------------------------------------------
+
+    @Test
+    void uploadAvatar_MagicBytesMismatch_Returns400() throws Exception {
+        doThrow(new InvalidAvatarException("magic bytes do not match declared content type image/png"))
+                .when(avatarService).uploadAvatar(eq(UUID.fromString(SUB)), any());
+
+        MockMultipartFile file = new MockMultipartFile("file", "fake.png",
+                "image/png", new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, 0x00});
+
+        mockMvc.perform(multipart("/api/users/me/avatar")
+                        .file(file)
+                        .with(request -> { request.setMethod("PUT"); return request; })
+                        .with(jwt().jwt(j -> j.subject(SUB))))
+                .andExpect(status().isBadRequest());
     }
 
     // -------------------------------------------------------------------------

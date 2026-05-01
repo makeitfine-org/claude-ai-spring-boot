@@ -1,9 +1,10 @@
 ---
 id: TASK-6.10
 title: 'Tests: backend unit & slice tests'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-04-30 16:41'
+updated_date: '2026-05-01 09:42'
 labels:
   - testing
   - backend
@@ -44,10 +45,16 @@ Write JUnit 5 unit tests and `@WebMvcTest` slice tests for all new backend compo
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 All validator unit tests pass with no Spring context loaded.
-- [ ] #2 RegistrationService compensating-delete test verifies IdentityProvider.deleteUser is called when DB insert throws.
-- [ ] #3 WebMvcTest for RegistrationController covers at least: valid 201, invalid username 400, duplicate 409, weak password 400.
-- [ ] #4 WebMvcTest for AvatarController covers: valid upload, size exceeded, wrong content-type, magic-byte mismatch, missing avatar GET.
-- [ ] #5 No test mocks the database (slice tests use H2 or Testcontainers; unit tests mock only the direct collaborators).
-- [ ] #6 mvn test passes with all new tests green.
+- [x] #1 All validator unit tests pass with no Spring context loaded.
+- [x] #2 RegistrationService compensating-delete test verifies IdentityProvider.deleteUser is called when DB insert throws.
+- [x] #3 WebMvcTest for RegistrationController covers at least: valid 201, invalid username 400, duplicate 409, weak password 400.
+- [x] #4 WebMvcTest for AvatarController covers: valid upload, size exceeded, wrong content-type, magic-byte mismatch, missing avatar GET.
+- [x] #5 No test mocks the database (slice tests use H2 or Testcontainers; unit tests mock only the direct collaborators).
+- [x] #6 mvn test passes with all new tests green.
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Added two missing @WebMvcTest tests to AvatarControllerTest: `uploadAvatar_FileTooLarge_Returns413` (verifies AvatarTooLargeException → HTTP 413) and `uploadAvatar_MagicBytesMismatch_Returns400` (verifies InvalidAvatarException → HTTP 400). All other acceptance criteria were already met by existing tests: PasswordValidatorTest (AC#1), RegistrationServiceTest with compensation-delete (AC#2), RegistrationControllerTest (AC#3), AvatarControllerTest now complete (AC#4), unit tests mock only direct collaborators (AC#5). All 246 tests pass with `mvn verify` including JaCoCo 85% coverage gate.
+<!-- SECTION:FINAL_SUMMARY:END -->
