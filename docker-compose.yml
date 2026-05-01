@@ -64,6 +64,13 @@ services:
       DATABASE_PASSWORD: postgres
       JWT_SECRET: dGhpcy1pcy1hLXZlcnktbG9uZy1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tZ2VuZXJhdGlvbg==
       KEYCLOAK_URL: http://keycloak:8180
+      # Browser-facing Keycloak URL used only for the OAuth2 authorization redirect.
+      # Must be resolvable by end-user browsers (localhost), while KEYCLOAK_URL is
+      # used for container-to-container calls (token endpoint, userinfo, JWKS, admin).
+      KEYCLOAK_AUTH_URL: http://localhost:8180
+      # OAuth2 callback URL base — must be the browser-facing origin (nginx) so
+      # Keycloak can redirect back through a URL the browser can reach.
+      OIDC_REDIRECT_BASE_URL: http://localhost:3000
       KEYCLOAK_REALM: claude-ai
       KEYCLOAK_CLIENT_ID: claude-ai-bff
       KEYCLOAK_CLIENT_SECRET: claude-ai-bff-secret

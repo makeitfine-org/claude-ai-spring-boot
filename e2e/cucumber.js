@@ -8,6 +8,7 @@ module.exports = {
       'json:reports/cucumber.json'
     ],
     paths: ['features/**/*.feature'],
+    tags: 'not @wip',
     parallel: 1
   }
 }

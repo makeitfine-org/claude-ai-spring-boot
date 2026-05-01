@@ -102,6 +102,39 @@
 - Nothing
 ---
 
+<!-- git-snapshot 2026-05-01T10:48:21Z -->
+- .claude/docs/blackbox/audit.md
+- backend/src/test/java/pl/piomin/services/application/service/RegistrationServiceTest.java
+- e2e/.env.example
+- e2e/src/hooks.ts
+- e2e/src/support/db-client.ts
+- e2e/src/world.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T10:48:31Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/test/java/pl/piomin/services/application/service/RegistrationServiceTest.java
+- e2e/.env.example
+- e2e/src/hooks.ts
+- e2e/src/support/db-client.ts
+- e2e/src/world.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T12:06:48Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/resources/application.yml
+- backend/src/test/java/pl/piomin/services/application/service/RegistrationServiceTest.java
+- backlog/tasks/task-6.12 - Tests-E2E-Cucumber-Playwright-user-journey.md
+- docker-compose.yml
+- e2e/.env.example
+- e2e/src/hooks.ts
+- e2e/src/support/db-client.ts
+- e2e/src/world.ts
+- keycloak/realm-export.json
+<!-- end-snapshot -->
+
 <!-- git-snapshot 2026-05-01T12:15:14Z -->
 - .claude/docs/blackbox/audit.md
 <!-- end-snapshot -->
@@ -217,4 +250,71 @@
 - CLAUDE.md
 - backlog/drafts/todo.md
 - notes.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T14:52:34Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.json
+- .claude/settings.local.json
+- backend/src/main/resources/application.yml
+- backlog/tasks/task-6.12 - Tests-E2E-Cucumber-Playwright-user-journey.md
+- docker-compose.yml
+- e2e/.env.example
+- e2e/features/auth/user-auth.feature
+- e2e/src/hooks.ts
+- e2e/src/steps/user-auth.steps.ts
+- e2e/src/support/db-client.ts
+- e2e/src/support/jwt-helper.ts
+- e2e/src/support/keycloak-admin.ts
+- e2e/src/support/mailhog-client.ts
+- e2e/src/world.ts
+- keycloak/realm-export.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T14:59:12Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.json
+- .claude/settings.local.json
+- backend/src/main/resources/application.yml
+- backlog/tasks/task-6.12 - Tests-E2E-Cucumber-Playwright-user-journey.md
+- docker-compose.yml
+- e2e/.env.example
+- e2e/features/auth/user-auth.feature
+- e2e/src/hooks.ts
+- e2e/src/steps/user-auth.steps.ts
+- e2e/src/support/db-client.ts
+- e2e/src/support/jwt-helper.ts
+- e2e/src/support/keycloak-admin.ts
+- e2e/src/support/mailhog-client.ts
+- e2e/src/world.ts
+- keycloak/realm-export.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:00:26Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.json
+- .claude/settings.local.json
+- backend/src/main/resources/application.yml
+- backlog/tasks/task-6.12 - Tests-E2E-Cucumber-Playwright-user-journey.md
+- docker-compose.yml
+- e2e/.env.example
+- e2e/features/auth/user-auth.feature
+- e2e/src/hooks.ts
+- e2e/src/steps/user-auth.steps.ts
+- e2e/src/support/db-client.ts
+- e2e/src/support/jwt-helper.ts
+- e2e/src/support/keycloak-admin.ts
+- e2e/src/support/mailhog-client.ts
+- e2e/src/world.ts
+- keycloak/realm-export.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:09:47Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.json
+- .claude/settings.local.json
 <!-- end-snapshot -->

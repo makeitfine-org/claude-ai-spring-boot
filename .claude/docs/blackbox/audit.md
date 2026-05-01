@@ -25,6 +25,66 @@ From backlog.md read sequentially and complete sequentially task-6.6, task-6.7, 
 continue
 ---
 
+## 2026-05-01T09:20:58Z
+What backlog sub-tasks of TASKS-6 are not completed?
+---
+
+## 2026-05-01T09:22:21Z
+What backlog sub-tasks of TASKS-6 are not completed?
+With layers
+---
+
+## 2026-05-01T09:24:17Z
+Read backlog task TASK-6.9 via the backlog MCP, move it to In Progress, implement it.
+   When ready to validate, run: flock /tmp/make-build.lock make clean build
+   When validation is successful commit changes (include also this task Markdown file)
+---
+
+## 2026-05-01T09:38:02Z
+Read backlog task TASK-6.10 via the backlog MCP, move it to In Progress, implement it.
+When ready to validate, run: flock /tmp/make-build.lock make clean build.
+When validation is successful commit changes, include also this task Markdown file into commit.
+---
+
+## 2026-05-01T09:59:25Z
+Create an agent team.
+Spawn three agents in parallel. Load the TeamCreate tool schema and spawn the agent team
+
+Agent 1 — test-automator — implement TASK-6.11:                                                                                                                                                                                                               
+Read backlog task TASK-6.11 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run: flock /tmp/make-build.lock make build
+When validation is successful commit changes, include also this task description Markdown file into commit.
+
+Agent 2 — test-automator — implement TASK-6.12:                                                                                                                                                                                                               
+Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run: flock /tmp/make-build.lock make build
+
+When validation is successful commit changes, include also this task description Markdown file into commit.
+
+Agent 3 — test-automator — implement TASK-6.13:                                                                                                                                                                                                               
+Read backlog task TASK-6.13 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
+When ready to validate, run: flock /tmp/make-build.lock make build
+When validation is successful commit changes, include also this task description Markdown file into commit.
+
+NOTE: flock serializes make build — if two agents finish at the same time,                                                                                                                                                                                  
+the second waits for the first to complete before running. This avoids docker compose collisions.
+---
+
+## 2026-05-01T11:42:52Z
+continue this task completion
+---
+
+## 2026-05-01T11:56:09Z
+You are test-automator which is implementing TASK-6.12:                                                                                                                                                                                                               
+Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress, check what was done in scope of the task, and then complete its implementation.                                                                                                                                                                     
+When ready to validate, run: flock /tmp/make-build.lock `make clean build`.
+When validation is successful commit changes, include also this task description Markdown file into commit.
+---
+
+## 2026-05-01T12:06:27Z
+Include into each `Acceptance Criteria` checklist of backlog task when it's being created `make clean build` point.
+---
+
 ## 2026-05-01T12:15:03Z
 Clean up and remove agent team forcefully
 ---
@@ -69,4 +129,36 @@ yes
 
 ## 2026-05-01T13:35:50Z
 execute git add all changes and commit them with suitable message
+---
+
+## 2026-05-01T13:47:31Z
+Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress (if it wasn't done), check what was done in scope of the task, and then complete its implementation.                                                                                                                                                                     
+When ready to validate, run: flock /tmp/make-build.lock `make clean build`.
+When validation is successful commit changes, include also this task description Markdown file into commit.
+---
+
+## 2026-05-01T14:12:12Z
+Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress (if it wasn't done), 
+Scan current project, uncommited git changes and check what was done in scope of the task. Change something if necessary, and completed the task.
+When ready to validate, run: flock /tmp/make-build.lock `make clean build`.
+When validation is successful commit changes, include also this task description Markdown file into commit.
+---
+
+## 2026-05-01T14:59:02Z
+What's the best optimal joice?
+---
+
+## 2026-05-01T15:00:18Z
+If I approve this optimal chois all the functionality will work, will not they?
+---
+
+## 2026-05-01T15:05:26Z
+```
+  If you agree, I'll:                                                                                                                                                                                                                                         
+  1. Tag the two scenarios @wip and exclude @wip from the default cucumber profile.                                                                                                                                                                         
+  2. Document the two product bugs in TASK-6.12's implementation notes.                                                                                                                                                                                       
+  3. Open two new backlog tasks (OIDC callback fix, avatar upload Content-Type fix), linked from TASK-6.12.                                                                                                                                                 
+  4. Run make clean build to confirm green, then commit. 
+```
+I agree.
 ---

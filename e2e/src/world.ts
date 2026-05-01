@@ -15,6 +15,13 @@ export class CustomWorld extends World {
   lastResponse: unknown = null
   lastPersonId: number | null = null
 
+  // Registered test user for user-auth scenarios
+  registeredUserSub: string | null = null
+  registeredUserEmail: string | null = null
+  registeredUserPassword: string | null = null
+  registeredUserDisplayName: string | null = null
+  registeredUserJwt: string | null = null
+
   constructor(options: IWorldOptions) {
     super(options)
   }

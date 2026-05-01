@@ -78,9 +78,18 @@
       "Bash(echo \"exit: $?\")",
       "Bash(make clean *)",
       "Bash(make *)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "Bash(xargs cat *)",
+      "Bash(node -e ' *)",
+      "Bash(npx ts-node -e ' *)",
+      "Bash(base64 -w0)",
+      "Bash(npx ts-node *)",
+      "Bash(awk '/14:42:5[3-9]|14:43:0[0-2]/')",
+      "Bash(awk '/14:42:5[3-9]|14:43:[0-1][0-9]/')",
+      "Bash(awk '/14:42:5[3-9]\\\\.|14:42:54/')"
     ],
     "deny": []
   },
+  "model": "opus",
   "teammateMode": "tmux"
 }

@@ -63,4 +63,18 @@ export class DbClient {
       "DELETE FROM persons WHERE email LIKE '%e2e-test%' OR first_name = 'E2ETest'"
     )
   }
+
+  async queryUserByEmail(email: string): Promise<{ sub: string; username: string; display_name: string | null } | null> {
+    const result = await this.getClient().query(
+      'SELECT sub::text, username, display_name FROM users WHERE email = $1',
+      [email]
+    )
+    return (result.rows[0] as { sub: string; username: string; display_name: string | null }) ?? null
+  }
+
+  async deleteTestUsers(): Promise<void> {
+    await this.getClient().query(
+      "DELETE FROM users WHERE email LIKE 'e2e-user-%'"
+    )
+  }
 }

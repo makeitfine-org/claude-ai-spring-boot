@@ -63,9 +63,6 @@ Prompt which created 2 pane
    Each task must have clear 'Acceptance Criteria' in its description.
    ```
    ```
-   Read backlog task TASK-6.1 via the backlog MCP, move it to In Progress, implement it.
-   ```
-   ```
    I want to implement a [Feature Name, e.g., REST API for User Profiles]. 
    Based on our Java project structure, use the backlog tool to decompose this 
    into 10-15 small, atomic tasks. Each task must have clear 'Acceptance Criteria'  
@@ -75,9 +72,6 @@ Prompt which created 2 pane
    I need to add a new feature.
    We need to implement a JWT authentication filter for our Spring Security setup.
    Create a task for this in the backlog.
-   ```   
-   ```
-   /loop "Check the backlog for the next 'TODO' task. Start it, implement the Java code, run tests to verify, and mark it as 'DONE'. Continue until all tasks for this feature are complete."
    ```
    ```
    Create a task for 'Database Migration' and include three subtasks as a checklist:
@@ -90,6 +84,15 @@ Prompt which created 2 pane
    ```
    When run `make clean build` it is failed.                                                                                                                                                                                                                 
    Create a task in the backlog to solve the described problem.
+   ```
+   ```
+   Read backlog task TASK-6.1 via the backlog MCP, move it to In Progress, implement it.
+   ```   
+   ```
+   Complete the backlog task-
+   ```
+   ```
+   /loop "Check the backlog for the next 'TODO' task. Start it, implement the Java code, run tests to verify, and mark it as 'DONE'. Continue until all tasks for this feature are complete."
    ```
    ```   
    Read backlog task TASK-6.10 via the backlog MCP, move it to In Progress, implement it.                                                                                     

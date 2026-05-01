@@ -129,6 +129,20 @@
           "temporary": false
         }
       ]
+    },
+    {
+      "username": "service-account-claude-ai-backend",
+      "enabled": true,
+      "email": "service-account-claude-ai-backend@placeholder.org",
+      "serviceAccountClientId": "claude-ai-backend",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "view-users",
+          "query-users",
+          "manage-realm"
+        ]
+      }
     }
   ]
 }

@@ -38,11 +38,15 @@ spring:
             client-id: ${KEYCLOAK_CLIENT_ID:claude-ai-bff}
             client-secret: ${KEYCLOAK_CLIENT_SECRET:claude-ai-bff-secret}
             authorization-grant-type: authorization_code
-            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            # OIDC_REDIRECT_BASE_URL lets Docker/CI set the external-facing base URL
+            # (e.g. http://localhost:3000 when behind nginx), avoiding {baseUrl} mismatches.
+            redirect-uri: '${OIDC_REDIRECT_BASE_URL:{baseUrl}}/login/oauth2/code/{registrationId}'
             scope: openid, profile, email
         provider:
           keycloak:
-            authorization-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/auth
+            # KEYCLOAK_AUTH_URL is the browser-facing URL (e.g. http://localhost:8180 in Docker);
+            # defaults to KEYCLOAK_URL so non-Docker local dev continues to work unchanged.
+            authorization-uri: ${KEYCLOAK_AUTH_URL:${KEYCLOAK_URL:http://localhost:8180}}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/auth
             token-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/token
             user-info-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/${KEYCLOAK_REALM:claude-ai}/protocol/openid-connect/userinfo
             user-name-attribute: sub

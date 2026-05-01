@@ -1,10 +1,11 @@
 import { Before, After, BeforeAll, AfterAll, ITestCaseHookParameter, setDefaultTimeout } from '@cucumber/cucumber'
 
-setDefaultTimeout(30000)
+setDefaultTimeout(60000)
 import { chromium } from 'playwright'
 import { CustomWorld } from './world'
 import { bringStackUp, tearDownStack, waitForStack } from './support/stack'
 import { cleanupE2EPersons } from './support/seed'
+import { deleteKeycloakUserByEmail } from './support/keycloak-admin'
 import * as path from 'path'
 import * as fs from 'fs'
 
@@ -66,6 +67,13 @@ After(async function (this: CustomWorld, scenario: ITestCaseHookParameter) {
   if (this.dbClient) {
     try {
       await cleanupE2EPersons(this.dbClient)
+
+      // Clean up any test user created by user-auth scenarios
+      if (this.registeredUserEmail) {
+        await this.dbClient.deleteTestUsers()
+        await deleteKeycloakUserByEmail(this.registeredUserEmail)
+      }
+
       await this.dbClient.disconnect()
     } catch { /* ignore */ }
   }
