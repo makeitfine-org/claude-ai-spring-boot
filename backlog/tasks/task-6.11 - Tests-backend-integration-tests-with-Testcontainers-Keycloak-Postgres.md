@@ -1,7 +1,7 @@
 ---
 id: TASK-6.11
 title: 'Tests: backend integration tests with Testcontainers (Keycloak + Postgres)'
-status: in-progress
+status: done
 assignee: []
 created_date: '2026-04-30 16:41'
 labels:
@@ -44,10 +44,10 @@ Write Spring Boot integration tests using Testcontainers to spin up real Keycloa
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Testcontainers starts Keycloak (with realm import) and Postgres for the test suite without manual setup.
-- [ ] #2 All 10 scenarios listed above pass.
-- [ ] #3 The compensating-delete scenario (DB unavailable after IdP create) is tested: Keycloak user is removed.
-- [ ] #4 Rate-limit test confirms 429 + Retry-After on the 6th registration attempt.
-- [ ] #5 Audit anonymisation test confirms sub of deleted account rows starts with 'DELETED:'.
-- [ ] #6 mvn verify passes including integration tests.
+- [x] #1 Testcontainers starts Keycloak (with realm import) and Postgres for the test suite without manual setup.
+- [x] #2 All 10 scenarios listed above pass.
+- [x] #3 The compensating-delete scenario (DB unavailable after IdP create) is tested: Keycloak user is removed.
+- [x] #4 Rate-limit test confirms 429 + Retry-After on the 6th registration attempt.
+- [x] #5 Audit anonymisation test confirms sub of deleted account rows starts with 'DELETED:'.
+- [x] #6 mvn verify passes including integration tests.
 <!-- AC:END -->
