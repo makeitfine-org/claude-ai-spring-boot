@@ -1,9 +1,10 @@
 ---
 id: TASK-6.8
 title: 'Frontend: registration & login/logout UI'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-04-30 16:40'
+updated_date: '2026-05-01 09:01'
 labels:
   - frontend
   - auth
@@ -56,3 +57,9 @@ Build the React screens and routing for registration, login initiation, and logo
 - [ ] #7 Navigating to a protected route while unauthenticated redirects to the login prompt page.
 - [ ] #8 AuthContext reflects the authenticated state correctly on page refresh (re-fetches /api/users/me).
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Implemented session-based auth UI: LoginPromptPage (Keycloak OIDC redirect), RegisterPage (Zod validation, POST /api/register), RegisterSuccessPage. AuthContext rewritten to use GET /api/users/me for auth state and POST /api/logout. api.ts simplified to withCredentials only. nginx and vite.config proxies added for /oauth2/ and /login/ BFF routes. Keycloak realm export updated with test user and redirect URIs. E2E auth steps fixed with LIFO-ordered Playwright routes: GET /api/users/me is mocked (local JWT sub is email not UUID), all other /api/** calls get Bearer token injected. Build passes with all 11 scenarios green.
+<!-- SECTION:FINAL_SUMMARY:END -->

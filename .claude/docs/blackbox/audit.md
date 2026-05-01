@@ -8,3 +8,19 @@ What time is it in Kyiv now?
 ## 2026-05-01T07:23:27Z
 What backlog sub-tasks of TASKS-6 are not completed?
 ---
+
+## 2026-05-01T07:27:46Z
+From backlog.md read sequentially and complete sequentially task-6.6, task-6.7, task-6.8.
+
+   For each task:
+   1. Move it to `In Progress`
+   2. When ready to validate, run: flock /tmp/make-build.lock `make clean build`
+   3. When validation is successful commit changes
+   4. Do not move to the next task until the current one is fully complete, validation is successful and changes commited.
+   
+   Start with task-6.6.
+---
+
+## 2026-05-01T08:47:11Z
+continue
+---

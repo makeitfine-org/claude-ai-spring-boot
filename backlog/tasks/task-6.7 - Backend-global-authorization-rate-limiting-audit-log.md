@@ -1,10 +1,10 @@
 ---
 id: TASK-6.7
 title: 'Backend: global authorization, rate limiting & audit log'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-04-30 16:40'
-updated_date: '2026-05-01 07:35'
+updated_date: '2026-05-01 07:50'
 labels:
   - backend
   - security
@@ -54,11 +54,11 @@ CREATE TABLE audit_events (
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 GET /api/persons returns 401 without a session (previously public).
-- [ ] #2 POST /api/register and GET /actuator/health remain accessible without authentication.
-- [ ] #3 Posting to /api/register 6 times within 15 minutes from the same IP returns 429 with a Retry-After header on the 6th request.
-- [ ] #4 Changing display_name writes an AUDIT_EVENT row with event_type=DISPLAY_NAME_CHANGED, before_val, and after_val.
-- [ ] #5 Uploading or removing an avatar writes the corresponding AVATAR_UPLOADED or AVATAR_REMOVED audit row.
-- [ ] #6 Deleting the account writes an ACCOUNT_DELETED audit row, then anonymises all prior audit rows for that sub.
-- [ ] #7 audit_events rows for a deleted account have sub starting with 'DELETED:'.
+- [x] #1 GET /api/persons returns 401 without a session (previously public).
+- [x] #2 POST /api/register and GET /actuator/health remain accessible without authentication.
+- [x] #3 Posting to /api/register 6 times within 15 minutes from the same IP returns 429 with a Retry-After header on the 6th request.
+- [x] #4 Changing display_name writes an AUDIT_EVENT row with event_type=DISPLAY_NAME_CHANGED, before_val, and after_val.
+- [x] #5 Uploading or removing an avatar writes the corresponding AVATAR_UPLOADED or AVATAR_REMOVED audit row.
+- [x] #6 Deleting the account writes an ACCOUNT_DELETED audit row, then anonymises all prior audit rows for that sub.
+- [x] #7 audit_events rows for a deleted account have sub starting with 'DELETED:'.
 <!-- AC:END -->

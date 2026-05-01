@@ -77,7 +77,8 @@
       "Bash(tmux list-windows *)",
       "Bash(echo \"exit: $?\")",
       "Bash(make clean *)",
-      "Bash(make *)"
+      "Bash(make *)",
+      "Bash(python3 *)"
     ],
     "deny": []
   },

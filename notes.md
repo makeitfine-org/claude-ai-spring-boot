@@ -127,6 +127,7 @@ Run every 5 minutes:
 
    Read backlog task TASK-7 via the backlog MCP, move it to In Progress, implement it.
    When ready to validate, run: flock /tmp/make-build.lock make clean build
+   When validation is successful commit changes (include also this task Markdown file)
 
    ====
 
@@ -135,7 +136,7 @@ Run every 5 minutes:
    For each task:
    1. Move it to `In Progress`
    2. When ready to validate, run: flock /tmp/make-build.lock `make clean build`
-   3. When validation is successful commit changes
+   3. When validation is successful commit changes (include also this task Markdown file)
    4. Do not move to the next task until the current one is fully complete, validation is successful and changes commited.
    
    Start with task-6.4.
