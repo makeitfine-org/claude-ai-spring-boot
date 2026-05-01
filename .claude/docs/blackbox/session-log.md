@@ -551,3 +551,7 @@
 - .claude/docs/blackbox/audit.md
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T22:04:54Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->

@@ -341,3 +341,16 @@ Use playwright mcp and open browser to check in browser whether it works and fix
 ## 2026-05-01T21:33:45Z
 but `make clean build` didnt' pass
 ---
+
+## 2026-05-01T22:04:33Z
+Create a task in the backlog to solve the described problem:
+
+I run:
+`eval $(minikube docker-env)`
+`cd backend`
+`skaffold dev`
+`cd frontend`
+`skaffold dev`
+Kubernetes and skaffold deployment is not configured to work with Keycloak functionality.
+Make it work successfully as it works with `docker compose` environment.
+---
