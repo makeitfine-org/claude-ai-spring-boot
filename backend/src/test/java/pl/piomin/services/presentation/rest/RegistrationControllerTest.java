@@ -1,6 +1,7 @@
 package pl.piomin.services.presentation.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,6 +18,7 @@ import pl.piomin.services.config.PasswordEncoderConfig;
 import pl.piomin.services.config.SecurityConfig;
 import pl.piomin.services.domain.exception.DuplicateUsernameException;
 import pl.piomin.services.domain.exception.PasswordPolicyViolationException;
+import pl.piomin.services.infrastructure.ratelimit.RegistrationRateLimitInterceptor;
 import pl.piomin.services.infrastructure.security.JwtService;
 
 import java.util.List;
@@ -51,6 +53,14 @@ class RegistrationControllerTest {
 
     @MockitoBean
     private JwtService jwtService;
+
+    @MockitoBean
+    private RegistrationRateLimitInterceptor registrationRateLimitInterceptor;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        when(registrationRateLimitInterceptor.preHandle(any(), any(), any())).thenReturn(true);
+    }
 
     // -------------------------------------------------------------------------
     // POST /api/register -- happy path

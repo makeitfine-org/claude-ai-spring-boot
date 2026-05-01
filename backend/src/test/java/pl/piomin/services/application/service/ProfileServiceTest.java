@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.piomin.services.application.dto.ProfileResponse;
 import pl.piomin.services.application.dto.UpdateProfileRequest;
+import pl.piomin.services.domain.AuditEventType;
 import pl.piomin.services.domain.entity.User;
 import pl.piomin.services.domain.exception.UserNotFoundException;
 import pl.piomin.services.domain.port.IdentityProvider;
@@ -19,6 +20,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,6 +33,9 @@ class ProfileServiceTest {
 
     @Mock
     private IdentityProvider identityProvider;
+
+    @Mock
+    private AuditService auditService;
 
     @InjectMocks
     private ProfileService profileService;
@@ -83,6 +88,8 @@ class ProfileServiceTest {
         assertThat(user.getDisplayName()).isEqualTo("New Name");
         verify(userRepository).save(user);
         assertThat(response.getDisplayName()).isEqualTo("New Name");
+        verify(auditService).log(eq(sub.toString()), eq(AuditEventType.DISPLAY_NAME_CHANGED),
+                eq("Old Name"), eq("New Name"));
     }
 
     @Test
@@ -130,6 +137,8 @@ class ProfileServiceTest {
 
         verify(userRepository).delete(user);
         verify(identityProvider).deleteUser(sub.toString());
+        verify(auditService).log(eq(sub.toString()), eq(AuditEventType.ACCOUNT_DELETED));
+        verify(auditService).anonymiseForDeletedUser(eq(sub.toString()));
     }
 
     @Test

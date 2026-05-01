@@ -3,6 +3,7 @@ package pl.piomin.services.application.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import pl.piomin.services.domain.AuditEventType;
 import pl.piomin.services.domain.entity.User;
 import pl.piomin.services.domain.exception.AvatarNotFoundException;
 import pl.piomin.services.domain.exception.AvatarTooLargeException;
@@ -31,9 +32,11 @@ public class AvatarService {
     private static final byte[] PNG_MAGIC = new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47};
 
     private final UserRepository userRepository;
+    private final AuditService auditService;
 
-    public AvatarService(UserRepository userRepository) {
+    public AvatarService(UserRepository userRepository, AuditService auditService) {
         this.userRepository = userRepository;
+        this.auditService = auditService;
     }
 
     public record AvatarData(byte[] bytes, String contentType) {}
@@ -66,6 +69,7 @@ public class AvatarService {
         user.setAvatarBytes(stored);
         user.setAvatarContentType(contentType);
         userRepository.save(user);
+        auditService.log(sub.toString(), AuditEventType.AVATAR_UPLOADED);
     }
 
     public AvatarData getAvatarData(UUID sub) {
@@ -85,6 +89,7 @@ public class AvatarService {
         user.setAvatarBytes(null);
         user.setAvatarContentType(null);
         userRepository.save(user);
+        auditService.log(sub.toString(), AuditEventType.AVATAR_REMOVED);
     }
 
     // -------------------------------------------------------------------------

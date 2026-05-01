@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
+import pl.piomin.services.domain.AuditEventType;
 import pl.piomin.services.domain.entity.User;
 import pl.piomin.services.domain.exception.AvatarNotFoundException;
 import pl.piomin.services.domain.exception.AvatarTooLargeException;
@@ -23,6 +24,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,6 +33,9 @@ class AvatarServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private AuditService auditService;
 
     @InjectMocks
     private AvatarService avatarService;
@@ -56,6 +61,7 @@ class AvatarServiceTest {
         assertThat(user.getAvatarBytes()).isNotNull();
         assertThat(user.getAvatarBytes().length).isGreaterThan(0);
         assertThat(user.getAvatarContentType()).isEqualTo("image/png");
+        verify(auditService).log(eq(sub.toString()), eq(AuditEventType.AVATAR_UPLOADED));
     }
 
     // -------------------------------------------------------------------------
@@ -79,6 +85,7 @@ class AvatarServiceTest {
         assertThat(user.getAvatarBytes()).isNotNull();
         assertThat(user.getAvatarBytes().length).isGreaterThan(0);
         assertThat(user.getAvatarContentType()).isEqualTo("image/jpeg");
+        verify(auditService).log(eq(sub.toString()), eq(AuditEventType.AVATAR_UPLOADED));
     }
 
     // -------------------------------------------------------------------------
@@ -153,6 +160,7 @@ class AvatarServiceTest {
         assertThat(decoded).isNotNull();
         assertThat(decoded.getWidth()).isLessThanOrEqualTo(512);
         assertThat(decoded.getHeight()).isLessThanOrEqualTo(512);
+        verify(auditService).log(eq(sub.toString()), eq(AuditEventType.AVATAR_UPLOADED));
     }
 
     // -------------------------------------------------------------------------
@@ -224,6 +232,7 @@ class AvatarServiceTest {
         verify(userRepository).save(user);
         assertThat(user.getAvatarBytes()).isNull();
         assertThat(user.getAvatarContentType()).isNull();
+        verify(auditService).log(eq(sub.toString()), eq(AuditEventType.AVATAR_REMOVED));
     }
 
     // -------------------------------------------------------------------------

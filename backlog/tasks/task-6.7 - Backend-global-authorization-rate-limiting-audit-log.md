@@ -1,9 +1,10 @@
 ---
 id: TASK-6.7
 title: 'Backend: global authorization, rate limiting & audit log'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-04-30 16:40'
+updated_date: '2026-05-01 07:35'
 labels:
   - backend
   - security
