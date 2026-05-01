@@ -381,3 +381,9 @@
 - frontend/src/features/profile/profileApi.ts
 - frontend/src/lib/api.ts
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T17:06:09Z -->
+- .claude/docs/blackbox/audit.md
+- backlog/tasks/task-6 - User-Registration-Login-Profile-Management.md
+- backlog/tasks/task-6.12 - Tests-E2E-Cucumber-Playwright-user-journey.md
+<!-- end-snapshot -->

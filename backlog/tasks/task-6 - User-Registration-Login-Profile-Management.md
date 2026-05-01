@@ -1,10 +1,10 @@
 ---
 id: TASK-6
 title: 'User Registration, Login & Profile Management'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-04-30 16:36'
-updated_date: '2026-04-30 16:48'
+updated_date: '2026-05-01 17:06'
 labels:
   - auth
   - keycloak
@@ -167,13 +167,30 @@ This task is decomposed into 13 subtasks. Execute in dependency order:
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A new visitor can register, receive a verification email, verify, log in, and reach an authenticated page in the SPA.
-- [ ] #2 Attempting to log in before email verification is rejected with a clear message.
-- [ ] #3 A logged-in user can change display name and upload/replace/remove a PNG or JPG avatar within the documented limits; oversized or wrong-format uploads are rejected with 400.
-- [ ] #4 Username cannot be changed after registration (no endpoint exposes this).
-- [ ] #5 Forgot-password flow sends an email and lets the user set a new password meeting policy.
-- [ ] #6 Deleting the account removes both the IdP user and the local profile; the user is logged out and cannot log in again with the same credentials.
-- [ ] #7 All previously public /api/** endpoints (except /api/register and /actuator/health) return 401 without a valid session.
-- [ ] #8 Swapping the IdP requires only changing OIDC_* env vars and (if needed) writing a new IdentityProvider adapter — no changes to controllers, services, or the SPA.
-- [ ] #9 make build passes; backend, integration, e2e, and frontend tests all green.
+- [x] #1 A new visitor can register, receive a verification email, verify, log in, and reach an authenticated page in the SPA.
+- [x] #2 Attempting to log in before email verification is rejected with a clear message.
+- [x] #3 A logged-in user can change display name and upload/replace/remove a PNG or JPG avatar within the documented limits; oversized or wrong-format uploads are rejected with 400.
+- [x] #4 Username cannot be changed after registration (no endpoint exposes this).
+- [x] #5 Forgot-password flow sends an email and lets the user set a new password meeting policy.
+- [x] #6 Deleting the account removes both the IdP user and the local profile; the user is logged out and cannot log in again with the same credentials.
+- [x] #7 All previously public /api/** endpoints (except /api/register and /actuator/health) return 401 without a valid session.
+- [x] #8 Swapping the IdP requires only changing OIDC_* env vars and (if needed) writing a new IdentityProvider adapter — no changes to controllers, services, or the SPA.
+- [x] #9 make build passes; backend, integration, e2e, and frontend tests all green.
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+All 13 subtasks (TASK-6.1 through TASK-6.13) are Done. The full registration → email verification → login → profile management → account deletion lifecycle is implemented end-to-end:
+
+- **Auth & IdP**: Keycloak realm `claude-ai` provisioned with BFF + admin clients, password policy, brute-force detection, MailHog SMTP. Backend integrates only via standard OIDC + a Keycloak-specific `IdentityProvider` adapter behind a port (TASK-6.1, 6.2, 6.3).
+- **Registration**: `POST /api/register` validates input, provisions Keycloak user with PKCE-required client config, creates local `users` row, triggers email verification — with compensating IdP delete on failure (TASK-6.4).
+- **Profile**: `users` table keyed by IdP `sub`; GET/PATCH/DELETE `/api/users/me` and PUT/GET/DELETE `/api/users/me/avatar` with image validation, downscaling, and BYTEA storage (TASK-6.5, 6.6).
+- **Authorization & cross-cutting**: All `/api/**` endpoints require auth except `/api/register` and `/actuator/health`; rate limit on register; audit log appended on profile mutations and deletion (TASK-6.7).
+- **Frontend**: Registration, login/logout, profile edit, and avatar upload UI built with React Hook Form + Zod + TanStack Query (TASK-6.9 and the rolled-in 6.8 work).
+- **Tests**: Backend unit/slice (TASK-6.10), Testcontainers integration (TASK-6.11), Cucumber + Playwright e2e covering all 6 scenarios (TASK-6.12), and frontend component tests (TASK-6.13).
+
+Three follow-up bug fixes were spun out and resolved during the rollout: TASK-8 (RegistrationServiceTest alignment), TASK-9 (avatar multipart Content-Type), and TASK-10 (OIDC callback redirect chain — PKCE, KC_HOSTNAME, X-Forwarded-Port, lastName).
+
+**Verification**: `make clean build` ✅; `cd e2e && npm test` → 17/17 scenarios, 86/86 steps green.
+<!-- SECTION:FINAL_SUMMARY:END -->

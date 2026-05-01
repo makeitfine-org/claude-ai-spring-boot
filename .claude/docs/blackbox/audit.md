@@ -234,3 +234,11 @@ execute git add all changes and commit them with suitable message
 ## 2026-05-01T16:10:23Z
 Complete the backlog task-10
 ---
+
+## 2026-05-01T17:04:05Z
+Backlog task-9 and task-10 are now done. Check whether task-6 and task-6.12 can be also closed, and do it if all fine.
+---
+
+## 2026-05-01T17:06:31Z
+execute git add all changes and commit them with suitable message
+---
