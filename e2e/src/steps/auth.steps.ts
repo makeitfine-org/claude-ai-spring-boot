@@ -54,8 +54,16 @@ Given('I am logged in as {string}', async function (this: CustomWorld, email: st
 })
 
 Given('I am on the login page', async function (this: CustomWorld) {
-  await this.page.goto(`${FRONTEND_URL}/login-prompt`)
+  await this.page.goto(`${FRONTEND_URL}/login`)
   await this.page.waitForLoadState('networkidle')
+})
+
+Then('I should see the email field', async function (this: CustomWorld) {
+  await expect(this.page.locator('#email')).toBeVisible({ timeout: 5000 })
+})
+
+Then('I should see the password field', async function (this: CustomWorld) {
+  await expect(this.page.locator('#password')).toBeVisible({ timeout: 5000 })
 })
 
 When(

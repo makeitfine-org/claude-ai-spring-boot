@@ -18,7 +18,7 @@ export function RegisterSuccessPage() {
           </p>
           <p className="text-sm text-center">
             <Link
-              to="/login-prompt"
+              to="/login"
               className="underline underline-offset-4 hover:text-foreground"
             >
               Back to sign in

@@ -7,30 +7,50 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.piomin.services.domain.repository.UserRepository;
 
 import java.util.Collections;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private static final String DEMO_PASSWORD = "password";
+
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public CustomUserDetailsService(PasswordEncoder passwordEncoder) {
+    public CustomUserDetailsService(UserRepository userRepository,
+                                    PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // For demonstration purposes, using a hardcoded user
-        // In a real application, this would query a user repository
-        if ("test@example.com".equals(username)) {
-            return new User(
-                    "test@example.com",
-                    passwordEncoder.encode("password"),
-                    Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
-            );
-        }
+    public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
+        Optional<pl.piomin.services.domain.entity.User> dbUser = parseUuid(identifier)
+                .flatMap(userRepository::findById)
+                .or(() -> userRepository.findByEmail(identifier));
 
-        throw new UsernameNotFoundException("User not found with email: " + username);
+        return dbUser
+                .map(this::toUserDetails)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + identifier));
+    }
+
+    private UserDetails toUserDetails(pl.piomin.services.domain.entity.User user) {
+        return new User(
+                user.getSub().toString(),
+                passwordEncoder.encode(DEMO_PASSWORD),
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
+        );
+    }
+
+    private Optional<UUID> parseUuid(String value) {
+        try {
+            return Optional.of(UUID.fromString(value));
+        } catch (IllegalArgumentException ex) {
+            return Optional.empty();
+        }
     }
 }

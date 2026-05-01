@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react'
-import { api } from '@/lib/api'
+import { api, clearTokens } from '@/lib/api'
 import type { UserProfile } from '@/types/auth'
 
 interface AuthContextValue {
@@ -58,9 +58,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch {
       // ignore errors on logout
     }
+    clearTokens()
     setUser(null)
     setIsAuthenticated(false)
-    window.location.href = '/'
+    window.location.href = '/login'
   }, [])
 
   return (

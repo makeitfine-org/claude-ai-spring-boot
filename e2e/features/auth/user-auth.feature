@@ -8,13 +8,13 @@ Feature: User registration and profile management
     And I submit the registration form
     Then I see the registration success message
     When the email is verified via MailHog
-    And I sign in via Keycloak with the registered credentials
+    And I sign in via the login form with the registered email
     Then I am on the persons page and can see my display name in the nav
 
   Scenario: Protected routes require login
     Given I am not authenticated
     When I navigate to the persons page directly
-    Then I am redirected to the login prompt
+    Then I am redirected to the login page
 
   Scenario: Previously public endpoint now requires authentication
     Given I am not authenticated

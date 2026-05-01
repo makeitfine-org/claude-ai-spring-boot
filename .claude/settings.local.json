@@ -86,9 +86,12 @@
       "Bash(npx ts-node *)",
       "Bash(awk '/14:42:5[3-9]|14:43:0[0-2]/')",
       "Bash(awk '/14:42:5[3-9]|14:43:[0-1][0-9]/')",
-      "Bash(awk '/14:42:5[3-9]\\\\.|14:42:54/')"
+      "Bash(awk '/14:42:5[3-9]\\\\.|14:42:54/')",
+      "Bash(docker restart *)",
+      "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")"
     ],
     "deny": []
   },
+  "model": "opus",
   "teammateMode": "tmux"
 }

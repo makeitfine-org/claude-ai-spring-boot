@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useAuth } from '@/auth/AuthContext'
-import { api } from '@/lib/api'
+import { api, setTokens } from '@/lib/api'
 import type { AuthResponse } from '@/types/auth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,7 +21,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function LoginPage() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, refreshUser } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
 
@@ -38,7 +38,9 @@ export function LoginPage() {
   const onSubmit = async (data: FormData) => {
     setError(null)
     try {
-      await api.post<AuthResponse>('/api/auth/login', data)
+      const response = await api.post<AuthResponse>('/api/auth/login', data)
+      setTokens(response.data.accessToken, response.data.refreshToken)
+      await refreshUser()
       navigate('/persons', { replace: true })
     } catch {
       setError('Invalid email or password')
@@ -90,6 +92,12 @@ export function LoginPage() {
             <Button type="submit" disabled={isSubmitting} className="w-full mt-1">
               {isSubmitting ? 'Signing in…' : 'Sign in'}
             </Button>
+            <p className="text-sm text-center text-muted-foreground">
+              Don&apos;t have an account?{' '}
+              <Link to="/register" className="underline underline-offset-4 hover:text-foreground">
+                Register
+              </Link>
+            </p>
           </form>
         </CardContent>
       </Card>

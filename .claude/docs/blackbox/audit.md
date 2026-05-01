@@ -259,3 +259,68 @@ use playwrite and login yourself testuser, check where it work:
 ## 2026-05-01T18:16:30Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-05-01T19:29:13Z
+When I open login page there is only "Sing in" bottom on UI,                                                                                                                                                                  
+I want on login page to have:
+- username field 
+- password field 
+- sign in bottom
+It have to work correctly
+And left registration as os.
+When I log out I redirect to login page 
+correct e2e tests based on that
+
+Create a task in the backlog to solve the described problem.
+Analyze the project and if necessary interview me before task creation.
+---
+
+## 2026-05-01T19:35:42Z
+Complete the backlog task-11
+---
+
+## 2026-05-01T19:49:33Z
+<task-notification>
+<task-id>bi2f66bx9</task-id>
+<tool-use-id>toolu_01GnPjtVvBawzwJ7Dud5aC3K</tool-use-id>
+<output-file>/tmp/claude-1000/-home-eug-dev-projects-my-claude-ai-spring-boot/5384dfc6-9ac5-4cd9-a901-9eec39affd03/tasks/bi2f66bx9.output</output-file>
+<status>completed</status>
+<summary>Background command "Run full build with e2e" completed (exit code 0)</summary>
+</task-notification>
+---
+
+## 2026-05-01T19:59:28Z
+Complete the backlog task-11
+---
+
+## 2026-05-01T20:07:41Z
+<task-notification>
+<task-id>bt7dedm6f</task-id>
+<tool-use-id>toolu_01N7UL9ZRGBAwcPfhkGbeP9j</tool-use-id>
+<output-file>/tmp/claude-1000/-home-eug-dev-projects-my-claude-ai-spring-boot/5384dfc6-9ac5-4cd9-a901-9eec39affd03/tasks/bt7dedm6f.output</output-file>
+<status>completed</status>
+<summary>Background command "Re-run e2e after rate limit clear" completed (exit code 0)</summary>
+</task-notification>
+---
+
+## 2026-05-01T20:13:14Z
+<task-notification>
+<task-id>br9kwbmu3</task-id>
+<summary>Monitor event: "make build progress markers"</summary>
+<event>[Monitor timed out — re-arm if needed.]</event>
+</task-notification>
+---
+
+## 2026-05-01T20:16:53Z
+execute git add all changes and commit them with suitable message
+---
+
+## 2026-05-01T20:48:02Z
+Create a task in the backlog to solve the described problem:
+
+- Check that registration functionality is working
+- Registration should work without email confirmation
+- After registering user check that this user is successfully logining to the application
+- When I log out I should be redirected to "/login" page
+- Create e2e tests covered the above functionality
+---

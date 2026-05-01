@@ -162,31 +162,12 @@ When('the email is verified via MailHog', async function (this: CustomWorld) {
 
   const verificationUrl = rewriteInternalUrl(rawLink)
 
-  // Query DB for the registered user's sub so we can create a JWT
+  // Stash the registered user's sub for later assertions; the local /api/auth/login flow
+  // (used by the login form) issues the access token, so we deliberately do NOT inject
+  // a pre-built JWT here — that would short-circuit the form-based sign-in we want to test.
   const dbUser = await this.dbClient.queryUserByEmail(this.registeredUserEmail)
   if (dbUser) {
     this.registeredUserSub = dbUser.sub
-    const jwt = createTestJwt(dbUser.sub, JWT_SECRET)
-    this.registeredUserJwt = jwt
-
-    // Patch XHR before the next page load so Authorization flows through CORS correctly
-    await this.page.addInitScript((token: string) => {
-      const _send = XMLHttpRequest.prototype.send
-      const _open = XMLHttpRequest.prototype.open
-      const tokenMap = new WeakMap<XMLHttpRequest, string>()
-      XMLHttpRequest.prototype.open = function (m: string, u: string | URL, ...r: unknown[]) {
-        tokenMap.set(this, token)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (_open as any).call(this, m, u, ...r)
-      }
-      XMLHttpRequest.prototype.send = function (b?: Document | XMLHttpRequestBodyInit | null) {
-        const t = tokenMap.get(this)
-        if (t) {
-          try { this.setRequestHeader('Authorization', `Bearer ${t}`) } catch { /* ignore */ }
-        }
-        return _send.call(this, b)
-      }
-    }, jwt)
   }
 
   // Visit the verification link (may redirect through Keycloak)
@@ -207,46 +188,25 @@ When('the email is verified via MailHog', async function (this: CustomWorld) {
   }
 })
 
-When('I sign in via Keycloak with the registered credentials', { timeout: 120000 }, async function (this: CustomWorld) {
-  if (!this.registeredUserEmail || !this.registeredUserPassword) {
-    throw new Error('Registered user credentials not stored.')
+When('I sign in via the login form with the registered email', { timeout: 60000 }, async function (this: CustomWorld) {
+  if (!this.registeredUserEmail) {
+    throw new Error('Registered user email not stored.')
   }
 
-  // Navigate to the frontend login prompt
-  await this.page.goto(`${FRONTEND_URL}/login-prompt`, { waitUntil: 'networkidle' })
+  // The email-verification flow leaves a Keycloak OIDC session cookie behind. Clearing
+  // cookies here guarantees /login renders the credentials form (instead of LoginPage
+  // detecting an already-authenticated session and redirecting straight to /persons).
+  await this.page.context().clearCookies()
 
-  // Click the "Sign in" button which starts the Keycloak OIDC flow
+  // Local /api/auth/login looks the user up in the DB by email and validates against
+  // the demo password configured in CustomUserDetailsService. The actual Keycloak
+  // password chosen at registration is not relevant for this local-JWT login path.
+  await this.page.goto(`${FRONTEND_URL}/login`, { waitUntil: 'networkidle' })
+  await this.page.locator('#email').waitFor({ state: 'visible', timeout: 10000 })
+  await this.page.locator('#email').fill(this.registeredUserEmail)
+  await this.page.locator('#password').fill('password')
   await this.page.getByRole('button', { name: /sign in/i }).click()
-
-  // The OAuth2 flow navigates through: login-prompt → /oauth2/authorization/keycloak → Keycloak.
-  // If the user already has an active Keycloak session (e.g. created during email verification),
-  // Keycloak auto-completes the auth and redirects straight back to the app without showing
-  // the login form. Race: wait for either the Keycloak login form OR the redirect back.
-  const loginFormPromise = this.page
-    .locator('input[name="username"], #username')
-    .first()
-    .waitFor({ state: 'visible', timeout: 30000 })
-    .then(() => 'form' as const)
-    .catch(() => null)
-  const redirectBackPromise = this.page
-    .waitForURL(new RegExp(`^${FRONTEND_URL}`), { timeout: 30000 })
-    .then(() => 'redirected' as const)
-    .catch(() => null)
-
-  const outcome = await Promise.race([loginFormPromise, redirectBackPromise])
-
-  if (outcome === 'form') {
-    await this.page.locator('input[name="username"], #username').fill(this.registeredUserEmail)
-    await this.page.locator('input[name="password"], #password').fill(this.registeredUserPassword)
-    await this.page.locator('input[type="submit"], #kc-login, button[type="submit"]').click()
-  }
-  // else: already redirected (or will be); fall through to the final wait below.
-
-  // Wait for redirect back to the app. The OIDC callback chain may briefly
-  // pass through localhost:8080 before the SPA on localhost:3000 takes over,
-  // so accept either origin and let the next step assert /persons.
-  await this.page.waitForURL(/^http:\/\/localhost:(3000|8080)\//, { timeout: 60000 })
-  await this.page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {})
+  await this.page.waitForURL('**/persons', { timeout: 30000 })
 })
 
 When('I navigate to the persons page directly', async function (this: CustomWorld) {
@@ -363,13 +323,8 @@ Then('I am on the persons page and can see my display name in the nav', async fu
 })
 
 Then('I am redirected to the login page', async function (this: CustomWorld) {
-  await this.page.waitForURL('**/login-prompt', { timeout: 15000 })
-  expect(this.page.url()).toContain('/login-prompt')
-})
-
-Then('I am redirected to the login prompt', async function (this: CustomWorld) {
-  await this.page.waitForURL('**/login-prompt', { timeout: 15000 })
-  expect(this.page.url()).toContain('/login-prompt')
+  await this.page.waitForURL('**/login', { timeout: 15000 })
+  expect(this.page.url()).toContain('/login')
 })
 
 Then('the response status is {int}', async function (this: CustomWorld, expectedStatus: number) {
@@ -396,9 +351,8 @@ Then('the placeholder icon is shown on the profile page', async function (this: 
 })
 
 Then('I am redirected and no longer authenticated', async function (this: CustomWorld) {
-  // After account deletion, logout() is called which sets window.location.href = '/'
-  // The SPA redirects unauthenticated users to /login-prompt
-  await this.page.waitForURL(/\/(login-prompt|$)/, { timeout: 15000 })
+  // After account deletion, logout() clears tokens and redirects to /login.
+  await this.page.waitForURL(/\/login(\?|$|\/)/, { timeout: 15000 })
 })
 
 Then('the deleted account cannot be accessed with the old token', async function (this: CustomWorld) {

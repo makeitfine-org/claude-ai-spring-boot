@@ -144,7 +144,7 @@ export function RegisterPage() {
             <p className="text-sm text-center text-muted-foreground">
               Already have an account?{' '}
               <Link
-                to="/login-prompt"
+                to="/login"
                 className="underline underline-offset-4 hover:text-foreground"
               >
                 Sign in

@@ -414,3 +414,112 @@
 - .claude/settings.local.json
 - backlog/drafts/todo.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T19:33:55Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T19:48:35Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/src/main/java/pl/piomin/services/domain/repository/UserRepository.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/CustomUserDetailsService.java
+- backend/src/test/java/pl/piomin/services/infrastructure/security/CustomUserDetailsServiceTest.java
+- backlog/tasks/task-11 - Replace-OIDC-login-prompt-with-email-password-form-on-login.md
+- e2e/features/auth/login.feature
+- e2e/features/auth/user-auth.feature
+- e2e/src/steps/auth.steps.ts
+- e2e/src/steps/user-auth.steps.ts
+- frontend/src/App.tsx
+- frontend/src/auth/AuthContext.tsx
+- frontend/src/auth/ProtectedRoute.tsx
+- frontend/src/features/auth/LoginPage.tsx
+- frontend/src/features/auth/LoginPromptPage.test.tsx
+- frontend/src/features/auth/LoginPromptPage.tsx
+- frontend/src/features/auth/RegisterPage.tsx
+- frontend/src/features/auth/RegisterSuccessPage.tsx
+- frontend/src/lib/api.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T20:07:38Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/src/main/java/pl/piomin/services/domain/repository/UserRepository.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/CustomUserDetailsService.java
+- backend/src/test/java/pl/piomin/services/infrastructure/security/CustomUserDetailsServiceTest.java
+- backlog/tasks/task-11 - Replace-OIDC-login-prompt-with-email-password-form-on-login.md
+- e2e/features/auth/login.feature
+- e2e/features/auth/user-auth.feature
+- e2e/src/steps/auth.steps.ts
+- e2e/src/steps/user-auth.steps.ts
+- frontend/nginx.conf
+- frontend/src/App.tsx
+- frontend/src/auth/AuthContext.tsx
+- frontend/src/auth/ProtectedRoute.tsx
+- frontend/src/features/auth/LoginPage.tsx
+- frontend/src/features/auth/LoginPromptPage.test.tsx
+- frontend/src/features/auth/LoginPromptPage.tsx
+- frontend/src/features/auth/RegisterPage.tsx
+- frontend/src/features/auth/RegisterSuccessPage.tsx
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T20:12:40Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/src/main/java/pl/piomin/services/domain/repository/UserRepository.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/CustomUserDetailsService.java
+- backend/src/test/java/pl/piomin/services/infrastructure/security/CustomUserDetailsServiceTest.java
+- backlog/tasks/task-11 - Replace-OIDC-login-prompt-with-email-password-form-on-login.md
+- e2e/features/auth/login.feature
+- e2e/features/auth/user-auth.feature
+- e2e/src/steps/auth.steps.ts
+- e2e/src/steps/user-auth.steps.ts
+- frontend/nginx.conf
+- frontend/src/App.tsx
+- frontend/src/auth/AuthContext.tsx
+- frontend/src/auth/ProtectedRoute.tsx
+- frontend/src/features/auth/LoginPage.tsx
+- frontend/src/features/auth/LoginPromptPage.test.tsx
+- frontend/src/features/auth/LoginPromptPage.tsx
+- frontend/src/features/auth/RegisterPage.tsx
+- frontend/src/features/auth/RegisterSuccessPage.tsx
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T20:13:17Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- backend/src/main/java/pl/piomin/services/domain/repository/UserRepository.java
+- backend/src/main/java/pl/piomin/services/infrastructure/security/CustomUserDetailsService.java
+- backend/src/test/java/pl/piomin/services/infrastructure/security/CustomUserDetailsServiceTest.java
+- backlog/tasks/task-11 - Replace-OIDC-login-prompt-with-email-password-form-on-login.md
+- e2e/features/auth/login.feature
+- e2e/features/auth/user-auth.feature
+- e2e/src/steps/auth.steps.ts
+- e2e/src/steps/user-auth.steps.ts
+- frontend/nginx.conf
+- frontend/src/App.tsx
+- frontend/src/auth/AuthContext.tsx
+- frontend/src/auth/ProtectedRoute.tsx
+- frontend/src/features/auth/LoginPage.tsx
+- frontend/src/features/auth/LoginPromptPage.test.tsx
+- frontend/src/features/auth/LoginPromptPage.tsx
+- frontend/src/features/auth/RegisterPage.tsx
+- frontend/src/features/auth/RegisterSuccessPage.tsx
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T20:18:35Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T20:50:32Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- backlog/drafts/todo.md
+<!-- end-snapshot -->

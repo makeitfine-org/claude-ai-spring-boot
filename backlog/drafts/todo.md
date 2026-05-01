@@ -66,3 +66,6 @@ Include into each backlog task `Acceptance Criteria` checklist the point: `make 
 
 ---
 create browser test UI scenarios (open browser with playwrite and do all actions)
+
+---
+Make allow rule in settings.json universal
