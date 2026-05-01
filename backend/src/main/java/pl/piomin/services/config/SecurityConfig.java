@@ -90,6 +90,9 @@ public class SecurityConfig {
                 // Profile API endpoints authenticated via JWT bearer — CSRF not needed
                 .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.PATCH, "/api/users/me"))
                 .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/api/users/me"))
+                // Avatar API endpoints authenticated via JWT bearer — CSRF not needed
+                .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.PUT, "/api/users/me/avatar"))
+                .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, "/api/users/me/avatar"))
             )
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session

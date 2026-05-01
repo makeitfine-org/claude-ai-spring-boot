@@ -1,9 +1,10 @@
 ---
 id: TASK-6.6
 title: 'Backend: avatar upload, serve & delete (PUT/GET/DELETE /api/users/me/avatar)'
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-04-30 16:40'
+updated_date: '2026-05-01 07:27'
 labels:
   - backend
   - avatar

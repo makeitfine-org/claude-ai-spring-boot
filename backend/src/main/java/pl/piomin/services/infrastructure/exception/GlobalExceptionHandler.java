@@ -9,10 +9,14 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import pl.piomin.services.domain.exception.AvatarNotFoundException;
+import pl.piomin.services.domain.exception.AvatarTooLargeException;
 import pl.piomin.services.domain.exception.DuplicateEmailException;
 import pl.piomin.services.domain.exception.DuplicateUsernameException;
+import pl.piomin.services.domain.exception.InvalidAvatarException;
 import pl.piomin.services.domain.exception.PasswordPolicyViolationException;
 import pl.piomin.services.domain.exception.RegistrationException;
+import pl.piomin.services.domain.exception.UnsupportedAvatarTypeException;
 import pl.piomin.services.domain.exception.UserNotFoundException;
 
 import java.net.URI;
@@ -144,6 +148,54 @@ public class GlobalExceptionHandler {
         );
         problemDetail.setTitle("Registration Failed");
         problemDetail.setType(URI.create("https://api.example.com/errors/registration-failed"));
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(AvatarTooLargeException.class)
+    public ProblemDetail handleAvatarTooLargeException(AvatarTooLargeException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.PAYLOAD_TOO_LARGE,
+                exception.getMessage()
+        );
+        problemDetail.setTitle("Avatar Too Large");
+        problemDetail.setType(URI.create("https://api.example.com/errors/avatar-too-large"));
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(InvalidAvatarException.class)
+    public ProblemDetail handleInvalidAvatarException(InvalidAvatarException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage()
+        );
+        problemDetail.setTitle("Invalid Avatar");
+        problemDetail.setType(URI.create("https://api.example.com/errors/invalid-avatar"));
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(UnsupportedAvatarTypeException.class)
+    public ProblemDetail handleUnsupportedAvatarTypeException(UnsupportedAvatarTypeException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+                exception.getMessage()
+        );
+        problemDetail.setTitle("Unsupported Avatar Type");
+        problemDetail.setType(URI.create("https://api.example.com/errors/unsupported-avatar-type"));
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(AvatarNotFoundException.class)
+    public ProblemDetail handleAvatarNotFoundException(AvatarNotFoundException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.NOT_FOUND,
+                exception.getMessage()
+        );
+        problemDetail.setTitle("Avatar Not Found");
+        problemDetail.setType(URI.create("https://api.example.com/errors/avatar-not-found"));
         problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }
