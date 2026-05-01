@@ -7,6 +7,7 @@ interface AuthContextValue {
   user: UserProfile | null
   isLoading: boolean
   logout: () => Promise<void>
+  refreshUser: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -40,6 +41,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const refreshUser = useCallback(async () => {
+    try {
+      const res = await api.get<UserProfile>('/api/users/me')
+      setUser(res.data)
+      setIsAuthenticated(true)
+    } catch {
+      setUser(null)
+      setIsAuthenticated(false)
+    }
+  }, [])
+
   const logout = useCallback(async () => {
     try {
       await api.post('/api/logout')
@@ -52,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, isLoading, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, isLoading, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   )

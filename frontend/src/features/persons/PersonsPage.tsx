@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   PlusIcon,
   SearchIcon,
@@ -169,6 +170,9 @@ export function PersonsPage() {
               {user?.displayName ?? user?.username}
             </span>
           )}
+          <Link to="/profile">
+            <Button variant="ghost" size="sm">Profile</Button>
+          </Link>
           <Button variant="ghost" size="sm" onClick={handleLogout}>
             <LogOutIcon className="size-4 mr-1.5" />
             Logout

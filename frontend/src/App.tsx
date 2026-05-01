@@ -3,6 +3,7 @@ import { LoginPromptPage } from './features/auth/LoginPromptPage'
 import { RegisterPage } from './features/auth/RegisterPage'
 import { RegisterSuccessPage } from './features/auth/RegisterSuccessPage'
 import { PersonsPage } from './features/persons/PersonsPage'
+import { ProfilePage } from './features/profile/ProfilePage'
 import { ProtectedRoute } from './auth/ProtectedRoute'
 
 function App() {
@@ -17,6 +18,14 @@ function App() {
         element={
           <ProtectedRoute>
             <PersonsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         }
       />

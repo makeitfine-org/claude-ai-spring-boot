@@ -1,9 +1,10 @@
 ---
 id: TASK-6.9
 title: 'Frontend: profile edit & avatar upload UI'
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-04-30 16:40'
+updated_date: '2026-05-01 09:34'
 labels:
   - frontend
   - profile
@@ -48,13 +49,26 @@ Build the authenticated profile page where the user can view and edit their disp
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Profile page is accessible only to authenticated users.
-- [ ] #2 Display name can be edited inline; changes persist after page reload.
-- [ ] #3 Attempting to save a display name with control characters shows an error.
-- [ ] #4 File picker accepts only .png/.jpg/.jpeg files.
-- [ ] #5 Uploading a file > 1 MB client-side shows a friendly error before the request is sent.
-- [ ] #6 A successful avatar upload displays the new image without a full page reload.
-- [ ] #7 'Remove avatar' removes the image and shows the placeholder.
-- [ ] #8 Account deletion modal appears on click and requires explicit confirmation.
-- [ ] #9 After confirming account deletion, the user is logged out and redirected to /.
+- [x] #1 Profile page is accessible only to authenticated users.
+- [x] #2 Display name can be edited inline; changes persist after page reload.
+- [x] #3 Attempting to save a display name with control characters shows an error.
+- [x] #4 File picker accepts only .png/.jpg/.jpeg files.
+- [x] #5 Uploading a file > 1 MB client-side shows a friendly error before the request is sent.
+- [x] #6 A successful avatar upload displays the new image without a full page reload.
+- [x] #7 'Remove avatar' removes the image and shows the placeholder.
+- [x] #8 Account deletion modal appears on click and requires explicit confirmation.
+- [x] #9 After confirming account deletion, the user is logged out and redirected to /.
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Implemented the `/profile` protected page with:
+- **Avatar section**: fetches blob via axios (object URL lifecycle with cleanup), upload button with client-side validation (extension + 1 MB), replace/remove support; `avatarVersion` counter ensures refetch after upload/replace.
+- **Display name inline edit**: React Hook Form + Zod (trim, 1–50 chars, no control chars), server 400 errors surfaced as alerts.
+- **Account info**: read-only username and email display.
+- **Account deletion**: confirmation Dialog with destructive button; on confirm calls `DELETE /api/users/me` then `logout()`.
+- **Navigation**: `← Persons` breadcrumb in header; "Profile" link added to PersonsPage header.
+- **AuthContext**: added `refreshUser()` so profile page can sync updated user state after mutations.
+- Build + all acceptance tests pass (`make clean build`).
+<!-- SECTION:FINAL_SUMMARY:END -->
