@@ -37,10 +37,12 @@ Run every 5 minutes:
    Using the --worktree (or -w) flag automatically creates a new branch and a isolated directory in .claude/worktrees/, ensuring the agents don't overwrite each other's
 
 
-3. // settings.json
+3. Run agent team:
+   // settings.json
    { "env": { "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1" } }
    
    "teammateMode": "tmux" in settings.local.json
+    In prompt say to create agent with TeamCreate tools (see prompts below)
 
 4. I'd like to create a feature description for backlog.md.
    Help me to create description by interactivly interviewing me.
@@ -121,22 +123,29 @@ Run every 5 minutes:
 
    ===
 
+   You are test-automator which is implementing TASK-6.12:                                                                                                                                                                                                               
+   Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress, check what was done in scope of the task, and then complete its implementation.                                                                                                                                                                     
+   When ready to validate, run: flock /tmp/make-build.lock `make clean build`.
+   When validation is successful commit changes, include also this task description Markdown file into commit.
+
+   ===
+
    Create an agent team.
    Spawn three agents in parallel. Load the TeamCreate tool schema and spawn the agent team
    
    Agent 1 — test-automator — implement TASK-6.11:                                                                                                                                                                                                               
    Read backlog task TASK-6.11 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
-   When ready to validate, run: flock /tmp/make-build.lock make build
+   When ready to validate, run: flock /tmp/make-build.lock make clean build
    When validation is successful commit changes, include also this task description Markdown file into commit.
    
    Agent 2 — test-automator — implement TASK-6.12:                                                                                                                                                                                                               
    Read backlog task TASK-6.12 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
-   When ready to validate, run: flock /tmp/make-build.lock make build
+   When ready to validate, run: flock /tmp/make-build.lock make clean build
    When validation is successful commit changes, include also this task description Markdown file into commit.
    
    Agent 3 — test-automator — implement TASK-6.13:                                                                                                                                                                                                               
    Read backlog task TASK-6.13 via the backlog MCP, move it to In Progress, implement it.                                                                                                                                                                     
-   When ready to validate, run: flock /tmp/make-build.lock make build
+   When ready to validate, run: flock /tmp/make-build.lock make clean build
    When validation is successful commit changes, include also this task description Markdown file into commit.
    
    NOTE: flock serializes make build — if two agents finish at the same time,                                                                                                                                                                                  
@@ -146,3 +155,5 @@ Run every 5 minutes:
    $> ps aux | grep 'claude.*--agent-id'
    $> pgrep -la claude
    $> kill the processes
+
+6. Think about to include "/loop 15m run /compact command to reduce context"
