@@ -318,3 +318,66 @@
 - .claude/settings.json
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:20:04Z -->
+- .claude/docs/blackbox/audit.md
+- backlog/tasks/task-9 - Fix-avatar-upload-from-SPA-fails-multipart-Content-Type.md
+- e2e/features/auth/user-auth.feature
+- frontend/src/features/profile/profileApi.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:24:37Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-9 - Fix-avatar-upload-from-SPA-fails-multipart-Content-Type.md
+- e2e/features/auth/user-auth.feature
+- frontend/src/features/profile/profileApi.ts
+- frontend/src/lib/api.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:28:48Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-9 - Fix-avatar-upload-from-SPA-fails-multipart-Content-Type.md
+- e2e/features/auth/user-auth.feature
+- frontend/src/features/profile/profileApi.ts
+- frontend/src/lib/api.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:29:00Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-9 - Fix-avatar-upload-from-SPA-fails-multipart-Content-Type.md
+- e2e/features/auth/user-auth.feature
+- frontend/src/features/profile/profileApi.ts
+- frontend/src/lib/api.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:38:19Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-9 - Fix-avatar-upload-from-SPA-fails-multipart-Content-Type.md
+- e2e/features/auth/user-auth.feature
+- frontend/src/features/profile/profileApi.ts
+- frontend/src/lib/api.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:44:55Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-9 - Fix-avatar-upload-from-SPA-fails-multipart-Content-Type.md
+- e2e/features/auth/user-auth.feature
+- e2e/src/steps/user-auth.steps.ts
+- frontend/src/features/profile/profileApi.ts
+- frontend/src/lib/api.ts
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T15:47:27Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/tasks/task-9 - Fix-avatar-upload-from-SPA-fails-multipart-Content-Type.md
+- e2e/features/auth/user-auth.feature
+- e2e/src/steps/user-auth.steps.ts
+- frontend/src/features/profile/profileApi.ts
+- frontend/src/lib/api.ts
+<!-- end-snapshot -->

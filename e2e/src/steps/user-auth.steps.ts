@@ -309,12 +309,17 @@ When('I upload a valid PNG avatar', async function (this: CustomWorld) {
       this.page.getByRole('button', { name: /upload avatar/i }).click(),
     ])
     await fileChooser.setFiles(tmpFile)
-  } finally {
-    fs.unlinkSync(tmpFile)
-  }
 
-  // Wait for avatar to appear (loading indicator disappears)
-  await this.page.waitForLoadState('networkidle')
+    // Wait for the upload XHR to complete before deleting the temp file —
+    // Chromium reads the file lazily when the form data is serialised.
+    await this.page.waitForResponse(
+      (r) => r.url().endsWith('/api/users/me/avatar') && r.request().method() === 'PUT',
+      { timeout: 15000 },
+    )
+    await this.page.waitForLoadState('networkidle')
+  } finally {
+    if (fs.existsSync(tmpFile)) fs.unlinkSync(tmpFile)
+  }
 })
 
 When('I remove the avatar', async function (this: CustomWorld) {

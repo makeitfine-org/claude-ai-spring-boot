@@ -8,9 +8,7 @@ export const profileApi = {
   uploadAvatar: (file: File) => {
     const fd = new FormData()
     fd.append('file', file)
-    return api.put('/api/users/me/avatar', fd, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
+    return api.put('/api/users/me/avatar', fd)
   },
 
   deleteAvatar: () => api.delete('/api/users/me/avatar'),

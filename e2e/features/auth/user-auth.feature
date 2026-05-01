@@ -27,7 +27,6 @@ Feature: User registration and profile management
     When I edit my display name to "E2E Updated Name"
     Then the profile page shows the display name "E2E Updated Name"
 
-  @wip
   Scenario: Upload and remove avatar
     Given I have a registered and active test account
     And I navigate to my profile page
