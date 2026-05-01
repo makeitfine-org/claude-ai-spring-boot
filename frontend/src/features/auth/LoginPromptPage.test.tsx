@@ -1,13 +1,16 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 import { LoginPromptPage } from './LoginPromptPage'
 
 function renderLoginPromptPage() {
   return render(
-    <MemoryRouter>
-      <LoginPromptPage />
-    </MemoryRouter>
+    <ThemeProvider>
+      <MemoryRouter>
+        <LoginPromptPage />
+      </MemoryRouter>
+    </ThemeProvider>
   )
 }
 

@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import { setupServer } from 'msw/node'
 import { http, HttpResponse } from 'msw'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 import { RegisterPage } from './RegisterPage'
 
 const server = setupServer()
@@ -14,12 +15,14 @@ afterAll(() => server.close())
 
 function renderRegisterPage(initialPath = '/register') {
   return render(
-    <MemoryRouter initialEntries={[initialPath]}>
-      <Routes>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/register/success" element={<div>Success page</div>} />
-      </Routes>
-    </MemoryRouter>
+    <ThemeProvider>
+      <MemoryRouter initialEntries={[initialPath]}>
+        <Routes>
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/register/success" element={<div>Success page</div>} />
+        </Routes>
+      </MemoryRouter>
+    </ThemeProvider>
   )
 }
 

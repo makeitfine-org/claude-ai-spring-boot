@@ -1,7 +1,7 @@
 ---
 id: TASK-6.13
 title: 'Tests: frontend component tests (Vitest + RTL)'
-status: To Do
+status: in-progress
 assignee: []
 created_date: '2026-04-30 16:41'
 labels:
