@@ -332,3 +332,12 @@ Complete the backlog task-12
 ## 2026-05-01T21:07:45Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-05-01T21:16:57Z
+I registered user and tried to login with that new registered user but I got "Invalid email or password".
+Use playwright mcp and open browser to check in browser whether it works and fix if not.
+---
+
+## 2026-05-01T21:33:45Z
+but `make clean build` didnt' pass
+---

@@ -1,5 +1,6 @@
 package pl.piomin.services.application.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piomin.services.application.dto.RegistrationRequest;
@@ -20,13 +21,16 @@ public class RegistrationService {
     private final IdentityProvider identityProvider;
     private final UserRepository userRepository;
     private final PasswordValidator passwordValidator;
+    private final PasswordEncoder passwordEncoder;
 
     public RegistrationService(IdentityProvider identityProvider,
                                UserRepository userRepository,
-                               PasswordValidator passwordValidator) {
+                               PasswordValidator passwordValidator,
+                               PasswordEncoder passwordEncoder) {
         this.identityProvider = identityProvider;
         this.userRepository = userRepository;
         this.passwordValidator = passwordValidator;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -68,6 +72,7 @@ public class RegistrationService {
             user.setUsername(request.getUsername());
             user.setEmail(request.getEmail());
             user.setDisplayName(request.getDisplayName().trim());
+            user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
             userRepository.saveAndFlush(user);
         } catch (Exception e) {
             identityProvider.deleteUser(sub);

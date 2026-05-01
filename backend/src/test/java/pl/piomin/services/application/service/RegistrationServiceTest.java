@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.piomin.services.application.dto.RegistrationRequest;
 import pl.piomin.services.application.dto.RegistrationResponse;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.piomin.services.domain.entity.User;
 import pl.piomin.services.domain.exception.DuplicateUsernameException;
 import pl.piomin.services.domain.exception.PasswordPolicyViolationException;
@@ -37,6 +38,9 @@ class RegistrationServiceTest {
     @Mock
     private PasswordValidator passwordValidator;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private RegistrationService registrationService;
 
@@ -61,6 +65,7 @@ class RegistrationServiceTest {
     void register_ValidRequest_ReturnsRegistrationResponse() {
         when(userRepository.existsByUsernameLowerCase("john_doe")).thenReturn(false);
         when(identityProvider.createUser(any(CreateUserCommand.class))).thenReturn(VALID_SUB);
+        when(passwordEncoder.encode("Str0ng!Pass")).thenReturn("encoded-hash");
         when(userRepository.saveAndFlush(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
 
         RegistrationResponse response = registrationService.register(validRequest);
@@ -73,7 +78,8 @@ class RegistrationServiceTest {
         verify(passwordValidator).validate("Str0ng!Pass", "john_doe", "john.doe@example.com");
         verify(userRepository).existsByUsernameLowerCase("john_doe");
         verify(identityProvider).createUser(any(CreateUserCommand.class));
-        verify(userRepository).saveAndFlush(any(User.class));
+        verify(passwordEncoder).encode("Str0ng!Pass");
+        verify(userRepository).saveAndFlush(argThat(u -> "encoded-hash".equals(u.getPasswordHash())));
         verify(identityProvider, never()).deleteUser(any());
     }
 

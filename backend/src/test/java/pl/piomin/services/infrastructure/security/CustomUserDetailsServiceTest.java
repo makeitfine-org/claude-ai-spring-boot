@@ -46,7 +46,7 @@ class CustomUserDetailsServiceTest {
     }
 
     @Test
-    void loadUserByUsername_KnownEmail_ReturnsUserDetailsWithSubAsUsername() {
+    void loadUserByUsername_KnownEmail_NoStoredHash_FallsBackToDemoPassword() {
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(dbUser()));
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername("test@example.com");
@@ -57,6 +57,20 @@ class CustomUserDetailsServiceTest {
         assertThat(userDetails.getAuthorities())
                 .extracting("authority")
                 .containsExactly("ROLE_USER");
+    }
+
+    @Test
+    void loadUserByUsername_KnownEmail_StoredHash_UsesStoredHash() {
+        User user = dbUser();
+        String storedHash = passwordEncoder.encode("Str0ng!Pass");
+        user.setPasswordHash(storedHash);
+        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
+
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername("test@example.com");
+
+        assertThat(userDetails.getPassword()).isEqualTo(storedHash);
+        assertThat(passwordEncoder.matches("Str0ng!Pass", userDetails.getPassword())).isTrue();
+        assertThat(passwordEncoder.matches("password", userDetails.getPassword())).isFalse();
     }
 
     @Test

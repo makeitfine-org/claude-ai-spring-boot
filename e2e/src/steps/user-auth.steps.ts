@@ -133,8 +133,8 @@ When('I submit the registration form', async function (this: CustomWorld) {
 })
 
 When('I sign in via the login form with the registered email', { timeout: 60000 }, async function (this: CustomWorld) {
-  if (!this.registeredUserEmail) {
-    throw new Error('Registered user email not stored.')
+  if (!this.registeredUserEmail || !this.registeredUserPassword) {
+    throw new Error('Registered user email/password not stored.')
   }
 
   // Stash the registered user's sub for later assertions.
@@ -143,13 +143,10 @@ When('I sign in via the login form with the registered email', { timeout: 60000 
     this.registeredUserSub = dbUser.sub
   }
 
-  // Local /api/auth/login looks the user up in the DB by email and validates against
-  // the demo password configured in CustomUserDetailsService. The actual Keycloak
-  // password chosen at registration is not relevant for this local-JWT login path.
   await this.page.goto(`${FRONTEND_URL}/login`, { waitUntil: 'networkidle' })
   await this.page.locator('#email').waitFor({ state: 'visible', timeout: 10000 })
   await this.page.locator('#email').fill(this.registeredUserEmail)
-  await this.page.locator('#password').fill('password')
+  await this.page.locator('#password').fill(this.registeredUserPassword)
   await this.page.getByRole('button', { name: /sign in/i }).click()
   await this.page.waitForURL('**/persons', { timeout: 30000 })
 })

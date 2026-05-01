@@ -88,7 +88,8 @@
       "Bash(awk '/14:42:5[3-9]|14:43:[0-1][0-9]/')",
       "Bash(awk '/14:42:5[3-9]\\\\.|14:42:54/')",
       "Bash(docker restart *)",
-      "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")"
+      "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
+      "Bash(getent hosts *)"
     ],
     "deny": []
   },

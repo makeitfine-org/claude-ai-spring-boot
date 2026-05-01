@@ -39,9 +39,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails toUserDetails(pl.piomin.services.domain.entity.User user) {
+        // Self-registered users have a bcrypt hash of their chosen password.
+        // The seeded test user has no hash — fall back to a hash of DEMO_PASSWORD
+        // so legacy "password"-only logins keep working in dev/test.
+        String passwordHash = user.getPasswordHash() != null
+                ? user.getPasswordHash()
+                : passwordEncoder.encode(DEMO_PASSWORD);
         return new User(
                 user.getSub().toString(),
-                passwordEncoder.encode(DEMO_PASSWORD),
+                passwordHash,
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
         );
     }
