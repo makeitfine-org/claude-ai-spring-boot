@@ -1,7 +1,7 @@
 ---
 id: TASK-6.13
 title: 'Tests: frontend component tests (Vitest + RTL)'
-status: in-progress
+status: done
 assignee: []
 created_date: '2026-04-30 16:41'
 labels:
@@ -50,10 +50,10 @@ Write Vitest + React Testing Library component tests for the new frontend compon
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 RegistrationForm tests cover: render, client-side validation errors, valid submit, and API 409 error display.
-- [ ] #2 AvatarUploader tests cover: file-type filter, >1 MB rejection, successful upload with src refresh, and remove.
-- [ ] #3 DisplayNameEditor tests cover: edit/cancel, valid save with API call, and invalid-length error.
-- [ ] #4 AuthContext tests cover: authenticated and unauthenticated states based on /api/users/me response.
-- [ ] #5 All mocked API calls use MSW (Mock Service Worker) or vi.fn() — no real network calls.
-- [ ] #6 npm test (Vitest) passes with all new component tests green.
+- [x] #1 RegistrationForm tests cover: render, client-side validation errors, valid submit, and API 409 error display.
+- [x] #2 AvatarUploader tests cover: file-type filter, >1 MB rejection, successful upload with src refresh, and remove.
+- [x] #3 DisplayNameEditor tests cover: edit/cancel, valid save with API call, and invalid-length error.
+- [x] #4 AuthContext tests cover: authenticated and unauthenticated states based on /api/users/me response.
+- [x] #5 All mocked API calls use MSW (Mock Service Worker) or vi.fn() — no real network calls.
+- [x] #6 npm test (Vitest) passes with all new component tests green.
 <!-- AC:END -->
