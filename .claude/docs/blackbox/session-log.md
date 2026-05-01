@@ -186,3 +186,9 @@
 - .claude/docs/blackbox/session-log.md
 - .claude/settings.local.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-01T12:41:37Z -->
+- .claude/docs/blackbox/audit.md
+- backend/src/test/java/pl/piomin/services/application/service/RegistrationServiceTest.java
+- backlog/tasks/task-8 - Fix-failing-RegistrationServiceTest-causing-make-build-failure.md
+<!-- end-snapshot -->

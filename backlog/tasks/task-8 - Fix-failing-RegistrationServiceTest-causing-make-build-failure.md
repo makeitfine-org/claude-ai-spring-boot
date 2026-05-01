@@ -1,9 +1,10 @@
 ---
 id: TASK-8
 title: Fix failing RegistrationServiceTest causing make build failure
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-05-01 12:28'
+updated_date: '2026-05-01 12:41'
 labels:
   - bug
   - backend
@@ -51,8 +52,14 @@ Update the test to verify `saveAndFlush(...)` instead of `save(...)`, and remove
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 RegistrationServiceTest passes (7/7 green)
-- [ ] #2 No Mockito UnnecessaryStubbingException raised in the suite
-- [ ] #3 Backend `mvn clean install` succeeds
-- [ ] #4 `make clean build` succeeds end-to-end
+- [x] #1 RegistrationServiceTest passes (7/7 green)
+- [x] #2 No Mockito UnnecessaryStubbingException raised in the suite
+- [x] #3 Backend `mvn clean install` succeeds
+- [x] #4 `make clean build` succeeds end-to-end
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Replaced all `userRepository.save(` and `userRepository).save(` calls in `RegistrationServiceTest` with `saveAndFlush(` to match the production code change in `RegistrationService.register` (line 68). 257 tests pass, `mvn clean install` succeeds with BUILD SUCCESS.
+<!-- SECTION:FINAL_SUMMARY:END -->

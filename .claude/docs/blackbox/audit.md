@@ -46,3 +46,11 @@ Create a task in the backlog for the described problem
 When run `make clean build` it is failed.
 Create a task in the backlog to solve the described problem.
 ---
+
+## 2026-05-01T12:37:18Z
+Complete the backlog task-8
+---
+
+## 2026-05-01T12:57:46Z
+execute git add all changes and commit them with suitable message
+---

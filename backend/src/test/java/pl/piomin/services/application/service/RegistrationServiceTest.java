@@ -61,7 +61,7 @@ class RegistrationServiceTest {
     void register_ValidRequest_ReturnsRegistrationResponse() {
         when(userRepository.existsByUsernameLowerCase("john_doe")).thenReturn(false);
         when(identityProvider.createUser(any(CreateUserCommand.class))).thenReturn(VALID_SUB);
-        when(userRepository.save(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(userRepository.saveAndFlush(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
         doNothing().when(identityProvider).triggerEmailVerification(VALID_SUB);
 
         RegistrationResponse response = registrationService.register(validRequest);
@@ -74,7 +74,7 @@ class RegistrationServiceTest {
         verify(passwordValidator).validate("Str0ng!Pass", "john_doe", "john.doe@example.com");
         verify(userRepository).existsByUsernameLowerCase("john_doe");
         verify(identityProvider).createUser(any(CreateUserCommand.class));
-        verify(userRepository).save(any(User.class));
+        verify(userRepository).saveAndFlush(any(User.class));
         verify(identityProvider).triggerEmailVerification(VALID_SUB);
     }
 
@@ -83,7 +83,7 @@ class RegistrationServiceTest {
         validRequest.setDisplayName("  John Doe  ");
         when(userRepository.existsByUsernameLowerCase("john_doe")).thenReturn(false);
         when(identityProvider.createUser(any(CreateUserCommand.class))).thenReturn(VALID_SUB);
-        when(userRepository.save(any(User.class))).thenAnswer(inv -> {
+        when(userRepository.saveAndFlush(any(User.class))).thenAnswer(inv -> {
             User saved = inv.getArgument(0);
             assertThat(saved.getDisplayName()).isEqualTo("John Doe");
             return saved;
@@ -91,7 +91,7 @@ class RegistrationServiceTest {
 
         registrationService.register(validRequest);
 
-        verify(userRepository).save(any(User.class));
+        verify(userRepository).saveAndFlush(any(User.class));
     }
 
     // -------------------------------------------------------------------------
@@ -107,7 +107,7 @@ class RegistrationServiceTest {
                 .hasMessageContaining("john_doe");
 
         verify(identityProvider, never()).createUser(any());
-        verify(userRepository, never()).save(any());
+        verify(userRepository, never()).saveAndFlush(any());
     }
 
     // -------------------------------------------------------------------------
@@ -134,7 +134,7 @@ class RegistrationServiceTest {
     void register_DbInsertFailure_CompensatesByDeletingIdpUser() {
         when(userRepository.existsByUsernameLowerCase("john_doe")).thenReturn(false);
         when(identityProvider.createUser(any(CreateUserCommand.class))).thenReturn(VALID_SUB);
-        when(userRepository.save(any(User.class))).thenThrow(new RuntimeException("DB error"));
+        when(userRepository.saveAndFlush(any(User.class))).thenThrow(new RuntimeException("DB error"));
 
         assertThatThrownBy(() -> registrationService.register(validRequest))
                 .isInstanceOf(RegistrationException.class)
@@ -148,7 +148,7 @@ class RegistrationServiceTest {
     void register_EmailVerificationFailure_CompensatesByDeletingIdpUser() {
         when(userRepository.existsByUsernameLowerCase("john_doe")).thenReturn(false);
         when(identityProvider.createUser(any(CreateUserCommand.class))).thenReturn(VALID_SUB);
-        when(userRepository.save(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(userRepository.saveAndFlush(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
         doThrow(new RuntimeException("Email verification failed"))
                 .when(identityProvider).triggerEmailVerification(VALID_SUB);
 
@@ -166,7 +166,7 @@ class RegistrationServiceTest {
     void register_CreatesIdpUserWithCorrectData() {
         when(userRepository.existsByUsernameLowerCase("john_doe")).thenReturn(false);
         when(identityProvider.createUser(any(CreateUserCommand.class))).thenReturn(VALID_SUB);
-        when(userRepository.save(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(userRepository.saveAndFlush(any(User.class))).thenAnswer(inv -> inv.getArgument(0));
 
         registrationService.register(validRequest);
 
