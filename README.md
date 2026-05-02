@@ -67,6 +67,59 @@ Then open **http://localhost:3000** in your browser.
 
 ---
 
+## IAM Toggle (Keycloak)
+
+IAM (Keycloak) is **on by default**. A single flag — `IAM_ENABLED` env var / `app.iam.enabled` Spring property — controls whether Keycloak is deployed and enforced across all environments.
+
+| `IAM_ENABLED` | Effect |
+|---|---|
+| `true` (default) | Keycloak deployed, OIDC + JWT login enforced |
+| `false` | No Keycloak, all endpoints open, frontend bypasses login |
+
+### Local (`mvn spring-boot:run` + `npm run dev`)
+
+```bash
+# IAM on (default)
+cd backend && mvn spring-boot:run
+
+# IAM off
+IAM_ENABLED=false mvn spring-boot:run
+```
+
+The frontend adapts automatically at runtime by calling `GET /api/config`.
+
+### Docker Compose
+
+The `.env` file at the repo root sets `COMPOSE_PROFILES=iam` and `IAM_ENABLED=true` by default, so `docker compose up` starts Keycloak.
+
+```bash
+# IAM on (default) — Keycloak container starts
+docker compose up
+# or via Make:
+make dockerAll
+
+# IAM off — no Keycloak container
+make dockerAllNoIam
+# equivalent manual command:
+COMPOSE_PROFILES= IAM_ENABLED=false docker compose up
+```
+
+### Kubernetes / Skaffold
+
+```bash
+cd backend
+
+# IAM on (default) — deploys Keycloak pods + port-forward 8180
+skaffold dev
+
+# IAM off — no Keycloak pods, app starts without waiting for Keycloak
+skaffold dev -p no-iam
+```
+
+The `no-iam` profile uses manifests from `backend/k8s/no-iam/` which set `IAM_ENABLED=false` in the configmap and omit the `wait-for-keycloak` init container.
+
+---
+
 ## Repository Layout
 
 ```
