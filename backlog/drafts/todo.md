@@ -93,3 +93,4 @@ frontend Session expire time
 ---
 Add read testing:
 - open browser and check functionality
+(check for both AIM on/off)

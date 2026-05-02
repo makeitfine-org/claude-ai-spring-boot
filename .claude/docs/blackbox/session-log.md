@@ -618,3 +618,26 @@
 - .claude/docs/blackbox/audit.md
 - .claude/docs/blackbox/session-log.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T11:37:09Z -->
+- .claude/docs/blackbox/audit.md
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backlog/drafts/todo.md
+- backlog/tasks/task-15 - fix-frontend-polls-GET-api-timeout32s-without-bearer-token-causing-repeated-AuthorizationDeniedException-spam.md
+- frontend/nginx.conf
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T11:42:32Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backlog/completed/task-15 - fix-frontend-polls-GET-api-timeout32s-without-bearer-token-causing-repeated-AuthorizationDeniedException-spam.md
+- backlog/drafts/todo.md
+- frontend/nginx.conf
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T11:46:32Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/drafts/todo.md
+<!-- end-snapshot -->

@@ -22,8 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestCustomizers;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -114,6 +114,10 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                 // Use AntPathRequestMatcher to avoid MvcRequestMatcher issues in @WebMvcTest slices
+                // Exact-match GET /api (no subpath, no handler) — dev-tool long-polling probes hit this
+                // path without a bearer token and would otherwise spam AuthorizationDeniedException.
+                // IMPORTANT: if a real GET /api handler is ever added it must be protecteparately.
+                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/config")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/register")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/auth/login")).permitAll()

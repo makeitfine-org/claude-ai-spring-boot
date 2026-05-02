@@ -553,3 +553,15 @@ backend   | 2026-05-02T11:20:57.264Z TRACE 1 --- [backend] [nio-8080-exec-6] o.s
 Gracefully Stopping... press Ctrl+C again to force
 Create a bug in the backlog to solve the described problem.
 ---
+
+## 2026-05-02T11:27:39Z
+Complete the backlog task-15
+---
+
+## 2026-05-02T11:41:13Z
+but /api path should be authorized when IAM is enabled. Will it work fine?
+---
+
+## 2026-05-02T11:46:14Z
+execute git add all changes and commit them with suitable message
+---
