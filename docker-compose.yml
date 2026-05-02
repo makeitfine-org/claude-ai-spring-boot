@@ -20,6 +20,7 @@ services:
       - app-network
 
   keycloak:
+    profiles: ["iam"]
     image: quay.io/keycloak/keycloak:26.2
     container_name: keycloak
     command: start-dev --import-realm
@@ -68,6 +69,7 @@ services:
       DATABASE_URL: jdbc:postgresql://postgres:5432/persondb
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
+      IAM_ENABLED: ${IAM_ENABLED:-true}
       JWT_SECRET: dGhpcy1pcy1hLXZlcnktbG9uZy1zZWNyZXQta2V5LWZvci1qd3QtdG9rZW4tZ2VuZXJhdGlvbg==
       KEYCLOAK_URL: http://keycloak:8180
       # Browser-facing Keycloak URL used only for the OAuth2 authorization redirect.

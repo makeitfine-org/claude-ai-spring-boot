@@ -362,3 +362,21 @@ Complete the backlog task-13
 ## 2026-05-01T22:26:36Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-05-02T10:00:22Z
+I want my application to have an option to enable or disable Identity and Access Management (IAM) during deployment. 
+Since I am working with Docker Compose and Kubernetes, what is the best way to organize this?
+Help me to resolve it by interactively interviewing me if necessary.
+Then create a task in the backlog to solve the described problem.
+---
+
+## 2026-05-02T10:04:11Z
+I want my application to have an option to enable or disable Identity and Access Management (IAM) during deployment. 
+Since I am working with Docker Compose and Kubernetes, what is the best way to organize this?
+Help me to resolve it by interactively interviewing me if necessary.
+Then create a task in the backlog to solve the described problem.
+---
+
+## 2026-05-02T10:16:49Z
+Complete the backlog task-14
+---

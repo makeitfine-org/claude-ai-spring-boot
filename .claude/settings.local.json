@@ -93,5 +93,6 @@
     ],
     "deny": []
   },
-  "teammateMode": "tmux"
+  "teammateMode": "tmux",
+  "model": "opusplan"
 }

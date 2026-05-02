@@ -4,6 +4,7 @@ import type { UserProfile } from '@/types/auth'
 
 interface AuthContextValue {
   isAuthenticated: boolean
+  iamEnabled: boolean
   user: UserProfile | null
   isLoading: boolean
   logout: () => Promise<void>
@@ -15,17 +16,29 @@ const AuthContext = createContext<AuthContextValue | null>(null)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [iamEnabled, setIamEnabled] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     let cancelled = false
+
     api
-      .get<UserProfile>('/api/users/me')
+      .get<{ iamEnabled: boolean }>('/api/config')
       .then((res) => {
-        if (!cancelled) {
-          setUser(res.data)
+        if (cancelled) return
+        const enabled = res.data.iamEnabled
+        setIamEnabled(enabled)
+        if (!enabled) {
           setIsAuthenticated(true)
+          setIsLoading(false)
+          return
         }
+        return api.get<UserProfile>('/api/users/me').then((userRes) => {
+          if (!cancelled) {
+            setUser(userRes.data)
+            setIsAuthenticated(true)
+          }
+        })
       })
       .catch(() => {
         if (!cancelled) {
@@ -36,12 +49,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .finally(() => {
         if (!cancelled) setIsLoading(false)
       })
+
     return () => {
       cancelled = true
     }
   }, [])
 
   const refreshUser = useCallback(async () => {
+    if (!iamEnabled) return
     try {
       const res = await api.get<UserProfile>('/api/users/me')
       setUser(res.data)
@@ -50,22 +65,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null)
       setIsAuthenticated(false)
     }
-  }, [])
+  }, [iamEnabled])
 
   const logout = useCallback(async () => {
-    try {
-      await api.post('/api/logout')
-    } catch {
-      // ignore errors on logout
+    if (iamEnabled) {
+      try {
+        await api.post('/api/logout')
+      } catch {
+        // ignore errors on logout
+      }
+      clearTokens()
     }
-    clearTokens()
     setUser(null)
     setIsAuthenticated(false)
     window.location.href = '/login'
-  }, [])
+  }, [iamEnabled])
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, isLoading, logout, refreshUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, iamEnabled, user, isLoading, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   )

@@ -3,6 +3,7 @@ package pl.piomin.services.infrastructure.identity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ import java.util.Map;
  * Uses the Keycloak Admin REST API via plain {@link RestClient}.
  */
 @Component
+@ConditionalOnProperty(prefix = "app.iam", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class KeycloakIdentityProvider implements IdentityProvider {
 
     private static final Logger log = LoggerFactory.getLogger(KeycloakIdentityProvider.class);

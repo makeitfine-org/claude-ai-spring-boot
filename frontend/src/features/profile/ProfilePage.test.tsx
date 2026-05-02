@@ -37,6 +37,7 @@ function makeAuthMock(overrides: Partial<UserProfile> = {}) {
     logout: vi.fn().mockResolvedValue(undefined),
     refreshUser: vi.fn().mockResolvedValue(undefined),
     isAuthenticated: true,
+    iamEnabled: true,
     isLoading: false,
   }
 }

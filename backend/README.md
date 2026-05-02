@@ -595,4 +595,4 @@ docker-compose logs app    # check startup errors
 
 ## Version
 
-Current version: **1.0.2**
+Current version: **1.0.3**

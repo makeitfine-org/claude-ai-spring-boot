@@ -21,7 +21,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function LoginPage() {
-  const { isAuthenticated, refreshUser } = useAuth()
+  const { isAuthenticated, iamEnabled, refreshUser } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
 
@@ -32,8 +32,18 @@ export function LoginPage() {
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/persons', { replace: true })
-  }, [isAuthenticated, navigate])
+    if (!iamEnabled || isAuthenticated) navigate('/persons', { replace: true })
+  }, [isAuthenticated, iamEnabled, navigate])
+
+  if (!iamEnabled) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
+        <Alert>
+          <AlertDescription>IAM disabled — open mode. Redirecting…</AlertDescription>
+        </Alert>
+      </div>
+    )
+  }
 
   const onSubmit = async (data: FormData) => {
     setError(null)

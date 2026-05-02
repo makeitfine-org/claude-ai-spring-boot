@@ -3,6 +3,7 @@ package pl.piomin.services.config;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -81,7 +82,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+    @ConditionalOnProperty(prefix = "app.iam", name = "enabled", havingValue = "true", matchIfMissing = true)
+    public SecurityFilterChain iamEnabledFilterChain(HttpSecurity http,
             ClientRegistrationRepository clientRegistrationRepository) throws Exception {
 
         OidcClientInitiatedLogoutSuccessHandler oidcLogoutHandler =
@@ -112,6 +114,7 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                 // Use AntPathRequestMatcher to avoid MvcRequestMatcher issues in @WebMvcTest slices
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/config")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/register")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/auth/login")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/auth/refresh")).permitAll()
@@ -145,6 +148,17 @@ public class SecurityConfig {
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
             );
 
+        return http.build();
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "app.iam", name = "enabled", havingValue = "false")
+    public SecurityFilterChain iamDisabledFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
         return http.build();
     }
 

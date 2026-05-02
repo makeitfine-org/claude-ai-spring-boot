@@ -86,3 +86,10 @@ Remove hardcoded on the backend `test@example.com` user with password
 
 ---
 Show small pic of avatar on the frontend near/instead of Profile bottom
+
+---
+frontend Session expire time
+
+---
+Add read testing:
+- open browser and check functionality

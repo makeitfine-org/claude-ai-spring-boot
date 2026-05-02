@@ -575,3 +575,32 @@
 - .claude/settings.local.json
 - backlog/drafts/todo.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T10:12:56Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/settings.local.json
+- backlog/drafts/todo.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T10:32:19Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/plans/2026-05-02 12:10 Plan Toggle IAM Keycloak onoff at deployment time.md
+- .claude/docs/blackbox/session-log.md
+- .claude/settings.local.json
+- Makefile
+- backend/README.md
+- backend/k8s/configmap.yaml
+- backend/k8s/deployment.yaml
+- backend/k8s/keycloak-configmap.yaml
+- backend/k8s/keycloak-deployment.yaml
+- backend/k8s/keycloak-secret.yaml
+- backend/k8s/keycloak-service.yaml
+- backend/pom.xml
+- backend/skaffold.yaml
+- backend/src/main/java/pl/piomin/services/config/IdentityProviderConfig.java
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- backend/src/main/java/pl/piomin/services/infrastructure/identity/KeycloakIdentityProvider.java
+- backend/src/main/resources/application.yml
+- backlog/drafts/todo.md
+- backlog/tasks/task-14 - Toggle-IAM-Keycloak-on-off-at-deployment-time.md
+<!-- end-snapshot -->

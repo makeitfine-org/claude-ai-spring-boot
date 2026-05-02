@@ -19,12 +19,20 @@ const mockUser: UserProfile = {
   hasAvatar: false,
 }
 
+const configIamEnabled = http.get('http://localhost:8080/api/config', () =>
+  HttpResponse.json({ iamEnabled: true }, { status: 200 }),
+)
+const configIamDisabled = http.get('http://localhost:8080/api/config', () =>
+  HttpResponse.json({ iamEnabled: false }, { status: 200 }),
+)
+
 function TestConsumer() {
-  const { isAuthenticated, user, isLoading } = useAuth()
+  const { isAuthenticated, iamEnabled, user, isLoading } = useAuth()
   if (isLoading) return <div>loading</div>
   return (
     <div>
       <div data-testid="authenticated">{String(isAuthenticated)}</div>
+      <div data-testid="iam-enabled">{String(iamEnabled)}</div>
       <div data-testid="username">{user?.username ?? 'none'}</div>
     </div>
   )
@@ -39,11 +47,12 @@ function renderWithProvider() {
 }
 
 describe('AuthContext', () => {
-  it('fetches /api/users/me on mount and sets user when 200', async () => {
+  it('fetches /api/users/me on mount and sets user when IAM enabled and 200', async () => {
     server.use(
+      configIamEnabled,
       http.get('http://localhost:8080/api/users/me', () => {
         return HttpResponse.json(mockUser, { status: 200 })
-      })
+      }),
     )
     renderWithProvider()
     await waitFor(() => {
@@ -54,9 +63,10 @@ describe('AuthContext', () => {
 
   it('sets isAuthenticated=false when /api/users/me returns 401', async () => {
     server.use(
+      configIamEnabled,
       http.get('http://localhost:8080/api/users/me', () => {
         return HttpResponse.json({ error: 'Unauthorized' }, { status: 401 })
-      })
+      }),
     )
     renderWithProvider()
     await waitFor(() => {
@@ -66,23 +76,33 @@ describe('AuthContext', () => {
   })
 
   it('shows loading initially, then resolves', async () => {
-    let resolveRequest!: () => void
-    const requestHeld = new Promise<void>((res) => {
-      resolveRequest = res
+    let resolveUser!: () => void
+    const userRequestHeld = new Promise<void>((res) => {
+      resolveUser = res
     })
     server.use(
+      configIamEnabled,
       http.get('http://localhost:8080/api/users/me', async () => {
-        await requestHeld
+        await userRequestHeld
         return HttpResponse.json(mockUser, { status: 200 })
-      })
+      }),
     )
     renderWithProvider()
-    // While the request is pending, loading indicator should be visible
     expect(screen.getByText('loading')).toBeInTheDocument()
-    resolveRequest()
+    resolveUser()
     await waitFor(() => {
       expect(screen.queryByText('loading')).not.toBeInTheDocument()
     })
     expect(screen.getByTestId('authenticated')).toHaveTextContent('true')
+  })
+
+  it('sets isAuthenticated=true without fetching /api/users/me when IAM disabled', async () => {
+    server.use(configIamDisabled)
+    renderWithProvider()
+    await waitFor(() => {
+      expect(screen.getByTestId('authenticated')).toHaveTextContent('true')
+    })
+    expect(screen.getByTestId('iam-enabled')).toHaveTextContent('false')
+    expect(screen.getByTestId('username')).toHaveTextContent('none')
   })
 })

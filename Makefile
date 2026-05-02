@@ -1,6 +1,6 @@
 # Makefile for claude-ai-spring-boot
 
-.PHONY: clean updateFrontend buildBackend buildFrontend acceptanceTest build dockerAll dockerDown \
+.PHONY: clean updateFrontend buildBackend buildFrontend acceptanceTest build dockerAll dockerAllNoIam dockerDown \
         ghList ghView defaultMessage message help ciCheck
 
 # Function to execute commands sequentially with success and failure messages
@@ -80,6 +80,17 @@ dockerAll:
 		"✅ DOCKER COMPOSE ALL SUCCESSFUL (claude-ai-spring-boot) ✅",\
 		"❌ DOCKER COMPOSE ALL FAILED (claude-ai-spring-boot) ❌")
 
+dockerAllNoIam:
+	@echo "### Building and docker up (IAM disabled) (claude-ai-spring-boot) ..."
+	$(call execute_commands,\
+		$(MAKE) buildBackend && \
+		$(MAKE) buildFrontend && \
+		COMPOSE_PROFILES= IAM_ENABLED=false docker compose build && \
+		$(MAKE) message "✅ DOCKER COMPOSE RUNNING (no IAM) (claude-ai-spring-boot) ... ⏩⏩⏩" && \
+		COMPOSE_PROFILES= IAM_ENABLED=false docker compose up,\
+		"✅ DOCKER COMPOSE ALL (no IAM) SUCCESSFUL (claude-ai-spring-boot) ✅",\
+		"❌ DOCKER COMPOSE ALL (no IAM) FAILED (claude-ai-spring-boot) ❌")
+
 dockerDown:
 	docker compose down
 
@@ -139,7 +150,8 @@ help:
 	@echo "  acceptanceTest    - Run Cucumber+Playwright e2e tests (stack must be running)"
 	@echo ""
 	@echo "🐳 Docker Targets:"
-	@echo "  dockerAll        - Build backend + frontend, then docker compose up (foreground)"
+	@echo "  dockerAll        - Build backend + frontend, then docker compose up (foreground, IAM on)"
+	@echo "  dockerAllNoIam   - Build backend + frontend, then docker compose up without Keycloak (IAM off)"
 	@echo "  dockerDown       - Stop and remove all Docker services"
 	@echo ""
 	@echo "🐙 GitHub Actions:"

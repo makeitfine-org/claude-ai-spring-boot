@@ -17,6 +17,7 @@ const refreshUserMock = vi.fn().mockResolvedValue(undefined)
 vi.mock('@/auth/AuthContext', () => ({
   useAuth: () => ({
     isAuthenticated: false,
+    iamEnabled: true,
     user: null,
     isLoading: false,
     logout: vi.fn(),
