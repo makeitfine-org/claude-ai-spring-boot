@@ -565,3 +565,175 @@ but /api path should be authorized when IAM is enabled. Will it work fine?
 ## 2026-05-02T11:46:14Z
 execute git add all changes and commit them with suitable message
 ---
+
+## 2026-05-02T11:49:37Z
+When I run `docker compose up` and login in frontend application I see repeatedly in log:
+rue, Details=WebAuthenticationDetails [RemoteIpAddress=172.19.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+backend   | 2026-05-02T11:47:47.993Z TRACE 1 --- [backend] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (15/16)
+backend   | 2026-05-02T11:47:47.993Z TRACE 1 --- [backend] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (16/16)
+backend   | 2026-05-02T11:47:47.993Z TRACE 1 --- [backend] [nio-8080-exec-3] estMatcherDelegatingAuthorizationManager : Authorizing GET /api?timeout=32s
+backend   | 2026-05-02T11:47:47.993Z TRACE 1 --- [backend] [nio-8080-exec-3] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /api?timeout=32s using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda/0x0000711963c01eb0@61d93589
+backend   | 2026-05-02T11:47:47.993Z DEBUG 1 --- [backend] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api?timeout=32s
+backend   | 2026-05-02T11:47:47.994Z TRACE 1 --- [backend] [nio-8080-exec-3] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'iamEnabledFilterChain' in [class path resource [pl/piomin/services/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Csrf, Logout, OAuth2AuthorizationRequestRedirect, OAuth2LoginAuthentication, BearerTokenAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+backend   | 2026-05-02T11:47:47.995Z DEBUG 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /apis?timeout=32s
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking CorsFilter (5/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking CsrfFilter (6/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.csrf.CsrfFilter         : Did not protect against CSRF since request did not match And [CsrfNotRequired [TRACE, HEAD, GET, OPTIONS], Not [Or [Ant [pattern='/api/auth/**'], Ant [pattern='/api/register', POST], Ant [pattern='/api/logout', POST], Ant [pattern='/api/users/me', PATCH], Ant [pattern='/api/users/me', DELETE], Ant [pattern='/api/users/me/avatar', PUT], Ant [pattern='/api/users/me/avatar', DELETE], org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer$BearerTokenRequestMatcher@46c9a298]]]
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (7/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Ant [pattern='/api/logout', POST]
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking OAuth2AuthorizationRequestRedirectFilter (8/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking OAuth2LoginAuthenticationFilter (9/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] .s.o.c.w.OAuth2LoginAuthenticationFilter : Did not match request to Ant [pattern='/login/oauth2/code/*']
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking BearerTokenAuthenticationFilter (10/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] .s.r.w.a.BearerTokenAuthenticationFilter : Did not process request since did not find bearer token
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (11/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.s.w.s.HttpSessionRequestCache        : matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (12/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (13/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (14/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] w.c.HttpSessionSecurityContextRepository : No HttpSession currently exists
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=172.19.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (15/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (16/16)
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] estMatcherDelegatingAuthorizationManager : Authorizing GET /apis?timeout=32s
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /apis?timeout=32s using org.springframework.security.authorization.AuthenticatedAuthorizationManager@29d7cada
+backend   | 2026-05-02T11:47:47.995Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.s.w.a.ExceptionTranslationFilter     : Sending AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=172.19.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]] to authentication entry point since access is denied
+backend   | 
+backend   | org.springframework.security.authorization.AuthorizationDeniedException: Access Denied
+backend   |     at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:99) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter.doFilterInternal(BearerTokenAuthenticationFilter.java:128) ~[spring-security-oauth2-resource-server-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198) ~[spring-security-oauth2-client-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:117) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243) ~[spring-webmvc-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238) ~[spring-security-config-6.4.2.jar!/:6.4.2]
+backend   |     at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:114) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.1.jar!/:6.2.1]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:731) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.34.jar!/:na]
+backend   |     at java.base/java.lang.Thread.run(Unknown Source) ~[na:na]
+backend   | 
+backend   | 2026-05-02T11:47:47.996Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.s.w.s.HttpSessionRequestCache        : Did not save request since it did not match [And [Ant [pattern='/**', GET], Not [Ant [pattern='/**/favicon.*']], Not [MediaTypeRequestMatcher [contentNegotiationStrategy=org.springframework.web.accept.ContentNegotiationManager@3a7243e1, matchingMediaTypes=[application/json], useEquals=false, ignoredMediaTypes=[*/*]]], Not [RequestHeaderRequestMatcher [expectedHeaderName=X-Requested-With, expectedHeaderValue=XMLHttpRequest]], Not [MediaTypeRequestMatcher [contentNegotiationStrategy=org.springframework.web.accept.ContentNegotiationManager@3a7243e1, matchingMediaTypes=[multipart/form-data], useEquals=false, ignoredMediaTypes=[*/*]]], Not [MediaTypeRequestMatcher [contentNegotiationStrategy=org.springframework.web.accept.ContentNegotiationManager@3a7243e1, matchingMediaTypes=[text/event-stream], useEquals=false, ignoredMediaTypes=[*/*]]]]]
+backend   | 2026-05-02T11:47:47.996Z TRACE 1 --- [backend] [nio-8080-exec-4] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+---
+
+## 2026-05-02T12:11:29Z
+execute git add all changes and commit them with suitable message
+---

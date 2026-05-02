@@ -94,3 +94,6 @@ frontend Session expire time
 Add read testing:
 - open browser and check functionality
 (check for both AIM on/off)
+
+---
+Add to acceptance criterial run back+front and see logs of docker

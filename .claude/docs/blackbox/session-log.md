@@ -641,3 +641,15 @@
 - .claude/docs/blackbox/session-log.md
 - backlog/drafts/todo.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T11:51:25Z -->
+- .claude/docs/blackbox/audit.md
+- backend/src/main/java/pl/piomin/services/config/SecurityConfig.java
+- frontend/nginx.conf
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T12:11:43Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- backlog/drafts/todo.md
+<!-- end-snapshot -->

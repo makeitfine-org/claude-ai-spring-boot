@@ -118,6 +118,9 @@ public class SecurityConfig {
                 // path without a bearer token and would otherwise spam AuthorizationDeniedException.
                 // IMPORTANT: if a real GET /api handler is ever added it must be protecteparately.
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/api")).permitAll()
+                // Exact-match GET /apis — Kubernetes/Skaffold API-discovery probes hit this path
+                // without a bearer token and would otherwise spam AuthorizationDeniedException.
+                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/apis")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/api/config")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/register")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/api/auth/login")).permitAll()
