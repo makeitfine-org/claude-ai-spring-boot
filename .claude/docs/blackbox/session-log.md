@@ -604,3 +604,17 @@
 - backlog/drafts/todo.md
 - backlog/tasks/task-14 - Toggle-IAM-Keycloak-on-off-at-deployment-time.md
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T10:55:21Z -->
+- .claude/docs/blackbox/audit.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T11:00:55Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-05-02T11:25:47Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+<!-- end-snapshot -->
