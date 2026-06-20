@@ -578,3 +578,33 @@ add this info also:
 ## 2026-06-20T20:43:34Z
 git add all changes and commit them with suitable message
 ---
+
+## 2026-06-20T20:52:39Z
+gs
+---
+
+## 2026-06-20T20:53:43Z
+Create a backlog.md task (but don't execute it):
+Improve @README.md and @CLAUDE.md
+---
+
+## 2026-06-20T20:55:20Z
+Create a backlog.md task (but don't execute it):
+Improve @README.md and @CLAUDE.md
+---
+
+## 2026-06-20T20:56:21Z
+git add all changes and commit them with suitable message
+---
+
+## 2026-06-20T21:35:43Z
+I run backend and frontend under linux for windows skaffold and all works fine.
+But I also run `minikube tunnel` and cannot connect with HeidiSQL to postgress db:
+tmp\tempo\Screenshot 2026-06-11 130704
+---
+
+## 2026-06-20T21:36:28Z
+I run backend and frontend under linux for windows skaffold and all works fine.
+But I also run `minikube tunnel` and cannot connect with HeidiSQL to postgress db:
+"/tmp/tempo/Screenshot 2026-06-11 130704"
+---
