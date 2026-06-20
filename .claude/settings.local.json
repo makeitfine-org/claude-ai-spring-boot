@@ -89,10 +89,14 @@
       "Bash(awk '/14:42:5[3-9]\\\\.|14:42:54/')",
       "Bash(docker restart *)",
       "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
-      "Bash(getent hosts *)"
+      "Bash(getent hosts *)",
+      "Bash(npx playwright *)",
+      "Bash(node *)",
+      "Bash(npm view *)",
+      "Bash(npm install *)"
     ],
     "deny": []
   },
   "teammateMode": "tmux",
-  "model": "opusplan"
+  "_old_model": "opusplan"
 }
