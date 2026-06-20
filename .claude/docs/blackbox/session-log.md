@@ -94,3 +94,14 @@
 - frontend/package-lock.json
 - frontend/package.json
 <!-- end-snapshot -->
+
+<!-- git-snapshot 2026-06-20T20:41:53Z -->
+- .claude/docs/blackbox/audit.md
+- README.md
+<!-- end-snapshot -->
+
+<!-- git-snapshot 2026-06-20T20:42:32Z -->
+- .claude/docs/blackbox/audit.md
+- .claude/docs/blackbox/session-log.md
+- README.md
+<!-- end-snapshot -->

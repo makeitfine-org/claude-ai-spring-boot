@@ -560,3 +560,21 @@ can you use backlog.md mcp server on that project?
 ## 2026-06-20T20:25:19Z
 git add all changes and commit them with suitable message
 ---
+
+## 2026-06-20T20:40:53Z
+Add small infor about @.envrc file
+---
+
+## 2026-06-20T20:41:33Z
+Add small info about @.envrc into @README.md
+---
+
+## 2026-06-20T20:42:24Z
+add this info also:
+  # Add the hook to your shell (add to ~/.bashrc)
+  eval "$(direnv hook bash)"
+---
+
+## 2026-06-20T20:43:34Z
+git add all changes and commit them with suitable message
+---

@@ -120,6 +120,20 @@ The `no-iam` profile uses manifests from `backend/k8s/no-iam/` which set `IAM_EN
 
 ---
 
+## Environment (direnv)
+
+The repo includes an `.envrc` file that sets `JAVA_HOME` to Java 21. If you use [direnv](https://direnv.net/), run `direnv allow` once and the correct JDK will be activated automatically in every shell session.
+
+```bash
+# Add the hook to your shell (add to ~/.bashrc)
+eval "$(direnv hook bash)"
+
+# Then allow this project's .envrc
+direnv allow
+```
+
+---
+
 ## Repository Layout
 
 ```
