@@ -608,3 +608,38 @@ I run backend and frontend under linux for windows skaffold and all works fine.
 But I also run `minikube tunnel` and cannot connect with HeidiSQL to postgress db:
 "/tmp/tempo/Screenshot 2026-06-11 130704"
 ---
+
+## 2026-06-22T08:52:35Z
+- Migrate the project to fullstack application desribed.
+  Consider all as base and ethalon using "~/dev/mine/claude-ai-spring-boot" project, so do similar: create backend, frontend, e2e modules; Makefile, etc.
+---
+
+## 2026-06-22T08:53:57Z
+- Migrate the current project to fullstack application desribed.
+  Consider all as base and ethalon using "~/dev/mine/claude-ai-spring-boot" project, so do similar: create backend, frontend, e2e modules; Makefile, etc.
+---
+
+## 2026-06-22T08:58:22Z
+gb
+---
+
+## 2026-06-22T08:58:28Z
+gbgb
+---
+
+## 2026-06-22T09:02:35Z
+- Analyze the current project
+- Analyze "~/dev/mine/claude-ai-spring-boot" project
+- Migrate the current project to fullstack application desribed.
+  Consider all as base and ethalon using "~/dev/mine/claude-ai-spring-boot" project, so do similar: create backend, frontend, e2e modules; Makefile, etc.
+---
+
+## 2026-06-22T12:38:31Z
+The Invalidate Caches operation requested embedded browser engine cache cleanup. The operation failed due to I/O error: C:\Users\malysh.evgen\AppData\Local\JetBrains\IntelliJIdea2026.1\jcef_cache\Default\Account Web Data: The process cannot access the file because it is being used by another process
+
+how to fix?
+---
+
+## 2026-06-23T07:51:45Z
+do you work?
+---
